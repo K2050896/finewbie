@@ -1,0 +1,23 @@
+{% extends "base_template.jinja2" %}
+{% block content %}
+<!-- This is for the welcome/ about us intro page -->
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">finewbieeee</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href='/register'><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Sign Up!</a></li>
+      <li><a href='/login'><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class = "container-fluid">
+	<h2> Welcome to finewbie! </h2>
+	<p> finewbie is a asset-liability management tool for beginners. Have no experience investing your money? Don't worry - we are here to walk you though the process as simply as we can </p>
+{% endblock %}

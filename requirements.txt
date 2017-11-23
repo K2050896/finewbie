@@ -1,0 +1,11 @@
+Flask
+pymongo
+passlib
+numpy
+pandas
+requests
+Jinja2
+quandl
+cvxpy
+matplotlib
+
