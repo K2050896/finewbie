@@ -1,1 +1,1 @@
-web: gunicorn flask_rest_service:app
+web: uwsgi uwsgi.ini
