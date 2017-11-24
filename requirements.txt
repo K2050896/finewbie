@@ -1,7 +1,7 @@
 Flask
 pymongo
 passlib
-numpy
+numpy==1.13.1
 pandas
 requests
 Jinja2
