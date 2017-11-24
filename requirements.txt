@@ -5,7 +5,6 @@ numpy==1.13.1
 pandas
 requests
 Jinja2
-cvxpy
 matplotlib
 uwsgi
 
