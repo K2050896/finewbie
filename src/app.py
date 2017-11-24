@@ -1,9 +1,9 @@
 # import the Flask class from the flask module
 from flask import Flask, render_template, redirect, url_for, request, session
-from models.users import User
-from models.asset import Asset
-from models.portfolio import Portfolio
-from common.database import Database
+from src.models.users import User
+from src.models.asset import Asset
+from src.models.portfolio import Portfolio
+from src.common.database import Database
 
 
 
