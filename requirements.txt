@@ -8,4 +8,5 @@ Jinja2
 quandl
 cvxpy
 matplotlib
+uwsgi
 
