@@ -1,4 +1,4 @@
-from common.database import Database
+from src.common.database import Database
 
 class Asset(object):
     def __init__(self, id, port_id):
