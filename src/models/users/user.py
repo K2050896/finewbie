@@ -1,5 +1,7 @@
 from src.common.database import Database
+import src.models.users.errors as UserErrors
 from flask import session
+from src.common.utils import Utils
 
 
 class User(object):
@@ -37,9 +39,13 @@ class User(object):
 
     @staticmethod
     def login_valid(email, password):
-        user = User.get_by_email(email)
-        if user is not None:
-            return user['password'] == password
+        user_data = User.get_by_email(email)
+        if user_data is None:
+            # Tell the user their email does not exist
+            raise UserErrors.UserNotExistsError("Your user does not exist!")
+        if not Utils.check_hashed_password(password, user_data['password']):
+            # Tell the user their password is wrong
+            raise UserErrors.IncorrectPasswordError("Your password was wrong!")
         return False
 
 
