@@ -102,30 +102,32 @@ def stochastic_programming(nA, nS, Y, nP, lamb, D, Returns, ic, goal, eff_fees,i
         G_[i, start_col] = 1
 
     # Sum of each scenario's terminal wealth is >= goal
-    A_ = np.zeros((nS,nA*nS))
+    G__ = np.zeros((nS,nA*nS))
     ctr = -nA
     for s in range(1,nS+1):
         ctr = ctr + nA
         for a in range(1,nA+1):
-            A_[-s,-a - ctr] = -1 * (1 - eff_fees[a-1])
-    G__ = np.concatenate((np.zeros((nS,nd-nA*nS)),A_),axis=1)
+            G__[-s,-a - ctr] = -1 * (1 - eff_fees[a-1])
+    G__ = np.concatenate((np.zeros((nS,nd-nA*nS)),G__),axis=1)
 
-    # Restricting initial allocation from concentrating on one asset
-    G___ = np.concatenate((np.eye(nA),np.zeros((nA,nd-nA))),axis=1)
-
-    G = np.concatenate((G,G_,G__,G___))
+    G = np.concatenate((G,G_,G__))
     
     # Define vector h
+    # Restricting initial allocation from concentrating on one asset
+    ini_alloc = np.matrix(init_alloc).T
     h = np.zeros((nd,1))
+    for i in range(0,ini_alloc.shape[0]):
+        h[i] = -ic * ini_alloc[i]
+
     h_ = D * np.ones((nS*(nP-1),1))
     h__ = goal * np.ones((nS,1))
-    
-    ini_alloc = np.matrix(init_alloc).T
-    h___ = np.zeros((ini_alloc.shape[0],1))
-    for i in range(0,ini_alloc.shape[0]):
-        h___[i] = ic * ini_alloc[i]
 
-    h = np.concatenate((h,h_,h__,h___))
+    h = np.concatenate((h,h_,h__))
+    
+#    # Define vector q
+#    q = -(1 - lamb) * np.ones((nA*nS,1))
+#    q_ = np.matrix(np.sum(G_.T,axis=1)).T
+#    q = np.concatenate((q_[0:-(nA*nS)],q)) / nS
 
     # Solvers.qp need inputs to be in cvxopt.matrix format
     P = matrix(P)
