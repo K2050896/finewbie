@@ -6,6 +6,9 @@ from src.models.users.user import User
 
 # create the application object
 app = Flask(__name__)
+app.config.from_object('config')
+
+
 app.secret_key = "secret"
 
 @app.before_first_request
