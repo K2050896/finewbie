@@ -2,67 +2,61 @@ import numpy as np
 import pandas as pd
 #import quandl
 from pandas_datareader.data import DataReader
-from datetime import datetime as dt
+import datetime as dt
 
-def import_assets(tickers,time_step):
+def import_assets(Y,T,tickers,time_step):
+    #   Y           - original length of gaol in years (always constant)
+    #   T           - remaining length of goal in years
+    #   Y - T       - will give me how much time has passed in years
 
     if time_step == 1:          # Annually
         tf = 'A' 
-        nrows = 10 
     elif time_step == 0.5:      # Semi-annually
         tf = '182D'
-        nrows = 19
     elif time_step == 1/3:      # Every 4 months
         tf = '122D'
-        nrows = 28
     elif time_step == 0.25:     # Quarterly (3 months)
         tf = '91D'
-        nrows = 37
     elif time_step == 1/6:      # Every 2 months
-        tf = '61D'   
-        nrows = 55                     
+        tf = '61D'                      
     elif time_step == 1/12:     # Monthly
         tf = 'M'
-        nrows = 109
     elif time_step == 1/52:     # Weekly
-        tf = 'W'       
-        nrows = 473           
+        tf = 'W'               
     
-    N = len(tickers)
-    prices = np.matrix(np.zeros((nrows,N)))         #Preallocate
 
-    today = dt.now()
-    today = str(today.year) + '-' + str(today.month) + '-' + str(today.day)
-    index = 0
-    for i in tickers:
-        ### Using Yahoo ###
-        imported = DataReader(i,'yahoo','2008-11-05',today)                  #Default daily frequency
-        imported = imported.groupby(pd.TimeGrouper(freq=tf))['Close'].mean()   #For yearly frequency
-        prices[:,index] = np.matrix(imported).T
-        index = index + 1
+    date_now = dt.datetime.now()
+    date_now = date_now + dt.timedelta(days=int((Y-T)*365.25))
+    fake_today = str(date_now.year-3) + '-' + str(date_now.month) + '-' + str(date_now.day)
 
-    if nrows % 2 == 0:
-        breakpoint = int(nrows/2)
-        r_prices = prices[0:breakpoint,:]
-        bt_prices = prices[breakpoint:nrows,:]
-    else:
-        breakpoint = int((nrows - 1) / 2)
-        r_prices = prices[0:breakpoint,:]
-        bt_prices = prices[breakpoint:(nrows-1),:]
+    ### Using Yahoo ###
+    imported = DataReader(tickers[0],'yahoo','2008-11-05',fake_today)           #Default daily frequency
+    imported0 = imported.groupby(pd.TimeGrouper(freq=tf))['Close'].mean()   #For yearly frequency
+    
+    imported = DataReader(tickers[1],'yahoo','2008-11-05',fake_today)           #Default daily frequency
+    imported1 = imported.groupby(pd.TimeGrouper(freq=tf))['Close'].mean()   #For yearly frequency
+    
+    imported = DataReader(tickers[2],'yahoo','2008-11-05',fake_today)           #Default daily frequency
+    imported2 = imported.groupby(pd.TimeGrouper(freq=tf))['Close'].mean()   #For yearly frequency
+    
+    imported = DataReader(tickers[3],'yahoo','2008-11-05',fake_today)           #Default daily frequency
+    imported3 = imported.groupby(pd.TimeGrouper(freq=tf))['Close'].mean()   #For yearly frequency
+    
+    imported = DataReader(tickers[4],'yahoo','2008-11-05',fake_today)           #Default daily frequency
+    imported4 = imported.groupby(pd.TimeGrouper(freq=tf))['Close'].mean()   #For yearly frequency
+    
+    
 
-    r_returns = np.zeros((r_prices.shape[0]-1,r_prices.shape[1]))
-    bt_returns = np.zeros((bt_prices.shape[0]-1,bt_prices.shape[1]))
-    for i in range(0,r_returns.shape[0]):
-        r_returns[i,:] = (r_prices[i+1,:] - r_prices[i,:])/r_prices[i,:]    #Calculate returns manually
-        bt_returns[i,:] = (bt_prices[i+1,:] - bt_prices[i,:])/bt_prices[i,:]
+    prices0 = np.matrix(imported0).T
+    prices1 = np.matrix(imported1).T
+    prices2 = np.matrix(imported2).T
+    prices3 = np.matrix(imported3).T
+    prices4 = np.matrix(imported4).T
 
-#    for i in range(0,r_returns.shape[0]):
-#        df=pd.DataFrame(r_returns[i])
-#        df.fillna(0,inplace=True)                                   #Replace NaN with 0's just in case
-#        r_returns[i]=df.values
-#
-#        df=pd.DataFrame(bt_returns[i])
-#        df.fillna(0,inplace=True)                                   #Replace NaN with 0's just in case
-#        bt_returns[i]=df.values
-        
-    return r_prices, r_returns, bt_prices, bt_returns;
+    prices = np.concatenate((prices0,prices1,prices2,prices3,prices4),axis=1)
+
+    returns = np.zeros((prices.shape[0]-1,prices.shape[1]))
+    for i in range(0,returns.shape[0]):
+        returns[i,:] = (prices[i+1,:] - prices[i,:])/prices[i,:]
+
+    return prices, returns
