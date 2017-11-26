@@ -127,6 +127,11 @@ dv = np.matrix(opt_soln['x'])
 mean_term_wealth = round(float(q.T * dv),2)         # Mean of terminal wealths
 mean_var_wealth = round(float(dv.T * P * dv),2)     # Variance of wealths
 
+# Determine if the goal is "ambitious"
+diff = goal - mean_term_wealth
+if diff > 0:
+    ambitious = 1
+
 # t = 1 average asset allocation across all scenarios (need this for next optimization)
 collect = np.matrix(np.zeros((nassets,ntrials)))
 ctr = 0
