@@ -10,8 +10,16 @@ mgmt_fees = [0.000945,0.002,0.0011,0.002,0.0007]     # annual management fees
 
 Y = 3                       # Original number of years (CONSTANT) (WEBAPP INPUT)
 T = 3                       # Number of years left (WEBAPP INPUT)
-time_step = 1/4             # Trading frequency in years e.g. 1 means annual trading frequency
-N = int(T / time_step)      # Total number of trading periods (WEBAPP INPUT)
+if Y < 2:
+    time_step = 1/12        # Trading frequency is monthly
+elif 2 <= Y <= 5:
+    time_step = 1/4         # Trading frequency is quarterly
+elif 5 < Y <= 10:
+    time_step = 1/2         # Trading frequency is semi-annually
+elif Y > 10:
+    time_step = 1           # Trading frequency is annually
+
+N = int(T / time_step)      # Total number of trading periods
 
 # Convert the annual rate to any frequency
 annual_int_rate = 0.01      # assume constant interest rate for cash investment
@@ -126,8 +134,15 @@ for s in range(0,ntrials):
     ctr = ctr + (nassets + 1)
     collect[:,s] = dv[ctr:ctr + nassets]
 avg_alloc = np.mean(collect,axis=1) 
+alloc_percent = avg_alloc / np.sum(avg_alloc)
 shares = avg_alloc
 shares[0:-1] = avg_alloc[0:-1] / prices[-1,:].T # Cash investment is left in units of $
+
+# Additional contribution required by next time step
+cont = round(float(dv[nassets:nassets+1]),2)
+
+# % reached of financial goal target
+reached = round(float(init_con / goal),3)
 
 ## Pie Chart: Terminal average asset allocation across all scenarios
 #temp = dv[dv.shape[0]-nassets*ntrials:dv.shape[0]]
