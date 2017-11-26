@@ -26,3 +26,6 @@ class Database(object):
     def delete_all(collection, query):
         Database.DATABASE[collection].remove(query)
 
+    @staticmethod
+    def update(collection,document,query):
+        Database.DATABASE[collection].update(document,query)
