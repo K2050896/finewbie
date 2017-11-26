@@ -1,10 +1,10 @@
 Flask
 pymongo
 passlib
-numpy==1.13.1
+numpy
 pandas
 requests
 Jinja2
 matplotlib
 uwsgi
-cvxpy
+cvxopt
