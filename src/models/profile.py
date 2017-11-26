@@ -101,14 +101,13 @@ class Profile(object):
         return {
             "port_id": self.port_id,
             "name": self.name,
-            "lenght of goal": self.Y
+            "lenght of goal": self.Y,
             "length remaining": self.T,
             "lamb": self.lamb,
             "dis_inc": self.dis_inc,
             "init_con": self.init_con,
             "init_alloc": self.init_alloc,
             "goal": self.goal
-            
         }
 
     def save_to_mongo(self):
@@ -122,6 +121,11 @@ class Profile(object):
             return data
 
     @staticmethod
-    def delete_setting(port_id):
+    def delete_profile(port_id):
         Database.delete_all(collection='profiles', query ={"port_id": port_id})
    
+    @staticmethod
+    def update_profile(port_id, query):
+        # query must include all the fields of profiles
+        Database.update("profiles",{"port_id": port_id},
+                        query)
