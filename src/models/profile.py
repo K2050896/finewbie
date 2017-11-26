@@ -94,6 +94,18 @@ class Profile(object):
             self.init_alloc = [0.50,0.20,0.25,0,0,0.05]
             self.lamb = 1.00
 
+    def json(self):
+        return {
+            "port_id": self.port_id,
+            "name": self.name,
+            "length_of_goal": self.Y,
+            "length_remaining": self.T,
+            "lamb": self.lamb,
+            "dis_inc": self.dis_inc,
+            "init_con": self.init_con,
+            "init_alloc": self.init_alloc,
+            "goal": self.goal
+        }
 
     def save_to_mongo(self):
         Database.insert("profiles", self.json())
