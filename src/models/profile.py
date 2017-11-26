@@ -56,7 +56,7 @@ class Profile(object):
         
         elif time > 3 and time <= 4:
             if risk > 0 and risk <= 11:
-                profile = "Conservative:
+                profile = "Conservative"
             elif risk > 11 and risk <= 18:
                 profile = "Moderately Conservative"
             elif risk > 18 and risk <= 25:
@@ -101,8 +101,8 @@ class Profile(object):
         return {
             "port_id": self.port_id,
             "name": self.name,
-            "lenght of goal": self.Y,
-            "length remaining": self.T,
+            "length_of_goal": self.Y,
+            "length_remaining": self.T,
             "lamb": self.lamb,
             "dis_inc": self.dis_inc,
             "init_con": self.init_con,
