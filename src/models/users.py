@@ -58,3 +58,9 @@ class User(object):
 
     def add_portfolio(self, port_id):
         self.port_ids.append(port_id)
+      
+    @staticmethod
+    def change_password(email, new_pass):
+        user = User.get_by_email(email)
+        Database.update("users",{"email": user["email"]},
+                        {"email": user["email"], "password": new_pass, "port_ids": user["port_ids"]})
