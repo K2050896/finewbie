@@ -1,14 +1,11 @@
 # import the Flask class from the flask module
 from flask import Flask, render_template, request, session
-
 from src.common.database import Database
 from src.models.users.user import User
 
 # create the application object
 app = Flask(__name__)
 app.config.from_object('config')
-
-
 app.secret_key = "secret"
 
 @app.before_first_request
@@ -18,6 +15,13 @@ def initialize_database():
 @app.route('/')
 def home():
     return render_template("intro.jinja2")
+
+# Import all views
+from src.models.users.views import user_blueprint
+
+# Register views in Flask app
+app.register_blueprint(user_blueprint, url_prefix = '/users')
+
 
 @app.route('/login')
 def login_page():

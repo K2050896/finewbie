@@ -20,16 +20,16 @@ class User(object):
     def save_to_mongo(self):
         Database.insert("users", self.json())
 
-    @classmethod
-    def register_user(cls, email, password):
-        user = cls.get_by_email(email)
-        if user is None:
-            new_user = cls(email, password)
-            new_user.save_to_mongo()
-            session['email'] = email
-            return True
-        else:
-            return False
+    @staticmethod
+    def register_user(email, password):
+        user_data = User.get_by_email(email)
+        if user_data is not None:
+            raise UserErrors.UserAlreadyRegisteredError("You already have an account with this email address.")
+        if not Utils.email_is_valid(email):
+            raise UserErrors.InvalidEmailError("That is an invalid email address!")
+
+        User(email, Utils.hash_password(password)).save_to_mongo()
+        return True
 
     @staticmethod
     def get_by_email(email):
