@@ -3,7 +3,8 @@ from src.common.database import Database
 
 
 class Portfolio(object):
-    def __init__(self,port_id=None):
+    def __init__(self,name,port_id=None):
+        self.name = name
         self.port_id = uuid.uuid4().hex if port_id is None else port_id
         self.time_series = []
         # self.time_len = function of time series depending on the organization of the data
@@ -11,6 +12,7 @@ class Portfolio(object):
     def json(self):
         return {
             "port_id": self.port_id,
+            "name": self.name,
             "time_series": self.time_series
         }
 
