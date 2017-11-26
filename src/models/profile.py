@@ -2,7 +2,6 @@ from src.common.database import Database
 
 class Profile(object):
     def __init__(self, id, port_id, name, Y, T , dis_inc, init_con, goal, importance, r1, r2, r3, r4):
-        #T1 is the time horizon 
         self.port_id = port_id #portfolio id
         self.name = name
         self.Y = Y
