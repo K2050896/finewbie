@@ -1,16 +1,47 @@
 from src.common.database import Database
 
 class Setting(object):
-    def __init__(self, id, port_id, settings):
+    def __init__(self, id, port_id, name, Y,T , dis_inc, init_con, goal, t1, t2, r1, r2, r3, r4):
+        #T1 is the time horizon 
         self.port_id = port_id #portfolio id
-        self.settings = settings
-        # Format = [1,2,3,4,5,6,7,8,9,10,11,12,13]
+        self.name = name
+        self.Y = Y
+        self.T = T
+        if length <= 1:
+            t = 1
+        if length > 1 and <=2:
+            t = 2
+        elif length > 2 and length <= 5:
+            t = 3
+        elif length > 5 and length <= 10:
+            t = 4
+        elif length > 10:
+            t = 5
+        
+        (6 - importance + t)/2 = time
+        r = r1+ r2+ r3+ r4
+        
+        self.lamb
+        self.init_alloc = 
+        
+        
+        
+        self.dis_inc = dis_inc
+        self.init_con = init_con
+        self.goal = goal
 
 
     def json(self):
         return {
             "port_id": self.port_id,
-            "settings": self.settings
+            "name": self.name,
+            "length remaining": self.T,
+            "lamb": self.lamb,
+            "dis_inc": self.dis_inc,
+            "init_con": self.init_con,
+            "init_alloc": self.init_alloc
+            "goal": self.goal
+            
         }
 
     def save_to_mongo(self):
