@@ -55,7 +55,3 @@ def login():
     #         return redirect(url_for(login), email=session["email"])
 
     return render_template("homepage.jinja2", email=session['email'])
-
-# start the server with the 'run()' method
-if __name__ == '__main__':
-    app.run(debug=True)
