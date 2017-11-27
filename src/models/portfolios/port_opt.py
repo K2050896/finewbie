@@ -175,7 +175,7 @@ def port_opt(constants, portfolio, profile):
     reached = round(float(init_con / goal),3)
     
     # Update portfolio (export)
-    Portfolio.update_portfolio("port_id": portfolio.id,
+    Portfolio.update_portfolio(portfolio.id,
                                {"port_id": portfolio.id,
                                "mean_term_wealth": mean_term_wealth,
                                "mean_var_wealth": mean_var_wealth,
