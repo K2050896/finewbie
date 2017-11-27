@@ -42,7 +42,12 @@ def port_opt(constants, portfolio, profile):
     eff_fees[m+1] = 0           # assume mgmt fees of cash investment is 0
                                                 
     # Prices and returns of assets; nrows x nassets
-    prices, returns = ia(Y,T,tickers,time_step)     
+    prices = None
+    while prices is None:
+        try:
+            prices, returns = ia(Y,T,tickers,time_step)     
+        except:
+            pass
     means = np.mean(returns.T,axis=1)                    # mean return vector; nassets x 1
     cov_mat = np.cov(returns.T)                          # covariance matrix; nassets x nassets
     
@@ -191,3 +196,5 @@ def port_opt(constants, portfolio, profile):
     #    var_wealths.append(var_wealth)
     #plt.plot(lamb[0:len(lamb)-1],mean_wealths)
     #plt.plot(lamb[0:len(lamb)-1],var_wealths)
+
+    return None
