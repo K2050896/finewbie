@@ -8,8 +8,9 @@ class Portfolio(object):
         self.mean_term_wealth = mean_term_wealth
         self.mean_var_wealth = mean_var_wealth
         self.alloc_percent = alloc_percent
-        self.shares = shares
-        self.P = P
+        self.shares0 = shares0
+        self.shares1 = shares1
+        self.cont = cont
         self.reached = reached
         self.ambitious = ambitious
         
@@ -20,8 +21,9 @@ class Portfolio(object):
             "mean_term_wealth": self.mean_term_wealth,
             "mean_var_wealth": self.mean_var_wealth,
             "alloc_percent": self.alloc_percent,
-            "shares": self.shares,
-            "P": self.P,
+            "shares0": self.shares0,
+            "shares1": self.shares1,
+            "cont": self.cont,
             "reached": self.reached,
             "ambitious": self.ambitious
             
@@ -46,6 +48,7 @@ class Portfolio(object):
         # query must include all the fields of profiles
         Database.update("portfolios", {"port_id": port_id},
                         query)
+    '''
     @staticmethod
     def update_shares(port_id, new_shares):
         port = Portfolio.from_mongo(port_id)
@@ -56,7 +59,9 @@ class Portfolio(object):
                                     "mean_var_wealth": port["mean_var_wealth"],
                                     "alloc_percent": port["alloc_percent"],
                                     "shares": new_shares,
-                                    "P": port["P"],
+                                    "cont": port["cont"],
                                     "reached": port["reached"],
                                     "ambitious": port["ambitious"]
-                                   }
+                                   })
+                                   
+   '''
