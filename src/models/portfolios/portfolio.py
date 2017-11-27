@@ -40,3 +40,23 @@ class Portfolio(object):
     @staticmethod
     def delete_portfolio(port_id):
         Database.delete_all(collection='portfolios', query={"port_id": port_id})
+        
+    @staticmethod
+    def update_portfolio(port_id, query):
+        # query must include all the fields of profiles
+        Database.update("portfolios", {"port_id": port_id},
+                        query)
+    @staticmethod
+    def update_shares(port_id, new_shares):
+        port = Portfolio.from_mongo(port_id)
+        Portfolio.update_portfolio(port_id,
+                                   {
+                                     "port_id": port_id,
+                                    "mean_term_wealth": port["mean_term_wealth"],
+                                    "mean_var_wealth": port["mean_var_wealth"],
+                                    "alloc_percent": port["alloc_percent"],
+                                    "shares": new_shares,
+                                    "P": port["P"],
+                                    "reached": port["reached"],
+                                    "ambitious": port["ambitious"]
+                                   }
