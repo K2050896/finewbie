@@ -25,11 +25,11 @@ app.register_blueprint(user_blueprint, url_prefix = '/users')
 
 @app.route('/login')
 def login_page():
-    return render_template("login.jinja2")
+    return render_template("users/login.jinja2")
 
 @app.route('/register')
 def register_page():
-    return render_template("register.jinja2")
+    return render_template("users/register.jinja2")
 
 @app.route('/auth/register', methods=['POST'])
 def register():

@@ -16,7 +16,7 @@ def login_page():
         except UserErrors.UserError as e:
             return e.message
 
-    return render_template("login.jinja2")
+    return render_template("users/login.jinja2")
 
 @user_blueprint.route('/register', methods = ['GET','POST'])
 def register_user():   # Views form required for user signup
@@ -30,7 +30,7 @@ def register_user():   # Views form required for user signup
         except UserErrors.UserError as e:
             return e.message
 
-    return render_template("register.jinja2")
+    return render_template("users/register.jinja2")
 
 @user_blueprint.route('/profile')
 def user_portfolios():
