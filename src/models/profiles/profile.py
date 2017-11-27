@@ -1,7 +1,7 @@
 from src.common.database import Database
 
 class Profile(object):
-    def __init__(self, id, port_id, name, Y, T , dis_inc, init_con, goal, importance, r1, r2, r3, r4):
+    def __init__(self, id, port_id, name, Y, T , dis_inc, init_con, goal, importance, r1, r2, r3, r4, r5):
         self.port_id = port_id #portfolio id
         self.name = name
         self.Y = Y
@@ -22,7 +22,7 @@ class Profile(object):
             t = 5
         
         time = (6 - importance + t)/2 
-        risk = (r1+ r2+ r3+ r4)*2
+        risk = (r1+r2+r3+r4+r5)*2
         
         if time > 0 and time <= 1:
             if risk > 0 and risk <= 18:
