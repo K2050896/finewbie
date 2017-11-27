@@ -10,7 +10,7 @@ class Portfolio(object):
         self.alloc_percent = alloc_percent
         self.shares0 = shares0
         self.shares1 = shares1
-        self.P = P
+        self.cont = cont
         self.reached = reached
         self.ambitious = ambitious
         
@@ -23,7 +23,7 @@ class Portfolio(object):
             "alloc_percent": self.alloc_percent,
             "shares0": self.shares0,
             "shares1": self.shares1,
-            "P": self.P,
+            "cont": self.cont,
             "reached": self.reached,
             "ambitious": self.ambitious
             
@@ -59,8 +59,9 @@ class Portfolio(object):
                                     "mean_var_wealth": port["mean_var_wealth"],
                                     "alloc_percent": port["alloc_percent"],
                                     "shares": new_shares,
-                                    "P": port["P"],
+                                    "cont": port["cont"],
                                     "reached": port["reached"],
                                     "ambitious": port["ambitious"]
-                                   }
+                                   })
+                                   
    '''
