@@ -5,7 +5,7 @@ from Import_assets import import_assets as ia
 from SP import stochastic_programming as sp
 from GBM import GBM
 from src.models.portfolios.portfolio import Portfolio
-from src.models.profiles.profile import Profile
+#from src.models.profiles.profile import Profile
 import src.models.portfolios.constants as constants
 
 def port_opt(constants, portfolio, profile):
@@ -66,10 +66,7 @@ def port_opt(constants, portfolio, profile):
     Sprices3 = GBM(ntrials,N,time_step,means,cov_mat,S03,3)
     Sprices4 = GBM(ntrials,N,time_step,means,cov_mat,S04,4)
     # print("--- %s seconds ---" % (clock() - start_time))
-    
-    ## Example plot of simulated asset prices
-    #plt.plot(Sprices0.T,alpha=0.5)
-    #plt.show()
+    Sprices = np.concatenate((np.mean(Sprices0,axis=0),np.mean(Sprices1,axis=0),np.mean(Sprices2,axis=0),np.mean(Sprices3,axis=0),np.mean(Sprices4,axis=0)))
     
     # Calculate returns from the simulated stock prices of each asset
     Sreturns0 = np.matrix(np.zeros((ntrials,N)))
@@ -156,6 +153,10 @@ def port_opt(constants, portfolio, profile):
     if diff > 0:
         ambitious = 1
     
+    # t = 0 shares
+    shares0 = dv[0:6]
+    shares0[0:-1] = shares0[0:-1] / Sprices[:,0]
+
     # t = 1 average asset allocation across all scenarios (need this for next optimization)
     collect = np.matrix(np.zeros((nassets,ntrials)))
     ctr = 0
@@ -164,15 +165,17 @@ def port_opt(constants, portfolio, profile):
         collect[:,s] = dv[ctr:ctr + nassets]
     avg_alloc = np.mean(collect,axis=1) 
     alloc_percent = avg_alloc / np.sum(avg_alloc)
-    shares = avg_alloc
-    shares[0:-1] = avg_alloc[0:-1] / prices[-1,:].T # Cash investment is left in units of $
-    # Portfolio.update_portfolio(port_id,_____)
+    shares1 = avg_alloc
+    shares1[0:-1] = avg_alloc[0:-1] / Sprices[:,1] # Cash investment is left in units of $
     
     # Additional contribution required by next time step
     cont = round(float(dv[nassets:nassets+1]),2)
     
     # % reached of financial goal target
     reached = round(float(init_con / goal),3)
+    
+    # Update portfolio (export)
+    Portfolio.update_portfolio(portfolio.id,{portfolio.id, mean_term_wealth, mean_var_wealth, alloc_percent, shares0, shares1, cont, reached, ambitious})
     
 #    # Pie Chart: Terminal average asset allocation across all scenarios
 #    temp = dv[dv.shape[0]-nassets*ntrials:dv.shape[0]]
