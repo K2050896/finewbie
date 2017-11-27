@@ -80,19 +80,19 @@ class Profile(object):
         
         if profile == "Conservative":
             self.init_alloc = [0.15,0,0.05,0.25,0.25,0.3]
-            self.lamb = 0.00
+            self.lamb = 1.00
         elif profile == "Moderately Conservative":
             self.init_alloc = [0.25,0.05,0.10,0.25,0.25,0.10]
-            self.lamb = 0.25
+            self.lamb = 0.75
         elif profile == "Moderate":
             self.init_alloc = [0.35,0.10,0.15,0.175,0.175,0.05]
             self.lamb = 0.50
         elif profile == "Moderately Aggressive":
             self.init_alloc = [0.45,0.15,0.20,0.075,0.075,0.05]
-            self.lamb = 0.75
+            self.lamb = 0.25
         elif profile == "Aggressive":
             self.init_alloc = [0.50,0.20,0.25,0,0,0.05]
-            self.lamb = 1.00
+            self.lamb = 0.00
 
     def json(self):
         return {
