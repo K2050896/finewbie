@@ -175,7 +175,16 @@ def port_opt(constants, portfolio, profile):
     reached = round(float(init_con / goal),3)
     
     # Update portfolio (export)
-    Portfolio.update_portfolio(portfolio.id,{portfolio.id, mean_term_wealth, mean_var_wealth, alloc_percent, shares0, shares1, cont, reached, ambitious})
+    Portfolio.update_portfolio("port_id": portfolio.id,
+                               {"port_id": portfolio.id,
+                               "mean_term_wealth": mean_term_wealth,
+                               "mean_var_wealth": mean_var_wealth,
+                               "alloc_percent": alloc_percent,
+                               "shares0": shares0,
+                               "shares1": shares1,
+                               "cont": cont,
+                               "reached": reached,
+                               "ambitious": ambitious})
     
 #    # Pie Chart: Terminal average asset allocation across all scenarios
 #    temp = dv[dv.shape[0]-nassets*ntrials:dv.shape[0]]
