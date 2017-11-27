@@ -5,6 +5,7 @@ from src.models.users.user import User
 
 # create the application object
 app = Flask(__name__)
+app.config['secret']
 app.config.from_pyfile('config.py') # app.config.from_object('config') before heroku fix
 app.secret_key = "secret"
 
