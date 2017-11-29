@@ -8,3 +8,5 @@ Jinja2
 matplotlib
 uwsgi
 cvxopt
+datetime
+pandas_datareader
