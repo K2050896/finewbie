@@ -4,9 +4,9 @@ from time import clock
 from Import_assets import import_assets as ia  
 from SP import stochastic_programming as sp
 from GBM import GBM
-from src.models.portfolios.portfolio import Portfolio
-from src.models.profiles.profile import Profile
-import src.models.portfolios.constants as constants
+from portfolio import Portfolio
+from profile import Profile
+import constants
 
 def port_opt(constants, portfolio, profile):
     
@@ -114,14 +114,14 @@ def port_opt(constants, portfolio, profile):
     if lamb == 0:
         lamb = 0
     elif lamb == 0.25:
-        lamb = 0.008
+        lamb = 0.01
     elif lamb == 0.5:
-        lamb = 0.02
+        lamb = 0.05
     elif lamb == 0.75:
-        lamb = 0.5
+        lamb = 0.4
     elif lamb == 1:
         lamb = 0.99
-    dis_inc = 500                          # comfortable disposable income given the trading period
+    dis_inc = profile.dis_inc                          # comfortable disposable income given the trading period
     if Y - T == 0:
         init_con = profile.init_con        # intial contribution to goal (User input)
         init_alloc = profile.init_alloc      # Recommended initial alloc (WEBAPP INPUT)
@@ -158,7 +158,8 @@ def port_opt(constants, portfolio, profile):
     shares0 = dv[0:6]
     shares0[0:-1] = shares0[0:-1] / Sprices[:,0]
 
-    # t = 1 average asset allocation across all scenarios (need this for next optimization)
+    # t = 1 average asset allocation across all scenarios 
+    # (need this for next optimization)
     collect = np.matrix(np.zeros((nassets,ntrials)))
     ctr = 0
     for s in range(0,ntrials):
@@ -177,11 +178,11 @@ def port_opt(constants, portfolio, profile):
     # % reached of financial goal target
     reached = round(float(init_con / goal),3)
     
-    # Update portfolio (export)
-    portfolio.update_portfolio(portfolio.id,{"port_id": portfolio.id,"mean_term_wealth": mean_term_wealth,"mean_var_wealth": mean_var_wealth,"alloc_percent": alloc_percent,"shares0": shares0,"shares1": shares1,"cont": cont,"reached": reached,"ambitious": ambitious})
-    
     # Update profile by changing the length of time remaining
     profile.update_profile(1,{"port_id": 1,"name": profile.name,"length_of_goal": profile.Y,"length_remaining": profile.Y - time_step,"lamb": profile.lamb,"dis_inc": profile.dis_inc,"init_con": profile.init_con,"init_alloc": profile.init_alloc,"goal": profile.goal})
+    
+    # Update portfolio (export)
+    portfolio.update_portfolio(portfolio.id,{"port_id": portfolio.id,"mean_term_wealth": mean_term_wealth,"mean_var_wealth": mean_var_wealth,"alloc_percent": alloc_percent,"shares0": shares0,"shares1": shares1,"cont": cont,"reached": reached,"ambitious": ambitious})
 
 #    # Pie Chart: Terminal average asset allocation across all scenarios
 #    temp = dv[dv.shape[0]-nassets*ntrials:dv.shape[0]]
@@ -192,19 +193,20 @@ def port_opt(constants, portfolio, profile):
 #    taaa = np.mean(term_wealths,axis=1)
 #    plt.pie(taaa,labels=['SPY','IWM','VEU','CSJ','BLV','Cash Investment'],autopct='%1.1f%%')
     
-    #### Optimize for different values of lamb and plot changes in mean and variance
-    #lamb = np.linspace(0,0.1,11)
-    #mean_wealths = []
-    #var_wealths = []
-    #for l in lamb[0:len(lamb)-1]:
-    #    opt_soln, P, q = sp(nassets, ntrials, Y, N, l, dis_inc, Returns, init_con, goal, eff_fees, init_alloc)
-    #    dv = np.matrix(opt_soln['x'])
-    #    mean_wealth = float(q.T * dv)
-    #    var_wealth = float(dv.T * P * dv)
-    #    mean_wealths.append(mean_wealth)
-    #    var_wealths.append(var_wealth)
-    #plt.plot(lamb[0:len(lamb)-1],mean_wealths)
-    #plt.plot(lamb[0:len(lamb)-1],var_wealths)
+    ## Optimize for different values of lamb
+#    lamb = np.linspace(0,1,70)
+#    mean_wealths = []
+#    var_wealths = []
+#    obj = []
+#    for l in lamb[0:len(lamb)-1]:
+#        opt_soln, P, q = sp(nassets, ntrials, Y, N, l, dis_inc, Returns, init_con, goal, eff_fees, init_alloc)
+#        dv = np.matrix(opt_soln['x'])
+#        mean_wealth = float(q.T * dv)
+#        var_wealth = float(dv.T * P * dv)
+#        mean_wealths.append(mean_wealth)
+#        var_wealths.append(var_wealth)
+#        obj.append(l*var_wealth - (1- l)*mean_wealth)
+#    plt.plot(lamb[0:len(lamb)-1],obj) # Efficient frontier for mean-variance tradeoff
     
 #    # Average cash contribution
 #    ctr = nassets

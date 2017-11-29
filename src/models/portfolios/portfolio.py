@@ -27,7 +27,6 @@ class Portfolio(object):
             "cont": self.cont,
             "reached": self.reached,
             "ambitious": self.ambitious
-            
         }
 
     def save_to_mongo(self):
@@ -55,7 +54,7 @@ class Portfolio(object):
         port = Portfolio.from_mongo(port_id)
         Portfolio.update_portfolio(port_id,
                                    {
-                                     "port_id": port_id,
+                                    "port_id": port_id,
                                     "mean_term_wealth": port["mean_term_wealth"],
                                     "mean_var_wealth": port["mean_var_wealth"],
                                     "alloc_percent": port["alloc_percent"],
@@ -63,6 +62,6 @@ class Portfolio(object):
                                     "cont": port["cont"],
                                     "reached": port["reached"],
                                     "ambitious": port["ambitious"]
-                                   })
+                                  } )
                                    
    '''
