@@ -22,7 +22,9 @@ def home():
 # Import all views
 from src.models.users.views import user_blueprint
 from src.models.profiles.views import profile_blueprint
+from src.models.portfolios.views import portfolio_blueprint
 
 # Register views in Flask app
 app.register_blueprint(user_blueprint, url_prefix = '/users')
 app.register_blueprint(profile_blueprint, url_prefix = '/profiles')
+app.register_blueprint(portfolio_blueprint, url_prefix = '/portfolios')

@@ -8,7 +8,7 @@ profile_blueprint = Blueprint('profiles', __name__)
 def create_goal():
     if request.method == 'POST':
         port_id = uuid.uuid4().hex
-        curr_port = session['port_id']
+        session['curr_port'] = port_id
         user_email = session['email']
         name = request.form["name"]
         goal = request.form["amount"]
@@ -28,7 +28,7 @@ def create_goal():
                           dis_inc=float(assets)-float(liab), r1=r1, r2=r2, r3=r3, r4=r4, r5=r5)
         profile.save_to_mongo()
         print("It got here!")
-        return render_template("portfolios/port_summary.jinja2", curr_port=session['port_id'], user_email=session['email'])
+        return render_template("portfolios/port_summary.jinja2", port_id=session['curr_port'], user_email=session['email'])
 
     return render_template("profiles/create_goal.jinja2")
 

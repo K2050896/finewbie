@@ -8,5 +8,5 @@ portfolio_blueprint = Blueprint('portfolios', __name__)
 
 @portfolio_blueprint.route('/optimize')
 def optimize():
-    portfolio = Portfolio()
+    #portfolio = Portfolio()
     pass

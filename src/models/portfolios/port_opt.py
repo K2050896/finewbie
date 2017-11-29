@@ -1,12 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from time import clock
-from Import_assets import import_assets as ia  
-from SP import stochastic_programming as sp
-from GBM import GBM
-from portfolio import Portfolio
+from src.models.portfolios.Import_assets import import_assets as ia
+from src.models.portfolios.SP import stochastic_programming as sp
+from src.models.portfolios.GBM import GBM
+from src.models.portfolios.portfolio import Portfolio
 from profile import Profile
-import constants
+import src.models.portfolios.constants
 
 def port_opt(constants, portfolio, profile):
     
