@@ -178,10 +178,10 @@ def port_opt(constants, portfolio, profile):
     reached = round(float(init_con / goal),3)
     
     # Update profile by changing the length of time remaining
-    profile.update_profile(1,{"port_id": 1,"name": profile.name,"length_of_goal": profile.Y,"length_remaining": profile.Y - time_step,"lamb": profile.lamb,"dis_inc": profile.dis_inc,"init_con": profile.init_con,"init_alloc": profile.init_alloc,"goal": profile.goal})
+    profile.update_profile(profile.port_id,{"port_id": profile.port_id,"name": profile.name,"length_of_goal": profile.Y,"length_remaining": profile.Y - time_step,"lamb": profile.lamb,"dis_inc": profile.dis_inc,"init_con": profile.init_con,"init_alloc": profile.init_alloc,"goal": profile.goal})
     
     # Update portfolio (export)
-    portfolio.update_portfolio(portfolio.id,{"port_id": portfolio.id,"mean_term_wealth": mean_term_wealth,"mean_var_wealth": mean_var_wealth,"alloc_percent": alloc_percent,"shares0": shares0,"shares1": shares1,"cont": cont,"reached": reached,"ambitious": ambitious})
+    portfolio.update_portfolio(portfolio.port_id,{"port_id": portfolio.port_id,"mean_term_wealth": mean_term_wealth,"mean_var_wealth": mean_var_wealth,"alloc_percent": alloc_percent,"shares0": shares0,"shares1": shares1,"cont": cont,"reached": reached,"ambitious": ambitious})
 
 #    # Pie Chart: Terminal average asset allocation across all scenarios
 #    temp = dv[dv.shape[0]-nassets*ntrials:dv.shape[0]]
