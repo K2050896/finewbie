@@ -1,0 +1,60 @@
+{% extends "homepage.jinja2" %}
+{% block content %}
+
+    <div class="container-fluid">
+    <div class="form">
+        <form id="login-form" action="/profiles/risk-profile" method="POST">
+        <h2>Goal Information</h2>
+        <p>Starting to save up for a goal? That's great! Even small amounts regularly add up to a lot in few years.
+            We'll ask you some questions about the goal and personal comfort level with risk, so we can better choose your portfolios for you.</p>
+
+        <div class="form-group">
+            <label class="control-label" for="name">Name the goal!</label>
+            <input type="text" class="form-control" id="name">
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="time">How long do you wish to save up for this goal? Enter the number of years.</label>
+            <input type="number" class="form-control" id="time">
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="phone">How much money would you like to save up for your goal? Please enter amount rounded up to the nearest dollar.</label>
+            <input type="number" class="form-control" id="phone" aria-describedby="phoneStatus">
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="imp">How important is it for you to achieve this goal?</label><br>
+            <input type="radio" name="imp" value="1" checked> Not very important<br>
+            <input type="radio" name="imp" value="2"> Not important<br>
+            <input type="radio" name="imp" value="3"> Doesn't matter<br>
+            <input type="radio" name="imp" value="4"> Somewhat important<br>
+            <input type="radio" name="imp" value="5"> Extremely important<br>
+        </div>
+
+        <h2>Goal Contribution</h2>
+        <p>We'd like to know how much you can regularly contribute towards your goal. Feel like you won't have any income left for your other needs? Don't worry, we will take other bills and payments you have to make into account.</p>
+
+        <div class="form-group">
+            <label class="control-label" for="time">What is the initial contribution you would like to make towards this goal? Please enter amount rounded up to the nearest dollar.</label>
+            <input type="number" class="form-control" id="time">
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="phone">What is the initial contribution you would like to make towards this goal? Please enter amount rounded up to the nearest dollar.</label>
+            <input type="number" class="form-control" id="phone" aria-describedby="phoneStatus">
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="phone">Enter the value of your current liabilities - monthly expenses including rent, insurance, credit card bills, utilities etc.</label>
+            <input type="number" class="form-control" id="phone" aria-describedby="phoneStatus">
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+        </div>
+
+        <button type="submit" class="btn btn-default btn-sm"><a href="/profiles/risk-profile">Continue to Risk Profile</a></button>
+        </form>
+    </div>
+    </div>
+
+{% endblock %}
