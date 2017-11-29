@@ -1,7 +1,7 @@
 {% extends "homepage.jinja2" %}
 {% block content %}
 
-    <h1> These are {{ email }}'s portfolios: </h1>
+    <h1> These are {{ user_email }}'s portfolios: </h1>
     <ul> {{ port_id }} </ul>
 
     <button action="{{ url_for('portfolios.optimize') }}">OPTIMIZEEEEE!!!</button>

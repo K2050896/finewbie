@@ -3,9 +3,9 @@ from src.common.database import Database
 
 
 class Portfolio(object):
-    def __init__(self,user_id,port_id):
+    def __init__(self, user_email, port_id):
         self.port_id = port_id
-        self.user_id = user_id
+        self.user_email = user_email
         self.mean_term_wealth = mean_term_wealth
         self.mean_var_wealth = mean_var_wealth
         self.alloc_percent = alloc_percent
