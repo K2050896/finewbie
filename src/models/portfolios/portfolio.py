@@ -26,7 +26,6 @@ class Portfolio(object):
             "cont": self.cont,
             "reached": self.reached,
             "ambitious": self.ambitious
-            
         }
 
     def save_to_mongo(self):
@@ -62,6 +61,6 @@ class Portfolio(object):
                                     "cont": port["cont"],
                                     "reached": port["reached"],
                                     "ambitious": port["ambitious"]
-                                   })
+                                  } )
                                    
    '''
