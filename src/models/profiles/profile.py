@@ -124,4 +124,4 @@ class Profile(object):
     @staticmethod
     def update_profile(port_id, query):
         # query must include all the fields of profiles
-        Database.update(collection="profiles", query={"port_id": port_id}, query)
+        Database.update("profiles", {"port_id": port_id}, query)
