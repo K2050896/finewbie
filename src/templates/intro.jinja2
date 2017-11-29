@@ -1,29 +1,21 @@
 {% extends "base_template.jinja2" %}
+
 {% block content %}
-<!-- This is for the welcome/ about us intro page -->
-
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/"><img src="src/static/finalLogo.png"</a>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2> Welcome to finewbie!</h2>
+                <p> finewbie is a personal asset-liability management tool for beginners!</p>
+            </div>
+            <div class="col-sm-6">
+                <div class="jumbotron">
+                    <p> Haven't tried finewbie?</p>
+                    <a class="btn btn-success" href="{{ url_for('users.register_user') }}">Sign Up Now!</a>
+                    <p> Already a registered user?</p>
+                    <a class="btn btn-info" href="{{ url_for('users.login_user') }}">Login</a>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div>
-
-
-    </div>
-      <ul class="nav navbar-nav">
-      <li class="active"><a href="/login">Login</a></li>
-      </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href='/register'><span class="glyphicon glyphicon-user"></span> Sign Up!</a></li>
-      <li><a href='/login'><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</a></li>
-    </ul>
-  </div>
-</nav>
-
-<div class = "container-fluid">
-	<h2> Welcome to finewbie! </h2>
-	<p> finewbie is a asset-liability management tool for beginners. Have no experience investing your money? Don't worry - we are here to walk you though the process as simply as we can </p>
-</div>
 {% endblock %}
+

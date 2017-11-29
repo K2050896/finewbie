@@ -1,9 +1,49 @@
 {% extends "base_template.jinja2" %}
 
-<!-- This is the mainnnnn home page for each user 
-
+<!-- This is the mainnnnn home page for each user
 For the description of the various goals -> maybe use scrollspy -->
+
 {% block content %}
-	<h1> Welcome! {{ email }} </h1>
-	<h2> You have been successfully logged in! </h2>
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><img src="static/img/new.png" alt="finewbie">
+            </a>
+        </div>
+        <div id="navbar1" class="navbar-collapse collapse navbar-right">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My Goals <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Create New Goal</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Existing Goals</a></li>
+                        <li><a href="#">Update Goals</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Resources <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Asset Classes</a></li>
+                        <li><a href="#">News</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">My Info</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <body>
+    <div class="container">
+        <h1> Welcome! {{ email }} </h1>
+        <h2> You have been successfully logged in! </h2>
+    </div>
+    </body>
 {% endblock %}

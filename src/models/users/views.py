@@ -5,7 +5,7 @@ import src.models.users.errors as UserErrors
 user_blueprint = Blueprint('users', __name__)
 
 @user_blueprint.route('/login', methods=['GET', 'POST'])
-def login_page():
+def login_user():
     if request.method == 'POST':
         email = request.form["email"]
         password = request.form["password"]
@@ -32,6 +32,11 @@ def register_user():   # Views form required for user signup
 
     return render_template("users/register.jinja2")
 
-@user_blueprint.route('/profile')
+@user_blueprint.route('/logout')
+def logout_user():
+    User.logout()
+    return render_template("users/logout.jinja2")
+
+@user_blueprint.route('/homepage')
 def user_portfolios():
-    pass
+    return render_template("homepage.jinja2", email=session['email'])

@@ -46,7 +46,7 @@ class User(object):
         if not Utils.check_hashed_password(password, user_data['password']):
             # Tell the user their password is wrong
             raise UserErrors.IncorrectPasswordError("Your password was wrong!")
-        return False
+        return True
 
 
     @staticmethod

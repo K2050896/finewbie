@@ -24,42 +24,42 @@ from src.models.users.views import user_blueprint
 app.register_blueprint(user_blueprint, url_prefix = '/users')
 
 
-@app.route('/login')
-def login_page():
-    return render_template("users/login.jinja2")
-
-@app.route('/register')
-def register_page():
-    return render_template("users/register.jinja2")
-
-@app.route('/auth/register', methods=['POST'])
-def register():
-    email = request.form["email"]
-    password = request.form["password"]
-
-    User.register_user(email, password)
-    return render_template("homepage.jinja2", email=session['email'])
-
-@app.route('/auth/login', methods=['POST'])
-def login():
-    # error = ""
-    email = request.form["email"]
-    password = request.form["password"]
-
-    if User.login_valid(email, password):
-        User.login(email)
-    else:
-        session["email"] = None
-
-    # if User.get_by_email(email) is None:
-    #     error = "No account found. Please sign up!"
-    #     return redirect(url_for(signup), email=session["email"])
-    # else:
-    #     if User.login_valid(email, password):
-    #         User.login(email, password)
-    #         return redirect(url_for(home), email=session["email"])
-    #     else:
-    #         error = "Incorrect password! Log in again"
-    #         return redirect(url_for(login), email=session["email"])
-
-    return render_template("homepage.jinja2", email=session['email'])
+# @app.route('/login')
+# def login_page():
+#     return render_template("users/login.jinja2")
+#
+# @app.route('/register')
+# def register_page():
+#     return render_template("users/register.jinja2")
+#
+# @app.route('/auth/register', methods=['POST'])
+# def register():
+#     email = request.form["email"]
+#     password = request.form["password"]
+#
+#     User.register_user(email, password)
+#     return render_template("homepage.jinja2", email=session['email'])
+#
+# @app.route('/auth/login', methods=['POST'])
+# def login():
+#     # error = ""
+#     email = request.form["email"]
+#     password = request.form["password"]
+#
+#     if User.login_valid(email, password):
+#         User.login(email)
+#     else:
+#         session["email"] = None
+#
+#     # if User.get_by_email(email) is None:
+#     #     error = "No account found. Please sign up!"
+#     #     return redirect(url_for(signup), email=session["email"])
+#     # else:
+#     #     if User.login_valid(email, password):
+#     #         User.login(email, password)
+#     #         return redirect(url_for(home), email=session["email"])
+#     #     else:
+#     #         error = "Incorrect password! Log in again"
+#     #         return redirect(url_for(login), email=session["email"])
+#
+#     return render_template("homepage.jinja2", email=session['email'])
