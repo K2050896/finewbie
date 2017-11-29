@@ -5,7 +5,7 @@ from Import_assets import import_assets as ia
 from SP import stochastic_programming as sp
 from GBM import GBM
 from src.models.portfolios.portfolio import Portfolio
-#from src.models.profiles.profile import Profile
+from src.models.profiles.profile import Profile
 import src.models.portfolios.constants as constants
 
 def port_opt(constants, portfolio, profile):
@@ -17,6 +17,7 @@ def port_opt(constants, portfolio, profile):
     
     tickers = constants.TICKERS
     mgmt_fees = constants.MGMT_FEES     # annual management fees
+    trans_costs = constants.TRANS_COSTS # transaction costs
     
     Y = profile.Y                       # Original number of years (CONSTANT) (WEBAPP INPUT)
     T = profile.T                       # Number of years left (WEBAPP INPUT)
@@ -134,7 +135,7 @@ def port_opt(constants, portfolio, profile):
     #    init_con = np.sum(net_val)
     #    init_alloc = list(net_val / init_con)   # New allocation restriction at "t = 0"
     
-    # Financial goal (target) accounted for inflation (constant 2%)
+    # Financial goal (target) accounted for inflation (assumed to be constant at 2%)
     inflation = constants.INFLATION
     goal = profile.goal * (1 + int_rate_convert(inflation,time_step))**(Y-T) 
     
@@ -167,7 +168,9 @@ def port_opt(constants, portfolio, profile):
     alloc_percent = avg_alloc / np.sum(avg_alloc)
     shares1 = avg_alloc
     shares1[0:-1] = avg_alloc[0:-1] / Sprices[:,1] # Cash investment is left in units of $
-    
+    for i in range(0,nassets-1):
+        shares1[i] = shares1[i] * (1 - trans_costs[i]) # take away transaction costs
+
     # Additional contribution required by next time step
     cont = round(float(dv[nassets:nassets+1]),2)
     
@@ -175,17 +178,11 @@ def port_opt(constants, portfolio, profile):
     reached = round(float(init_con / goal),3)
     
     # Update portfolio (export)
-    Portfolio.update_portfolio(portfolio.id,
-                               {"port_id": portfolio.id,
-                               "mean_term_wealth": mean_term_wealth,
-                               "mean_var_wealth": mean_var_wealth,
-                               "alloc_percent": alloc_percent,
-                               "shares0": shares0,
-                               "shares1": shares1,
-                               "cont": cont,
-                               "reached": reached,
-                               "ambitious": ambitious})
+    portfolio.update_portfolio(portfolio.id,{"port_id": portfolio.id,"mean_term_wealth": mean_term_wealth,"mean_var_wealth": mean_var_wealth,"alloc_percent": alloc_percent,"shares0": shares0,"shares1": shares1,"cont": cont,"reached": reached,"ambitious": ambitious})
     
+    # Update profile by changing the length of time remaining
+    profile.update_profile(1,{"port_id": 1,"name": profile.name,"length_of_goal": profile.Y,"length_remaining": profile.Y - time_step,"lamb": profile.lamb,"dis_inc": profile.dis_inc,"init_con": profile.init_con,"init_alloc": profile.init_alloc,"goal": profile.goal})
+
 #    # Pie Chart: Terminal average asset allocation across all scenarios
 #    temp = dv[dv.shape[0]-nassets*ntrials:dv.shape[0]]
 #    term_wealths = np.zeros((nassets,ntrials))
@@ -194,7 +191,7 @@ def port_opt(constants, portfolio, profile):
 #            term_wealths[a,s] = temp[a + s*nassets]
 #    taaa = np.mean(term_wealths,axis=1)
 #    plt.pie(taaa,labels=['SPY','IWM','VEU','CSJ','BLV','Cash Investment'],autopct='%1.1f%%')
-#    
+    
     #### Optimize for different values of lamb and plot changes in mean and variance
     #lamb = np.linspace(0,0.1,11)
     #mean_wealths = []
@@ -208,5 +205,14 @@ def port_opt(constants, portfolio, profile):
     #    var_wealths.append(var_wealth)
     #plt.plot(lamb[0:len(lamb)-1],mean_wealths)
     #plt.plot(lamb[0:len(lamb)-1],var_wealths)
-
+    
+#    # Average cash contribution
+#    ctr = nassets
+#    contr = []
+#    for i in range(0,ntrials*(N-1)):
+#        contr.append(dv[ctr:ctr+1])
+#        ctr = ctr + nassets + 1
+#    np.mean(contr)
+    
+#    return mean_term_wealth, mean_var_wealth,alloc_percent,shares0,shares1,cont,reached,ambitious
     return None
