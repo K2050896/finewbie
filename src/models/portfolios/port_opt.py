@@ -125,15 +125,14 @@ def port_opt(constants, portfolio, profile):
     if Y - T == 0:
         init_con = profile.init_con        # intial contribution to goal (User input)
         init_alloc = profile.init_alloc      # Recommended initial alloc (WEBAPP INPUT)
-    #else:
-    #    shares = 
-    #    # the variable shares is a result from last optimization
-    #    net_val = np.matrix(np.zeros((len(shares),1)))
-    #    for i in range(0,len(shares)-1):
-    #        net_val[i] = shares[i] * prices[-1,i]
-    #    net_val[i+1] = shares[i+1]              # This is the 'true' net wealth
-    #    init_con = np.sum(net_val)
-    #    init_alloc = list(net_val / init_con)   # New allocation restriction at "t = 0"
+    else:
+        shares = portfolio.shares1
+        net_val = np.matrix(np.zeros((len(shares),1)))
+        for i in range(0,len(shares)-1):
+            net_val[i] = shares[i] * prices[-1,i]
+        net_val[i+1] = shares[i+1]              # This is the 'true' current net wealth
+        init_con = np.sum(net_val)
+        init_alloc = list(net_val / init_con)   # New allocation constraint for the current period
     
     # Financial goal (target) accounted for inflation (assumed to be constant at 2%)
     inflation = constants.INFLATION
