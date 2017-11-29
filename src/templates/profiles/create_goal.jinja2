@@ -2,59 +2,103 @@
 {% block content %}
 
     <div class="container-fluid">
-    <div class="form">
-        <form id="login-form" action="/profiles/risk-profile" method="POST">
-        <h2>Goal Information</h2>
-        <p>Starting to save up for a goal? That's great! Even small amounts regularly add up to a lot in few years.
-            We'll ask you some questions about the goal and personal comfort level with risk, so we can better choose your portfolios for you.</p>
+        <div class="form">
+            <form id="login-form" action="{{ url_for('profiles.create_goal') }}" method="POST">
+                <h2>Goal Information</h2>
+                <p>Starting to save up for a goal? That's great! Even small amounts regularly add up to a lot in few years.
+                    We'll ask you some questions about the goal and personal comfort level with risk, so we can better choose your portfolios for you.</p>
 
-        <div class="form-group">
-            <label class="control-label" for="name">Name the goal!</label>
-            <input type="text" class="form-control" id="name">
-            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="time">How long do you wish to save up for this goal? Enter the number of years.</label>
-            <input type="number" class="form-control" id="time">
-            <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="phone">How much money would you like to save up for your goal? Please enter amount rounded up to the nearest dollar.</label>
-            <input type="number" class="form-control" id="phone" aria-describedby="phoneStatus">
-            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-        </div>
+                <div class="form-group">
+                    <label class="control-label" for="name">Name the goal!</label>
+                    <input type="text" class="form-control" id="name" name="name">
+                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                </div>
 
-        <div class="form-group">
-            <label class="control-label" for="imp">How important is it for you to achieve this goal?</label><br>
-            <input type="radio" name="imp" value="1" checked> Not very important<br>
-            <input type="radio" name="imp" value="2"> Not important<br>
-            <input type="radio" name="imp" value="3"> Doesn't matter<br>
-            <input type="radio" name="imp" value="4"> Somewhat important<br>
-            <input type="radio" name="imp" value="5"> Extremely important<br>
-        </div>
+                <div class="form-group">
+                    <label class="control-label" for="amount">How much money would you like to save up for your goal? Please enter amount rounded up to the nearest dollar.</label>
+                    <input type="number" class="form-control" id="amount" name="amount">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="time">How long do you wish to save up for this goal? Enter the number of years.</label>
+                    <input type="number" class="form-control" id="time" name="time">
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+                </div>
 
-        <h2>Goal Contribution</h2>
-        <p>We'd like to know how much you can regularly contribute towards your goal. Feel like you won't have any income left for your other needs? Don't worry, we will take other bills and payments you have to make into account.</p>
+                <div class="form-group">
+                    <label class="control-label" for="imp">How important is it for you to achieve this goal?</label><br>
+                    <input type="radio" name="imp" value="1" checked> Not very important<br>
+                    <input type="radio" name="imp" value="2"> Not important<br>
+                    <input type="radio" name="imp" value="3"> Doesn't matter<br>
+                    <input type="radio" name="imp" value="4"> Somewhat important<br>
+                    <input type="radio" name="imp" value="5"> Extremely important<br>
+                </div>
 
-        <div class="form-group">
-            <label class="control-label" for="time">What is the initial contribution you would like to make towards this goal? Please enter amount rounded up to the nearest dollar.</label>
-            <input type="number" class="form-control" id="time">
-            <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="phone">What is the initial contribution you would like to make towards this goal? Please enter amount rounded up to the nearest dollar.</label>
-            <input type="number" class="form-control" id="phone" aria-describedby="phoneStatus">
-            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="phone">Enter the value of your current liabilities - monthly expenses including rent, insurance, credit card bills, utilities etc.</label>
-            <input type="number" class="form-control" id="phone" aria-describedby="phoneStatus">
-            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-        </div>
+                <h2>Goal Contribution</h2>
+                <p>We'd like to know how much you can regularly contribute towards your goal. Feel like you won't have any income left for your other needs? Don't worry, we will take other bills and payments you have to make into account.</p>
 
-        <button type="submit" class="btn btn-default btn-sm"><a href="/profiles/risk-profile">Continue to Risk Profile</a></button>
-        </form>
-    </div>
+                <div class="form-group">
+                    <label class="control-label" for="init_con">What is the initial contribution you would like to make towards this goal? Please enter amount rounded up to the nearest dollar.</label>
+                    <input type="number" class="form-control" id="init_con" name="init_con">
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="assets">Enter the value of your current assets - salary, any existing investments.</label>
+                    <input type="number" class="form-control" id="assets" name="assets">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="liab">Enter the value of your current liabilities - monthly expenses including rent, insurance, credit card bills, utilities etc.</label>
+                    <input type="number" class="form-control" id="liab" name="liab">
+                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                </div>
+
+                <h2>Risk Profile</h2>
+                <p>What is your comfortable level of risk? Find out here! Don't overthink the questions - just go with your instinct :)</p>
+
+                <div class="form-group">
+                    <label class="control-label" for="r1">You are on a TV game show and can choose only one of the following options. Which would you take?</label><br>
+                    <input type="radio" name="r1" value="1" checked>$1,000 in cash<br>
+                    <input type="radio" name="r1" value="2">50% chance at $5,000<br>
+                    <input type="radio" name="r1" value="3">25% chance at $10,000<br>
+                    <input type="radio" name="r1" value="4">5% chance at $100,000<br>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="r2">Two weeks before you leave for your dream vacation, you lose your job. You would:</label><br>
+                    <input type="radio" name="r2" value="1" checked>Cancel your vacation<br>
+                    <input type="radio" name="r2" value="2">Take a more modest vacation<br>
+                    <input type="radio" name="r2" value="3">Proceed as scheduled<br>
+                    <input type="radio" name="r2" value="4">Extend your vacation<br>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="r3">When you think of the word ‘risk’, what first comes to mind?</label><br>
+                    <input type="radio" name="r3" value="1" checked>Threat<br>
+                    <input type="radio" name="r3" value="2">Loss<br>
+                    <input type="radio" name="r3" value="3">Uncertainty<br>
+                    <input type="radio" name="r3" value="4">Opportunity<br>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="r4">Given the best and worst case scenario, which of these investment choices do you prefer?</label><br>
+                    <input type="radio" name="r4" value="1" checked>$250 gain, $0 loss<br>
+                    <input type="radio" name="r4" value="2">$750 gain, $200 loss<br>
+                    <input type="radio" name="r4" value="3">$2,800 gain, $800 loss<br>
+                    <input type="radio" name="r4" value="4">$5,000 gain, $2,500 loss<br>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="r5">A good friend offers you an opportunity to invest in his new invention, which would double your investment if it passes a safety inspection. There’s a 20% chance of success. How much would you invest?</label><br>
+                    <input type="radio" name="r5" value="1" checked>Nothing<br>
+                    <input type="radio" name="r5" value="2">One month’s salary<br>
+                    <input type="radio" name="r5" value="3">Two month’s salary<br>
+                    <input type="radio" name="r5" value="4">Six month’s salary<br>
+                </div>
+
+                <button type="submit" class="btn btn-default btn-sm">Show me my portfolio!</button>
+            </form>
+        </div>
     </div>
 
 {% endblock %}
