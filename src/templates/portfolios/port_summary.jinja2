@@ -1,6 +1,9 @@
 {% extends "homepage.jinja2" %}
 {% block content %}
 
-    <h2>This is the portfolio summary page, after they have created a goal!</h2>
+    <h1> These are {{ email }}'s portfolios: </h1>
+    <ul> {{ port_id }} </ul>
+
+    <button action="{{ url_for('portfolios.optimize') }}">OPTIMIZEEEEE!!!</button>
 
 {% endblock %}

@@ -7,7 +7,9 @@ profile_blueprint = Blueprint('profiles', __name__)
 @profile_blueprint.route('/create-goal', methods=['GET', 'POST'])
 def create_goal():
     if request.method == 'POST':
-        port_id = uuid.uuid4()
+        port_id = uuid.uuid4().hex
+        curr_port = session['port_id']
+        user_email = session['email']
         name = request.form["name"]
         goal = request.form["amount"]
         Y = request.form["time"]
@@ -22,22 +24,18 @@ def create_goal():
         r4 = request.form["r4"]
         r5 = request.form["r5"]
 
-        profile = Profile(port_id=port_id, name=name, goal=goal, Y=Y, T=T, importance=importance, init_con=init_con,
+        profile = Profile(port_id=port_id, user_email=user_email, name=name, goal=goal, Y=Y, T=T, importance=importance, init_con=init_con,
                           dis_inc=float(assets)-float(liab), r1=r1, r2=r2, r3=r3, r4=r4, r5=r5)
         profile.save_to_mongo()
         print("It got here!")
-        return redirect(url_for(".port_summary"))
+        return render_template("portfolios/port_summary.jinja2", curr_port=session['port_id'], user_email=session['email'])
 
     return render_template("profiles/create_goal.jinja2")
 
-# @profile_blueprint.route('/risk-profile', methods=['GET', 'POST'])
-# def risk_profile():
-#     pass
-
-@profile_blueprint.route('/port-summary')
-def port_summary():
-    print("This is the new portfolio.")
-    return render_template("portfolios/port_summary.jinja2")
+# @profile_blueprint.route('/port-summary')
+# def port_summary():
+#     print("This is the new portfolio.")
+#     return render_template("portfolios/port_summary.jinja2", user_email=session['email'])
 
 @profile_blueprint.route('/edit-goal')
 def edit_goal():

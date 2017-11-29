@@ -1,8 +1,9 @@
 from src.common.database import Database
 
 class Profile(object):
-    def __init__(self, port_id, name, Y, T, dis_inc, init_con, goal, importance, r1, r2, r3, r4, r5):
-        self.port_id = port_id #portfolio id
+    def __init__(self, port_id, user_email, name, Y, T, dis_inc, init_con, goal, importance, r1, r2, r3, r4, r5):
+        self.port_id = port_id
+        self.user_email = user_email
         self.name = name
         self.Y = Y
         self.T = T
@@ -97,6 +98,7 @@ class Profile(object):
     def json(self):
         return {
             "port_id": self.port_id,
+            "user_email": self.user_email,
             "name": self.name,
             "goal": self.goal,
             "length_of_goal": self.Y,

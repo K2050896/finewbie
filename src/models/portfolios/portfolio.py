@@ -3,8 +3,9 @@ from src.common.database import Database
 
 
 class Portfolio(object):
-    def __init__(self,name,port_id=None):
-        self.port_id = uuid.uuid4().hex if port_id is None else port_id
+    def __init__(self,user_id,port_id):
+        self.port_id = port_id
+        self.user_id = user_id
         self.mean_term_wealth = mean_term_wealth
         self.mean_var_wealth = mean_var_wealth
         self.alloc_percent = alloc_percent
