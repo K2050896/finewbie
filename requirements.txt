@@ -10,4 +10,3 @@ uwsgi
 cvxopt
 datetime
 pandas_datareader
-matplotlib
