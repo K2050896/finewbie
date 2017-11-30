@@ -1,23 +1,23 @@
 from src.common.database import Database
 
 class Profile(object):
-    def __init__(self, port_id, user_email, name, Y, T, dis_inc, init_con, goal, importance, r1, r2, r3, r4, r5):
+    def __init__(self, port_id, user_email, name, horizon, time_left, dis_inc, init_con, goal, importance, r1, r2, r3, r4, r5):
         self.port_id = port_id
         self.user_email = user_email
         self.name = name
-        self.Y = float(Y)
-        self.T = float(T)
+        self.horizon = float(horizon)
+        self.time_left = float(time_left)
         self.dis_inc = float(dis_inc)
         self.init_con = float(init_con)
         self.goal = float(goal)
         
-        if Y <= 1:
+        if horizon <= 1:
             t = 1
-        elif Y <=2:
+        elif horizon <=2:
             t = 2
-        elif Y <= 5:
+        elif horizon <= 5:
             t = 3
-        elif Y <= 10:
+        elif horizon <= 10:
             t = 4
         else:
             t = 5
@@ -101,8 +101,8 @@ class Profile(object):
             "user_email": self.user_email,
             "name": self.name,
             "goal": self.goal,
-            "time_horizon": self.Y,
-            "time_left": self.T,
+            "horizon": self.horizon,
+            "time_left": self.time_left,
             "init_con": self.init_con,
             "dis_inc": self.dis_inc,
             "init_alloc": self.init_alloc,
