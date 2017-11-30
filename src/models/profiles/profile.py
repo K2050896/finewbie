@@ -11,7 +11,7 @@ class Profile(object):
         User.add_portfolio_to_user(user_email, port_id)
         
         # Creating new Porfolio Document
-        new = Portfolio(user_email, port_id, 0,0,0,0,0,0,0,0)
+        new = Portfolio(port_id, user_email,0,0,0,0,0,0,0,0)
         new.save_to_mongo()
         
         self.name = name
