@@ -11,4 +11,3 @@ cvxopt
 datetime
 pandas_datareader
 matplotlib
-time
