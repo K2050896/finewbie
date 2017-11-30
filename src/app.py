@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config.from_pyfile('config.py') # app.config.from_object('config') before heroku fix
 app.secret_key = "secret"
 #app.config['SECRET_KEY'] = "secret"
-#app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_TYPE'] = 'filesystem'
 
 
 @app.before_first_request
