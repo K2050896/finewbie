@@ -1,6 +1,7 @@
 from flask import Blueprint, request, render_template, session, redirect, url_for
 from src.models.users.user import User
 import src.models.users.errors as UserErrors
+import src.models.users.decorators as user_decorators
 
 user_blueprint = Blueprint('users', __name__)
 
@@ -40,3 +41,7 @@ def logout_user():
 @user_blueprint.route('/homepage')
 def user_portfolios():
     return render_template("homepage.jinja2", email=session['email'])
+
+@user_blueprint.route('/my-settings')
+def my_settings():
+    pass

@@ -27,6 +27,7 @@ def create_goal():
         profile = Profile(port_id=port_id, user_email=user_email, name=name, goal=goal, Y=Y, T=T, importance=importance, init_con=init_con,
                           dis_inc=float(assets)-float(liab), r1=r1, r2=r2, r3=r3, r4=r4, r5=r5)
         profile.save_to_mongo()
+
         print("It got here!")
         return render_template("portfolios/port_summary.jinja2", port_id=session['curr_port'], user_email=session['email'])
 
@@ -41,3 +42,8 @@ def create_goal():
 def edit_goal():
     pass
 
+@profile_blueprint.route('/my-goals')
+def my_goals():
+    pass
+
+@profile_blueprint.route('')

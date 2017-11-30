@@ -63,7 +63,7 @@ class User(object):
         Database.delete_all(collection='users', query ={"email": user_email})
 
     @staticmethod
-    def add_portfolio(email, port_id):
+    def add_portfolio_to_user(email, port_id):
         user = User.get_by_email(email)
         user["port_ids"].append(port_id)
         Database.update("users",{"email": user["email"]},
