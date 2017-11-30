@@ -5,7 +5,7 @@ from src.models.portfolios.Import_assets import import_assets as ia
 from src.models.portfolios.SP import stochastic_programming as sp
 from src.models.portfolios.GBM import GBM
 from src.models.portfolios.portfolio import Portfolio
-from profile import Profile
+from src.models.profiles.profile import Profile
 import src.models.portfolios.constants
 
 def port_opt(constants, portfolio, profile):
