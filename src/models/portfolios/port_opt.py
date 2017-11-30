@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from time import clock
+# from time import clock
 from src.models.portfolios.Import_assets import import_assets as ia
 from src.models.portfolios.SP import stochastic_programming as sp
 from src.models.portfolios.GBM import GBM
