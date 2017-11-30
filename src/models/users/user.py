@@ -62,9 +62,19 @@ class User(object):
     def delete_user(user_email):
         Database.delete_all(collection='users', query ={"email": user_email})
 
-    def add_portfolio(self, port_id):
-        self.port_ids.append(port_id)
-      
+    @staticmethod
+    def add_portfolio(email, port_id):
+        user = User.get_by_email(email)
+        user["port_ids"].append(port_id)
+        Database.update("users",{"email": user["email"]},
+                        {"email": user["email"], "password": user['password'], "port_ids": user["port_ids"]})
+
+    @staticmethod
+    def get_port_ids(email):
+        user = User.get_by_email(email)
+        if user is not None:
+            return user["port_ids"]
+
     @staticmethod
     def change_password(email, new_pass):
         user = User.get_by_email(email)
