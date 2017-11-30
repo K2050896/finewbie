@@ -127,3 +127,9 @@ class Profile(object):
     def update_profile(port_id, query):
         # query must include all the fields of profiles
         Database.update("profiles", {"port_id": port_id}, query)
+
+    @staticmethod
+    def find_user(port_id):
+        data = Profile.from_mongo(port_id)
+        if data is not None:
+            return data["user_email"]
