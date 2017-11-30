@@ -121,10 +121,10 @@ def port_opt(constants, portfolio, profile):
         lamb = 0.4
     elif lamb == 1:
         lamb = 0.99
-    dis_inc = profile.dis_inc                          # comfortable disposable income given the trading period
+    dis_inc = profile.dis_inc * 12 * time_step   # Investor's disposable income within a single trading period
     if Y - T == 0:
-        init_con = profile.init_con        # intial contribution to goal (User input)
-        init_alloc = profile.init_alloc      # Recommended initial alloc (WEBAPP INPUT)
+        init_con = profile.init_con              # intial contribution to goal (User input)
+        init_alloc = profile.init_alloc          # Recommended initial alloc (WEBAPP INPUT)
     else:
         shares = portfolio.shares1
         net_val = np.matrix(np.zeros((len(shares),1)))
