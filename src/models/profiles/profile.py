@@ -1,5 +1,6 @@
 from src.common.database import Database
 from src.models.users.user import User
+from src.models.portfolios.portfolio import Portfolio
 
 class Profile(object):
     def __init__(self, port_id, user_email, name, horizon, time_left, dis_inc, init_con, goal, importance, r1, r2, r3, r4, r5):
@@ -7,8 +8,12 @@ class Profile(object):
         self.user_email = user_email
         
         # Adding portfolio ID into users document
-        User.add_portfolio_to_user(self.user_email,self.port_id)
-       
+        User.add_portfolio_to_user(user_email, port_id)
+        
+        # Creating new Porfolio Document
+        new = Portfolio(port_id, user_email,0,0,0,0,0,0,0,0)
+        new.save_to_mongo()
+        
         self.name = name
         self.horizon = float(horizon)
         self.time_left = float(time_left)
