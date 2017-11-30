@@ -5,19 +5,19 @@ class Profile(object):
         self.port_id = port_id
         self.user_email = user_email
         self.name = name
-        self.Y = Y
-        self.T = T
-        self.dis_inc = dis_inc
-        self.init_con = init_con
-        self.goal = goal
+        self.Y = float(Y)
+        self.T = float(T)
+        self.dis_inc = float(dis_inc)
+        self.init_con = float(init_con)
+        self.goal = float(goal)
         
-        if int(Y) <= 1:
+        if Y <= 1:
             t = 1
-        elif int(Y) <=2:
+        elif Y <=2:
             t = 2
-        elif int(Y) <= 5:
+        elif Y <= 5:
             t = 3
-        elif int(Y) <= 10:
+        elif Y <= 10:
             t = 4
         else:
             t = 5

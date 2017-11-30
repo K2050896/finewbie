@@ -7,10 +7,13 @@ from src.models.portfolios.port_opt import port_opt
 
 portfolio_blueprint = Blueprint('portfolios', __name__)
 
-@portfolio_blueprint.route('/optimize')
+@portfolio_blueprint.route('/optimize', methods=['POST'])
 def optimize():
-    profile = Profile.from_mongo(session['port_id'])
-    portfolio = Portfolio.from_mongo(session['port_id'])
+    profile = Profile.from_mongo('port_id')
+    print(profile)
+    print("===============")
+    portfolio = Portfolio.from_mongo('port_id')
+    print(portfolio)
     port_opt(cnst, portfolio, profile)
     print("Optimization in progress................")
     print("HELLOOOOooOOOOO")
