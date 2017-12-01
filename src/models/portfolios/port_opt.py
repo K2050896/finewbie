@@ -8,7 +8,11 @@ from src.models.portfolios.portfolio import Portfolio
 from src.models.profiles.profile import Profile
 import src.models.portfolios.constants
 
-def port_opt(constants, portfolio, profile):
+def port_opt(constants, port_id):
+    
+    # Grab profile and portfolio objects
+    prof = Profile.from_mongo(port_id)
+    port = Portfolio.from_mongo(port_id)
     
     # Function for converting any rate to the specified time step
     def int_rate_convert(annual_int_rate,time_step):
@@ -19,8 +23,13 @@ def port_opt(constants, portfolio, profile):
     mgmt_fees = constants.MGMT_FEES     # annual management fees
     trans_costs = constants.TRANS_COSTS # transaction costs
     
-    Y = profile.Y                       # Original number of years (CONSTANT) (WEBAPP INPUT)
-    T = profile.T                       # Number of years left (WEBAPP INPUT)
+    Y = prof['horizon']                       # Original number of years (CONSTANT) (WEBAPP INPUT)
+    T = prof['time_left']                       # Number of years left (WEBAPP INPUT)
+    
+    # Terminate when time left = 0
+    if T == 0:
+        return None
+    
     if Y < 2:
         time_step = 1/12        # Trading frequency is monthly
     elif 2 <= Y <= 5:
@@ -110,7 +119,7 @@ def port_opt(constants, portfolio, profile):
             Returns[j+i*nassets,:] = temp[i+j*ntrials,:]
     
     ### Solve the problem!
-    lamb = profile.lamb
+    lamb = prof['lamb']
     if lamb == 0:
         lamb = 0
     elif lamb == 0.25:
@@ -121,22 +130,30 @@ def port_opt(constants, portfolio, profile):
         lamb = 0.4
     elif lamb == 1:
         lamb = 0.99
-    dis_inc = profile.dis_inc * 12 * time_step   # Investor's disposable income within a single trading period
+    dis_inc = prof['dis_inc'] * 12 * time_step   # Investor's disposable income within a single trading period
     if Y - T == 0:
-        init_con = profile.init_con              # intial contribution to goal (User input)
-        init_alloc = profile.init_alloc          # Recommended initial alloc (WEBAPP INPUT)
+        init_con = prof['init_con']              # intial contribution to goal (User input)
+        init_alloc = prof['init_alloc']          # Recommended initial alloc (WEBAPP INPUT)
+        print(init_con)
     else:
-        shares = portfolio.shares1
+        temp = port['shares1']
+        shares = np.matrix(np.zeros((6,1)))
+        for i in range(0,len(shares)):
+            shares[i] = float(temp[i])
+        # the variable shares is a result from last optimization
         net_val = np.matrix(np.zeros((len(shares),1)))
         for i in range(0,len(shares)-1):
             net_val[i] = shares[i] * prices[-1,i]
-        net_val[i+1] = shares[i+1]              # This is the 'true' current net wealth
-        init_con = np.sum(net_val)
-        init_alloc = list(net_val / init_con)   # New allocation constraint for the current period
+        net_val[i+1] = shares[i+1]              # This is the 'true' net wealth
+        init_con = float(np.sum(net_val))
+        print(init_con)
+        init_alloc = []
+        for i in range(0,nassets):
+            init_alloc.append(float(net_val[i] / init_con)) # New allocation restriction at "t = 0"
     
     # Financial goal (target) accounted for inflation (assumed to be constant at 2%)
     inflation = constants.INFLATION
-    goal = profile.goal * (1 + int_rate_convert(inflation,time_step))**(Y-T) 
+    goal = prof['goal'] * (1 + int_rate_convert(inflation,time_step))**(Y-T) 
     
     # Optimize!
     # start_time = clock()   
@@ -145,7 +162,7 @@ def port_opt(constants, portfolio, profile):
     
     dv = np.matrix(opt_soln['x'])
     mean_term_wealth = round(float(q.T * dv),2)         # Mean of terminal wealths
-    mean_var_wealth = round(np.sqrt(float(dv.T * P * dv)),2)     # Variance of wealths
+    mean_var_wealth = round(float(dv.T * P * dv)**0.5,2)     # Variance of wealths
     
     # Determine if the goal is "ambitious"
     diff = goal - mean_term_wealth
@@ -178,10 +195,17 @@ def port_opt(constants, portfolio, profile):
     reached = round(float(init_con / goal),3)
     
     # Update profile by changing the length of time remaining
-    profile.update_profile(profile.port_id,{"port_id": profile.port_id,"name": profile.name,"length_of_goal": profile.Y,"length_remaining": profile.Y - time_step,"lamb": profile.lamb,"dis_inc": profile.dis_inc,"init_con": profile.init_con,"init_alloc": profile.init_alloc,"goal": profile.goal})
+    Profile.update_profile(prof['port_id'],{"port_id": prof['port_id'],"user_email": prof['user_email'],"name":prof['name'],"goal":prof['goal'],"horizon": prof['horizon'],"time_left": prof['time_left'] - time_step,"init_con":prof['init_con'],"dis_inc": prof['dis_inc'],"init_alloc": prof['init_alloc'],"lamb":prof['lamb']})
     
     # Update portfolio (export)
-    portfolio.update_portfolio(portfolio.port_id,{"port_id": portfolio.port_id,"mean_term_wealth": mean_term_wealth,"mean_var_wealth": mean_var_wealth,"alloc_percent": alloc_percent,"shares0": shares0,"shares1": shares1,"cont": cont,"reached": reached,"ambitious": ambitious})
+    shares0_ = []
+    shares1_ = []
+    alloc_percent_ = []
+    for i in range(0,nassets):
+        shares0_.append(float(shares0[i]))
+        shares1_.append(float(shares1[i]))
+        alloc_percent_.append(float(alloc_percent[i]))
+    Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"mean_term_wealth": mean_term_wealth,"mean_var_wealth": mean_var_wealth,"alloc_percent": alloc_percent_,"shares0": shares0_,"shares1": shares1_,"cont": cont,"reached": reached,"ambitious": ambitious})
 
 #    # Pie Chart: Terminal average asset allocation across all scenarios
 #    temp = dv[dv.shape[0]-nassets*ntrials:dv.shape[0]]
