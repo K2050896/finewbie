@@ -19,6 +19,7 @@ class Profile(object):
         self.time_left = float(time_left)
         self.dis_inc = float(dis_inc)
         self.init_con = float(init_con)
+        self.importance = importance
         self.goal = float(goal)
         
         if self.horizon <= 1:
@@ -117,6 +118,7 @@ class Profile(object):
             "dis_inc": self.dis_inc,
             "init_alloc": self.init_alloc,
             "lamb": self.lamb
+            "importance": self.importance
         }
 
     def save_to_mongo(self):
