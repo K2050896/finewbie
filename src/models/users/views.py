@@ -45,3 +45,15 @@ def user_portfolios():
 @user_blueprint.route('/my-settings')
 def my_settings():
     pass
+
+@user_blueprint.route('/faqs')
+def faqs():
+    return render_template("resources.jinja2", _anchor="faqs")
+
+@user_blueprint.route('/assets')
+def assets():
+    return render_template("resources.jinja2", _anchor="assets")
+
+@user_blueprint.route('/news')
+def news():
+    return render_template("resources.jinja2", _anchor="news")

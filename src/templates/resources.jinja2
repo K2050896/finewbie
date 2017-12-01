@@ -1,29 +1,53 @@
-{% extends "base_template.jinja2" %}
-
-<div class="btn-group btn-group-justified">
-  <a href="#" class="btn btn-primary">Apple</a>
-  <a href="#" class="btn btn-primary">Samsung</a>
-  <a href="#" class="btn btn-primary">Sony</a>
-</div>
-
-
+{% extends "homepage.jinja2" %}
+{% block content %}
+<div class="container">
 <ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-  <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-  <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+    <li {% if request.path == "/users/faqs" %} class="active"{% endif %}>
+    <a data-toggle="{{ url_for('users.faqs') }}" href="{{ url_for('users.faqs') }}">FAQs</a>
+    </li>
+    <li {% if request.path == "/users/assets" %} class="active"{% endif %}>
+    <a data-toggle="{{ url_for('users.assets') }}" href="{{ url_for('users.assets') }}">Asset Classes</a>
+    </li>
+    <li {% if request.path == "/users/news" %} class="active"{% endif %}>
+    <a data-toggle="{{ url_for('users.news') }}" href="/users/news">News</a>
+    </li>
 </ul>
 
 <div class="tab-content">
-  <div id="home" class="tab-pane fade in active">
-    <h3>HOME</h3>
-    <p>Some content.</p>
+  <div id="FAQs" class="tab-pane fade {% if request.path == "/users/faqs" %}in active{% endif %}">
+    <h4>finewbie has compiled all of your common questions here. If you still have questions, don't hesitate to send us an email.</h4>
+      <br>
+      <ul>
+      <li><b>I don't understand what your app does.</b></li>
+      <p> finewbie is a personal asset-liability management app. It helps you plan for your goals.</p>
+      <li><b>Why should I invest for retirement this early? </b></li>
+      <p>It is never too early to invest and it gives you a peace of mind.</p>
+      </ul>
   </div>
-  <div id="menu1" class="tab-pane fade">
-    <h3>Menu 1</h3>
-    <p>Some content in menu 1.</p>
+  <div id="Asset Classes" class="tab-pane fade {% if request.path == "/users/assets" %}in active{% endif %}">
+    <h3>Diversification is key</h3>
+      <p>One of the basic rules of investing is to diversify your assets so that the risk is spread out and minimized. It is never wise to put all your egss in the same basket!
+      </p>
+      <p>Here at finewbie, we invest your money into Exchange Traded Funds(ETFs). These are essentially collection of stocks, commodities or bonds that track and are representative of a larger group. You can buy ETFs of industries, by geography or by market indices. </p>
+      <br>
+      <p>Following are the ETFs your portfolio money is invested in. Look below for latest performance of these ETFs.</p>
+      <ul>
+          <li> SPDR S&P 500 Trust ETF (SPY) - Large Cap Equity</li>
+          <li> iShares Russell 2000 Index Fund (IWM) - Small Cap Equity</li>
+          <li> Vanguard FTSE All-World ex-US ETF (VEU) - International Equity</li>
+          <li> iShares 1-3 Year Credit Bond ETF (CSJ) - Short-term Bonds</li>
+          <li> Vanguard Long-Term Bond ETF (BLV) - Long-term Bonds</li>
+          <li> Cash Investment - Savings Account</li>
+      </ul>
+    <iframe width="600" height="1000" style="border:none;"
+            src="http://output12.rssinclude.com/output?type=iframe&amp;id=1163288&amp;hash=8b978340e2008728f40402532fde9cdd"></iframe>
   </div>
-  <div id="menu2" class="tab-pane fade">
-    <h3>Menu 2</h3>
-    <p>Some content in menu 2.</p>
+  <div id="News" class="tab-pane fade {% if request.path == "/users/news" %}in active{% endif %}">
+    <br>
+    <h5>A great way to learn more about investing is to keep up with financial and economic news. Fret not, here are the latest headlines from the financial world. </h5>
+    <iframe width="800" height="1000" style="border:none;"
+             src="http://output56.rssinclude.com/output?type=iframe&amp;id=1163291&amp;hash=a399bc9cd53be3c73ddf035cf4f2afff"></iframe>
   </div>
 </div>
+</div>
+{% endblock %}
