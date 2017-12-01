@@ -11,9 +11,10 @@ For the description of the various goals -> maybe use scrollspy -->
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/users/homepage"><img src="static/img/new.png" alt="finewbie">
+            <a href="/users/homepage" class="navbar-left"><img src="{{ url_for('static', filename = 'newLogo.png') }}" width="auto" height="60px" alt="finewbie"></a>
             </a>
         </div>
+        <div class="container-fluid">
         <div id="navbar1" class="navbar-collapse collapse navbar-right">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/users/homepage">Home</a></li>
@@ -38,9 +39,17 @@ For the description of the various goals -> maybe use scrollspy -->
                 <li><a href="/users/logout">Logout</a></li>
             </ul>
         </div>
+        </div>
     </nav>
     <body>
     {% block content %}
+        {% if request.path == "/users/homepage" %}
+            <div class="container">
+                <h2>Welcome to finewbie, {{ email }}!</h2>
+                <p> Write something here - or what else can you add for the homepage?</p>
+            </div>
 
+
+        {% endif %}
     {% endblock %}
     </body>

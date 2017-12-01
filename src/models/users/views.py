@@ -13,7 +13,7 @@ def login_user():
         try:
             if User.login_valid(email, password):
                 User.login(email)
-                return redirect(url_for(".user_portfolios"))
+                return redirect(url_for(".user_homepage"))
         except UserErrors.UserError as e:
             return e.message
 
@@ -27,7 +27,7 @@ def register_user():   # Views form required for user signup
         try:
             if User.register_user(email,password):
                 session['email'] = email
-                return redirect(url_for(".user_portfolios"))
+                return redirect(url_for(".user_homepage"))
         except UserErrors.UserError as e:
             return e.message
 
@@ -39,7 +39,7 @@ def logout_user():
     return render_template("users/logout.jinja2")
 
 @user_blueprint.route('/homepage')
-def user_portfolios():
+def user_homepage():
     return render_template("homepage.jinja2", email=session['email'])
 
 @user_blueprint.route('/my-settings')
@@ -48,12 +48,12 @@ def my_settings():
 
 @user_blueprint.route('/faqs')
 def faqs():
-    return render_template("resources.jinja2", _anchor="faqs")
+    return render_template("resources.jinja2")
 
 @user_blueprint.route('/assets')
 def assets():
-    return render_template("resources.jinja2", _anchor="assets")
+    return render_template("resources.jinja2")
 
 @user_blueprint.route('/news')
 def news():
-    return render_template("resources.jinja2", _anchor="news")
+    return render_template("resources.jinja2")
