@@ -3,7 +3,7 @@ from src.common.database import Database
 
 
 class Portfolio(object):
-    def __init__(self, user_email, port_id, mean_term_wealth, mean_var_wealth, alloc_percent, shares0, shares1, cont, reached, ambitious):
+    def __init__(self, port_id, user_email, mean_term_wealth, mean_var_wealth, alloc_percent, shares0, shares1, cont, reached, ambitious):
         self.port_id = port_id
         self.user_email = user_email
         self.mean_term_wealth = mean_term_wealth
@@ -19,6 +19,7 @@ class Portfolio(object):
     def json(self):
         return {
             "port_id": self.port_id,
+            "user_email": self.user_email,
             "mean_term_wealth": self.mean_term_wealth,
             "mean_var_wealth": self.mean_var_wealth,
             "alloc_percent": self.alloc_percent,
@@ -48,20 +49,4 @@ class Portfolio(object):
         # query must include all the fields of profiles
         Database.update("portfolios", {"port_id": port_id},
                         query)
-    '''
-    @staticmethod
-    def update_shares(port_id, new_shares):
-        port = Portfolio.from_mongo(port_id)
-        Portfolio.update_portfolio(port_id,
-                                   {
-                                    "port_id": port_id,
-                                    "mean_term_wealth": port["mean_term_wealth"],
-                                    "mean_var_wealth": port["mean_var_wealth"],
-                                    "alloc_percent": port["alloc_percent"],
-                                    "shares": new_shares,
-                                    "cont": port["cont"],
-                                    "reached": port["reached"],
-                                    "ambitious": port["ambitious"]
-                                  } )
-                                   
-   '''
+ 
