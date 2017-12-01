@@ -1,10 +1,17 @@
 import uuid
 from flask import Blueprint, request, render_template, session, redirect, url_for
 from src.models.profiles.profile import Profile
+from src.models.users.user import User
+import src.models.users.errors as UserErrors
+import src.models.users.decorators as user_decorators
+from src.common.database import Database
+from src.models.portfolios.portfolio import Portfolio
+
 
 profile_blueprint = Blueprint('profiles', __name__)
 
 @profile_blueprint.route('/create-goal', methods=['GET', 'POST'])
+@user_decorators.requires_login
 def create_goal():
     if request.method == 'POST':
         port_id = uuid.uuid4().hex
@@ -29,20 +36,19 @@ def create_goal():
         profile.save_to_mongo()
 
         print("It got here!")
-        return render_template("portfolios/port_summary.jinja2", port_id=session['curr_port'], user_email=session['email'])
+        return redirect(url_for('portfolios.port_summary', portfolio_id=session['curr_port']))
 
     return render_template("profiles/create_goal.jinja2")
 
-# @profile_blueprint.route('/port-summary')
-# def port_summary():
-#     print("This is the new portfolio.")
-#     return render_template("portfolios/port_summary.jinja2", user_email=session['email'])
+@profile_blueprint.route('/edit-goal/<string:portfolio_id>')
+@user_decorators.requires_login
+def edit_goal(portfolio_id):
+    return render_template("profiles/edit_goal.jinja2", port_id=session['curr_port'], user_email=session['email'])
 
-@profile_blueprint.route('/edit-goal')
-def edit_goal():
-    pass
 
 @profile_blueprint.route('/my-goals')
-def my_goals():
-    pass
+@user_decorators.requires_login
+def my_goals(user_email):
+    return render_template("profiles/my_goals.jinja2", user_email=user_email)
+
 

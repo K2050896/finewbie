@@ -1,11 +1,15 @@
 {% extends "homepage.jinja2" %}
 {% block content %}
+<div class="container">
+    <h1> Congrats! You just made yourself a new goal!</h1>
+    <br>
+    <h2>Goal Details</h2>
+    <ul></ul>
+    <ul> {{ portfolio.port_id }} </ul>
 
-    <h1> These are {{ user_email }}'s portfolios: </h1>
-    <ul> {{ port_id }} </ul>
-
-    <form action = "{{ url_for('portfolios.optimize') }}" method = "POST">
-        <input type="submit" name="optimize" value="OPTIMIZE!!!" />
+    <form action = "{{ url_for('portfolios.optimize', portfolio_id=portfolio.port_id) }}" method = "POST">
+        <button type="button submit" class="btn btn-primary">OPTIMIZEE!!!</button>
+        <!--<input type="submit" name="optimize" value="OPTIMIZE!!!" />-->
     </form>
-
+</div>
 {% endblock %}

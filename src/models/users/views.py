@@ -39,21 +39,26 @@ def logout_user():
     return render_template("users/logout.jinja2")
 
 @user_blueprint.route('/homepage')
+@user_decorators.requires_login
 def user_homepage():
     return render_template("homepage.jinja2", email=session['email'])
 
 @user_blueprint.route('/my-settings')
+@user_decorators.requires_login
 def my_settings():
     pass
 
 @user_blueprint.route('/faqs')
+@user_decorators.requires_login
 def faqs():
     return render_template("resources.jinja2")
 
 @user_blueprint.route('/assets')
+@user_decorators.requires_login
 def assets():
     return render_template("resources.jinja2")
 
 @user_blueprint.route('/news')
+@user_decorators.requires_login
 def news():
     return render_template("resources.jinja2")

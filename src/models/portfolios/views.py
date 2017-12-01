@@ -1,5 +1,6 @@
 import uuid
 from flask import Blueprint, request, render_template, session, redirect, url_for
+
 from src.models.users.user import User
 import src.models.users.errors as UserErrors
 import src.models.users.decorators as user_decorators
@@ -11,18 +12,17 @@ from src.models.portfolios.port_opt import port_opt
 portfolio_blueprint = Blueprint('portfolios', __name__)
 
 
-@portfolio_blueprint.route('/port_summary/<string:portfolio_id>')
+@portfolio_blueprint.route('/port-summary/<string:portfolio_id>')
+@user_decorators.requires_login
+# Gets unique summary of portfolio page - and user can click optimize
+def port_summary(portfolio_id):
+    temp = Profile.from_mongo(portfolio_id)
+    return render_template("portfolios/port_summary.jinja2", portfolio=temp)
 
-
-
-@portfolio_blueprint.route('/optimize', methods=['POST'])
-def optimize():
-    profile = Profile.from_mongo('port_id')
-    print(profile)
-    print("===============")
-    portfolio = Portfolio.from_mongo('port_id')
-    print(portfolio)
-    port_opt(cnst, portfolio, profile)
+@portfolio_blueprint.route('/optimize/<string:portfolio_id>', methods=['POST'])
+@user_decorators.requires_login
+def optimize(portfolio_id):
+    port_opt(cnst, portfolio_id)
     print("Optimization in progress................")
     print("HELLOOOOOOO")
     return render_template("portfolios/port_details.jinja2")
