@@ -171,7 +171,7 @@ def port_opt(constants, port_id):
         
     # If the goal is ambitious, how much extra should the investor be contributing to meet the goal (monthly)?
     if ambitious == 1 and (N - 1) != 0:
-        extra_dis_inc = (diff / (N - 1) - dis_inc) / (12 * time_step)
+        extra_dis_inc = (diff / (N - 1)) / (12 * time_step)
     else:
         extra_dis_inc = 0
     
