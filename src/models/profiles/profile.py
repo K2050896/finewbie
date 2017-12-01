@@ -117,7 +117,7 @@ class Profile(object):
             "init_con": self.init_con,
             "dis_inc": self.dis_inc,
             "init_alloc": self.init_alloc,
-            "lamb": self.lamb
+            "lamb": self.lamb,
             "importance": self.importance
         }
 
