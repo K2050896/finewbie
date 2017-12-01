@@ -134,7 +134,6 @@ def port_opt(constants, port_id):
     if Y - T == 0:
         init_con = prof['init_con']              # intial contribution to goal (User input)
         init_alloc = prof['init_alloc']          # Recommended initial alloc (WEBAPP INPUT)
-        print(init_con)
     else:
         temp = port['shares1']
         shares = np.matrix(np.zeros((6,1)))
@@ -151,9 +150,9 @@ def port_opt(constants, port_id):
         for i in range(0,nassets):
             init_alloc.append(float(net_val[i] / init_con)) # New allocation restriction at "t = 0"
     
-    # Financial goal (target) accounted for inflation (assumed to be constant at 2%)
+    # Financial goal (target) accounted for inflation (assumed to be constant at 2% annual)
     inflation = constants.INFLATION
-    goal = prof['goal'] * (1 + int_rate_convert(inflation,time_step))**(Y-T) 
+    goal = prof['goal'] * (1 + int_rate_convert(inflation,time_step))**((Y-T)/time_step)
     
     # Optimize!
     # start_time = clock()   
@@ -169,6 +168,12 @@ def port_opt(constants, port_id):
     ambitious = 0
     if diff > 0:
         ambitious = 1
+        
+    # If the goal is ambitious, how much extra should the investor be contributing to meet the goal (monthly)?
+    if ambitious == 1 and (N - 1) != 0:
+        extra_dis_inc = (diff / (N - 1) - dis_inc) / (12 * time_step)
+    else:
+        extra_dis_inc = 0
     
     # t = 0 shares
     shares0 = dv[0:6]
