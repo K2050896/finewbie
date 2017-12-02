@@ -6,15 +6,15 @@ class Profile(object):
     def __init__(self, port_id, user_email, name, horizon, time_left, dis_inc, init_con, goal, importance, r1, r2, r3, r4, r5):
         self.port_id = port_id
         self.user_email = user_email
+        self.name = name
         
         # Adding portfolio ID into users document
         User.add_portfolio_to_user(user_email, port_id)
         
         # Creating new Porfolio Document
-        new = Portfolio(port_id, user_email,[],[],[],[],[],[],[],[],[])
+        new = Portfolio(port_id, user_email, name, [],[],[],[],[],[],[],[],[])
         new.save_to_mongo()
         
-        self.name = name
         self.horizon = horizon
         self.time_left = float(time_left)
         self.dis_inc = dis_inc
