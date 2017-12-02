@@ -225,7 +225,21 @@ def port_opt(constants, port_id):
         shares0_.append(float(shares0[i]))
         shares1_.append(float(shares1[i]))
         alloc_percent_.append(float(alloc_percent[i]))
-    Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"mean_term_wealth": mean_term_wealth,"mean_var_wealth": mean_var_wealth,"alloc_percent": alloc_percent_,"shares0": shares0_,"shares1": shares1_,"cont": cont,"reached": reached,"ambitious": ambitious})
+        
+    
+    # Add elements into lists for historical view
+    port["mean_term_wealth"].append(mean_term_wealth)
+    port["mean_var_wealth"].append(mean_var_wealth)
+    port["alloc_percent"].append(alloc_percent_)
+    port["shares0"].append(shares0_)
+    port["shares1"].append(shares1_)
+    port["cont"].append(cont)
+    port["reached"].append(reached)
+    port["amitious"].append(ambitious)
+    
+    Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"mean_term_wealth": port["mean_term_wealth"],
+                                                "mean_var_wealth": port["mean_var_wealth"],"alloc_percent": port["alloc_percent"],"shares0": port["shares0"],
+                                                "shares1": port["shares1"],"cont": port["cont"],"reached": port["reached"],"ambitious": port["amitious"]})
 
 #    # Pie Chart: Terminal average asset allocation across all scenarios
 #    temp = dv[dv.shape[0]-nassets*ntrials:dv.shape[0]]
