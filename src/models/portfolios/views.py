@@ -4,7 +4,6 @@ from bokeh import embed
 import pandas as pd
 from flask import Blueprint, request, render_template, session, redirect, url_for
 from io import BytesIO
-from matplotlib.backends.backend_agg import FigureCanvas
 from src.models.users.user import User
 import src.models.users.errors as UserErrors
 import src.models.users.decorators as user_decorators
