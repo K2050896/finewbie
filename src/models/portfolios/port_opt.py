@@ -35,7 +35,7 @@ def port_opt(constants, port_id):
     elif Y > 10:
         time_step = 1           # Trading frequency is annually
     
-    N = int(T / time_step)      # Total number of trading periods
+    N = int(T / time_step) + 1  # Total number of trading periods
     # Terminate when time left = 0
     if N == 0:
         return None
@@ -131,7 +131,7 @@ def port_opt(constants, port_id):
         lamb = 0.99
     dis_inc = prof['dis_inc'][-1] * 12 * time_step   # Investor's disposable income within a single trading period
     if Y - T == 0:
-        init_con = prof['init_con']              # initial contribution to goal (User input)
+        init_con = prof['init_con']              # intial contribution to goal (User input)
         init_alloc = prof['init_alloc']          # Recommended initial alloc (WEBAPP INPUT)
     else:
         temp = port['shares1'][-1]
@@ -246,7 +246,7 @@ def port_opt(constants, port_id):
     
     Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"mean_term_wealth": port["mean_term_wealth"],
                                                 "mean_var_wealth": port["mean_var_wealth"],"alloc_percent": port["alloc_percent"],"shares0": port["shares0"],
-                                                "shares1": port["shares1"],"cont": port["cont"],"reached": port["reached"],"ambitious": port["ambitious"]})
+                                                "shares1": port["shares1"],"cont": port["cont"],"reached": port["reached"],"ambitious": port["amitious"]})
 
 #    # Pie Chart: Terminal average asset allocation across all scenarios
 #    temp = dv[dv.shape[0]-nassets*ntrials:dv.shape[0]]
