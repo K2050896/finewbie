@@ -77,7 +77,7 @@ def port_opt(constants, port_id):
         
         inflation = constants.INFLATION
         goal = prof['goal'] * (1 + inflation)**Y
-        reached = init_con / goal
+        reached = round(init_con / goal,3)
                                     
         port["reached"].append(reached)
         port["alloc_percent"].append(init_alloc)
@@ -255,6 +255,7 @@ def port_opt(constants, port_id):
     
     # % reached of financial goal target
     reached = round(float(init_con / goal),3)
+    reached_dollar = round(reached * goal,2)
     
     # Add elements into lists for historical view
     prof["horizon"].append((prof["horizon"][-1] + extra_time))
@@ -284,11 +285,11 @@ def port_opt(constants, port_id):
     port["shares1"].append(shares1_)
     port["cont"].append(cont)
     port["reached"].append(reached)
+    port["reached_dollar"].append(reached_dollar)
     port["ambitious"].append(ambitious)
-    
     Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"mean_term_wealth": port["mean_term_wealth"],
                                                 "mean_var_wealth": port["mean_var_wealth"],"alloc_percent": port["alloc_percent"],"shares0": port["shares0"],
-                                                "shares1": port["shares1"],"cont": port["cont"],"reached": port["reached"],"ambitious": port["ambitious"]})
+                                                "shares1": port["shares1"],"cont": port["cont"],"reached": port["reached"],"reached_dollar":port["reached_dollar"],"ambitious": port["ambitious"]})
 
 #    # Pie Chart: Terminal average asset allocation across all scenarios
 #    temp = dv[dv.shape[0]-nassets*ntrials:dv.shape[0]]
