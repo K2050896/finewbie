@@ -9,6 +9,10 @@ from src.models.profiles.profile import Profile
 import src.models.portfolios.constants
 
 def port_opt(constants, port_id):
+
+    # If the gaol was already reached, further optimizaton is meaningless.
+    if port['reached'][-1] >= 1:
+        return None
     
     # Grab profile and portfolio objects
     prof = Profile.from_mongo(port_id)
@@ -25,6 +29,10 @@ def port_opt(constants, port_id):
     
     Y = prof['horizon'][-1]                     # Entire length of planning horizon (WEBAPP INPUT)
     T = max(prof['time_left'],0)                # Number of years left (WEBAPP INPUT)
+    
+    # Further optimization after time left = 0 is meaningless and returns None
+    if T < 0:
+        return None
     
     if Y < 2:
         time_step = 1/12        # Trading frequency is monthly
