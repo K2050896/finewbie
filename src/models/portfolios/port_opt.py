@@ -37,7 +37,7 @@ def port_opt(constants, port_id):
     
     N = int(T / time_step) + 1  # Total number of trading periods
     # Terminate when time left = 0
-    if N == 0:
+    if T <= 0:
         return None
     
     # Convert the annual rate to any frequency
