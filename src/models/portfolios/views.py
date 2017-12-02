@@ -19,10 +19,11 @@ def port_summary(portfolio_id):
     temp = Profile.from_mongo(portfolio_id)
     return render_template("portfolios/port_summary.jinja2", portfolio=temp)
 
-@portfolio_blueprint.route('/optimize/<string:portfolio_id>', methods=['POST'])
+@portfolio_blueprint.route('/optimize/<string:portfolio_id>', methods=['GET', 'POST'])
 @user_decorators.requires_login
 def optimize(portfolio_id):
-    port_opt(cnst, portfolio_id)
-    print("Optimization in progress................")
-    print("HELLOOOOOOO")
-    return render_template("portfolios/port_details.jinja2")
+    tempPortfolio = Portfolio.from_mongo(portfolio_id)
+    if request.method == "POST":
+        port_opt(cnst, portfolio_id)
+        return render_template("portfolios/port_details.jinja2", portfolio=tempPortfolio)
+    return render_template("portfolios/port_details.jinja2", portfolio=tempPortfolio)

@@ -5,10 +5,16 @@
     <br>
     <h2>Goal Details</h2>
     <ul></ul>
-    <ul> {{ portfolio.port_id }} </ul>
+    <ul> Name: {{ portfolio.name }} </ul>
+    <ul> Time Horizon: {{ portfolio.horizon }} </ul>
+    <ul> Time left till end of goal: {{ portfolio.time_left }} </ul>
+    <ul> Goal amount: {{ portfolio.goal }} </ul>
 
     <form action = "{{ url_for('portfolios.optimize', portfolio_id=portfolio.port_id) }}" method = "POST">
-        <button type="button submit" class="btn btn-primary">OPTIMIZEE!!!</button>
+        <button type="button submit" class="btn btn-primary">OPTIMIZE NOW!!!</button>
+    </form>
+    <form action = "{{ url_for('portfolios.optimize', portfolio_id=portfolio.port_id) }}" method = "GET">
+        <button type="button submit" class="btn btn-info">View Details</button>
     </form>
 </div>
 {% endblock %}

@@ -3,3 +3,12 @@
   background-color: darkslategray;
   color: white;
 }
+
+.vl {
+    border-left: 2px solid white;
+    height: fit-content;
+    position: absolute;
+    left: 50%;
+    margin-left: -3px;
+    top: 0;
+}
