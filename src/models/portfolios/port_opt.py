@@ -9,14 +9,14 @@ from src.models.profiles.profile import Profile
 import src.models.portfolios.constants
 
 def port_opt(constants, port_id):
-
-    # If the gaol was already reached, further optimizaton is meaningless.
-    if port['reached'][-1] >= 1:
-        return None
     
     # Grab profile and portfolio objects
     prof = Profile.from_mongo(port_id)
     port = Portfolio.from_mongo(port_id)
+    
+    # If the goal was already reached, further optimizaton is meaningless.
+    if port['reached'][-1] >= 1:
+        return None
     
     # Function for converting any rate to the specified time step
     def int_rate_convert(annual_int_rate,time_step):
