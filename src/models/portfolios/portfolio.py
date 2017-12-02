@@ -8,7 +8,7 @@ import src.models.portfolios.constants as cnst
 
 
 class Portfolio(object):
-    def __init__(self, port_id, user_email, name, mean_term_wealth, mean_var_wealth, alloc_percent, shares0, shares1, cont, reached, reached_dollar, hprr, ambitious):
+    def __init__(self, port_id, user_email, name, mean_term_wealth, mean_var_wealth, alloc_percent, shares0, shares1, cont, reached, reached_dollar, hprr, twrr, ambitious):
         self.port_id = port_id
         self.user_email = user_email
         self.name = name
@@ -21,6 +21,7 @@ class Portfolio(object):
         self.reached = reached
         self.reached_dollar = reached_dollar
         self.hprr = hprr
+        self.twrr = twrr
         self.ambitious = ambitious
         
         
@@ -38,6 +39,7 @@ class Portfolio(object):
             "reached": self.reached,
             "reached_dollar": self.reached_dollar,
             "hprr": self.hprr,
+            "twrr": self.twrr,
             "ambitious": self.ambitious
         }
 
