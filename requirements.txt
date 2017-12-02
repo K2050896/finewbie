@@ -5,8 +5,8 @@ numpy
 pandas
 requests
 Jinja2
-matplotlib
 uwsgi
 cvxopt
 datetime
 pandas_datareader
+bokeh==0.12.0
