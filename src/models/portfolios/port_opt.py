@@ -23,7 +23,7 @@ def port_opt(constants, port_id):
     mgmt_fees = constants.MGMT_FEES     # annual management fees
     trans_costs = constants.TRANS_COSTS # transaction costs
     
-    Y = prof['horizon']                       # Original number of years (CONSTANT) (WEBAPP INPUT)
+    Y = prof['horizon'][-1]                       # Original number of years (CONSTANT) (WEBAPP INPUT)
     T = prof['time_left']                       # Number of years left (WEBAPP INPUT)
     
     if Y < 2:
@@ -129,7 +129,7 @@ def port_opt(constants, port_id):
         lamb = 0.4
     elif lamb == 1:
         lamb = 0.99
-    dis_inc = prof['dis_inc'] * 12 * time_step   # Investor's disposable income within a single trading period
+    dis_inc = prof['dis_inc'][-1] * 12 * time_step   # Investor's disposable income within a single trading period
     if Y - T == 0:
         init_con = prof['init_con']              # initial contribution to goal (User input)
         init_alloc = prof['init_alloc']          # Recommended initial alloc (WEBAPP INPUT)
@@ -214,8 +214,15 @@ def port_opt(constants, port_id):
     # % reached of financial goal target
     reached = round(float(init_con / goal),3)
     
+    # Add elements into lists for historical view
+    prof["horizon"].append((prof["horizon"][-1] + extra_time))
+    prof["dis_inc"].append((prof["dis_inc"][-1] + extra_dis_inc))
+    
     # Update profile by changing the length of time remaining
-    Profile.update_profile(prof['port_id'],{"port_id": prof['port_id'],"user_email": prof['user_email'],"name":prof['name'],"goal":prof['goal'],"horizon": prof['horizon'] + extra_time,"time_left": prof['time_left'] - time_step + extra_time,"init_con":prof['init_con'],"dis_inc": prof['dis_inc'] + extra_dis_inc,"init_alloc": init_alloc,"lamb": prof['lamb'],"importance": prof['importance']})
+    Profile.update_profile(prof['port_id'],{"port_id": prof['port_id'],"user_email": prof['user_email'],"name":prof['name'],
+                                            "goal":prof['goal'],"horizon": prof['horizon'], "time_left": prof['time_left'] - time_step + extra_time,
+                                            "init_con":prof['init_con'],"dis_inc": prof['dis_inc'],"init_alloc": init_alloc,
+                                            "lamb": prof['lamb'],"importance": prof['importance']})
     
     # Update portfolio (export)
     shares0_ = []
