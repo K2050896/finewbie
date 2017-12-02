@@ -255,7 +255,16 @@ def port_opt(constants, port_id):
     
     # % reached of financial goal target
     reached = round(float(init_con / goal),3)
-    reached_dollar = round(reached * goal,2)
+    reached_dollar = round(reached * goal,2) # In dollar value
+    
+    # Time weighted rate of return (TWRR)
+    if Y - T == 0:
+        hprr = 0
+        twrr = 0
+    if Y - T != 0:
+        # holding period return i.e. rate of return on the portfolio in a single time period
+        hprr = round((reached - port['reached']) / port['reached'] - port['cont']/(goal*port['reached']),3)
+        twrr = round((1 + port['twrr']) * (1 + hprr) - 1,3)
     
     # Add elements into lists for historical view
     prof["horizon"].append((prof["horizon"][-1] + extra_time))
@@ -286,10 +295,12 @@ def port_opt(constants, port_id):
     port["cont"].append(cont)
     port["reached"].append(reached)
     port["reached_dollar"].append(reached_dollar)
+    port["hprr"].appped(hprr)
+    port["twrr"].append(twrr)
     port["ambitious"].append(ambitious)
-    Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"name": port["name"], "mean_term_wealth": port["mean_term_wealth"],
+    Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"mean_term_wealth": port["mean_term_wealth"],
                                                 "mean_var_wealth": port["mean_var_wealth"],"alloc_percent": port["alloc_percent"],"shares0": port["shares0"],
-                                                "shares1": port["shares1"],"cont": port["cont"],"reached": port["reached"],"reached_dollar":port["reached_dollar"],"ambitious": port["ambitious"]})
+                                                "shares1": port["shares1"],"cont": port["cont"],"reached": port["reached"],"reached_dollar":port["reached_dollar"],"hprr":port["hprr"],"twrr":port["twrr"],"ambitious": port["ambitious"]})
 
 #    # Pie Chart: Terminal average asset allocation across all scenarios
 #    temp = dv[dv.shape[0]-nassets*ntrials:dv.shape[0]]
