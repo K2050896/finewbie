@@ -9,4 +9,4 @@ uwsgi
 cvxopt
 datetime
 pandas_datareader
-bokeh
+bokeh==0.8.2
