@@ -1,12 +1,13 @@
-# import matplotlib.pyplot as plt
 import numpy as np
-# from time import clock
+import pandas as pd
 from src.models.portfolios.Import_assets import import_assets as ia
 from src.models.portfolios.SP import stochastic_programming as sp
 from src.models.portfolios.GBM import GBM
 from src.models.portfolios.portfolio import Portfolio
 from src.models.profiles.profile import Profile
 import src.models.portfolios.constants
+from bokeh.charts import Donut, Line
+
 
 def port_opt(constants, port_id):
     
@@ -311,37 +312,19 @@ def port_opt(constants, port_id):
                                                 "mean_var_wealth": port["mean_var_wealth"],"alloc_percent": port["alloc_percent"],"shares0": port["shares0"],
                                                 "shares1": port["shares1"],"cont": port["cont"],"reached": port["reached"],"reached_dollar":port["reached_dollar"],"hprr":port["hprr"],"twrr":port["twrr"],"ambitious": port["ambitious"]})
 
-#    # Pie Chart: Terminal average asset allocation across all scenarios
-#    temp = dv[dv.shape[0]-nassets*ntrials:dv.shape[0]]
-#    term_wealths = np.zeros((nassets,ntrials))
-#    for s in range(0,ntrials):
-#        for a in range(0,nassets):
-#            term_wealths[a,s] = temp[a + s*nassets]
-#    taaa = np.mean(term_wealths,axis=1)
-#    plt.pie(taaa,labels=['SPY','IWM','VEU','CSJ','BLV','Cash Investment'],autopct='%1.1f%%')
-    
-    ## Optimize for different values of lamb
-#    lamb = np.linspace(0,1,70)
-#    mean_wealths = []
-#    var_wealths = []
-#    obj = []
-#    for l in lamb[0:len(lamb)-1]:
-#        opt_soln, P, q = sp(nassets, ntrials, Y, N, l, dis_inc, Returns, init_con, goal, eff_fees, init_alloc)
-#        dv = np.matrix(opt_soln['x'])
-#        mean_wealth = float(q.T * dv)
-#        var_wealth = float(dv.T * P * dv)
-#        mean_wealths.append(mean_wealth)
-#        var_wealths.append(var_wealth)
-#        obj.append(l*var_wealth - (1- l)*mean_wealth)
-#    plt.plot(lamb[0:len(lamb)-1],obj) # Efficient frontier for mean-variance tradeoff
-    
-#    # Average cash contribution
-#    ctr = nassets
-#    contr = []
-#    for i in range(0,ntrials*(N-1)):
-#        contr.append(dv[ctr:ctr+1])
-#        ctr = ctr + nassets + 1
-#    np.mean(contr)
-    
-#    return mean_term_wealth, mean_var_wealth,alloc_percent,shares0,shares1,cont,reached,ambitious
-    return time_step
+    list1 = port['reached_dollar']
+    list2 = port['cont']
+    list3 = [i * time_step for i in range(len(list1))]
+
+    plot_data = pd.DataFrame({'reached_dollar':list1, 'cont':list2, 'time':list3})
+
+    list4 = ['Large Cap Equity', 'Small Cap Equity', 'International Equity', 'Short-term Bonds', 'Long-term Bonds', 'Cash Investments']
+    list5 = port['alloc_percent'][-1]
+
+    alloc_data = pd.DataFrame({'category':list4, 'percent':list5})
+
+    pie_plot = Donut(data=alloc_data, label="category", values="percent")
+    line_plot = Line(data=plot_data, x="time", y="reached_dollar", xlabel="Time Steps Passed", ylabel="Dollar Value of Goal Reached")
+    bar_plot = Line(data=plot_data, x="time", y="cont", xlabel="Time Steps Passed", ylabel="Contribution at Every Time Step")
+
+    return pie_plot, line_plot, bar_plot
