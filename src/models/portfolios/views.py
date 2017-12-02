@@ -1,9 +1,6 @@
 import base64
 import uuid
-
-import pygal
 from bokeh import embed
-from pygal.style import DefaultStyle
 import pandas as pd
 from flask import Blueprint, request, render_template, session, redirect, url_for
 from io import BytesIO
