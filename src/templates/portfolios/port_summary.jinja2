@@ -10,11 +10,21 @@
     <ul> Time left till end of goal: {{ portfolio.time_left }} </ul>
     <ul> Goal amount: {{ portfolio.goal }} </ul>
 
+    <style type="text/css">
+        form {
+            display: inline;
+        }
+    </style>
+
+    <form action = "{{ url_for('profiles.edit_goal', portfolio_id=portfolio.port_id) }}" method = "GET">
+        <button type="button submit" class="btn btn-warning">Edit your goal</button>
+    </form>
     <form action = "{{ url_for('portfolios.optimize', portfolio_id=portfolio.port_id) }}" method = "POST">
         <button type="button submit" class="btn btn-primary">OPTIMIZE NOW!!!</button>
     </form>
     <form action = "{{ url_for('portfolios.optimize', portfolio_id=portfolio.port_id) }}" method = "GET">
         <button type="button submit" class="btn btn-info">View Details</button>
     </form>
+
 </div>
 {% endblock %}

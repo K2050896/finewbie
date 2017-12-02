@@ -3,13 +3,13 @@
 <div class="container">
 <ul class="nav nav-tabs">
     <li {% if request.path == "/users/faqs" %} class="active"{% endif %}>
-    <a data-toggle="{{ url_for('users.faqs') }}" href="{{ url_for('users.faqs') }}">FAQs</a>
+    <a data-toggle="{{ url_for('users.faqs') }}" href="{{ url_for('users.faqs') }}"><font size="+1.5">FAQs</font></a>
     </li>
     <li {% if request.path == "/users/assets" %} class="active"{% endif %}>
-    <a data-toggle="{{ url_for('users.assets') }}" href="{{ url_for('users.assets') }}">Asset Classes</a>
+    <a data-toggle="{{ url_for('users.assets') }}" href="{{ url_for('users.assets') }}"><font size="+1.5">Asset Classes</font></a>
     </li>
     <li {% if request.path == "/users/news" %} class="active"{% endif %}>
-    <a data-toggle="{{ url_for('users.news') }}" href="/users/news">News</a>
+    <a data-toggle="{{ url_for('users.news') }}" href="/users/news"><font size="+1.5">News</font></a>
     </li>
 </ul>
 

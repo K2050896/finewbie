@@ -1,6 +1,27 @@
 {% extends "homepage.jinja2" %}
 {% block content %}
     <div class="container">
-        <h3>What fields do you wish to change? {{ port_id }}</h3>
+        <h3>Edit your goal ({{ portfolio_id }})</h3>
+        <p>Enter values in the following form to make changes to your goal.</p>
+        <form id="login-form" action="{{ url_for('profiles.edit_goal',portfolio_id=portfolio_id) }}" method="POST">
+            <div class="form-group">
+                <label class="control-label" for="amount">How much money would you like to save up for your goal?</label>
+                <input type="number" class="form-control" id="amount" name="amount" placeholder="Please enter amount rounded up to the nearest dollar">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="time">How long do you wish to save up for this goal?</label>
+                <input type="number" class="form-control" id="time" name="time" placeholder="Enter the number of years">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="assets">Enter the value of your current assets.</label>
+                <input type="number" class="form-control" id="assets" name="assets" placeholder="Salary, other income, any existing investments etc">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="liab">Enter the value of your current liabilities.</label>
+                <input type="number" class="form-control" id="liab" name="liab" placeholder="Monthly expenses including rent, insurance, credit card bills, utilities etc">
+            </div>
+
+            <button type="submit" class="btn btn-lg btn-warning">Edit my goal</button>
+        </form>
     </div>
 {% endblock %}

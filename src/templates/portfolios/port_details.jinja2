@@ -1,10 +1,16 @@
 {% extends "homepage.jinja2" %}
 {% block content %}
-<div class="container">
-    <h2>{{ portfolio.port_id }} optimized!!</h2>
-    <p>Until now, this is how much you saved up for your goal:</p>
-    <p>{{ portfolio.reached }}</p>
-    <p>Converted to dollar amount, this is how much your portfolio is worth now:</p>
-    <p>213232</p>
-</div>
+    <div class="container">
+        <h2>Optimal solution for portfolio {{ portfolio.port_id }}</h2>
+        <br>
+        <p>Until now, this is how much you saved up for your goal:</p>
+        <p>{{ portfolio.reached }}</p>
+        <p>Converted to dollar amount, this is how much your portfolio is worth now:</p>
+        <!--<img src="data:image/png;base64, {{ plot_url }}" class="img-fluid" alt="graph">-->
+        <div id="container" align="center">
+            <embed type="image/svg+xml" src= {{ chart|safe }} />
+        </div>
+        <button type="button" class="btn btn-info" onclick="window.history.back()">Go Back</button>
+
+    </div>
 {% endblock %}

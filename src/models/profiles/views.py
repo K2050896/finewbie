@@ -47,7 +47,20 @@ def my_goals():
     return render_template("profiles/my_goals.jinja2", portfolios=portfolios)
 
 
-@profile_blueprint.route('/edit-goal/<string:portfolio_id>')
+@profile_blueprint.route('/edit-goal/<string:portfolio_id>', methods=['GET', 'POST'])
 @user_decorators.requires_login
 def edit_goal(portfolio_id):
-    return render_template(url_for('profiles.edit_goal', port_id=portfolio_id))
+    temp = Profile.from_mongo(portfolio_id)
+    if request.method == "POST":
+        goal = request.form["amount"]
+        horizon = request.form["time"]
+        assets = request.form["assets"]
+        liab = request.form["liab"]
+        Profile.update_profile(temp['port_id'],
+                               {"port_id": temp['port_id'], "user_email": temp['user_email'], "name": temp['name'],
+                                "goal": goal, "horizon": [float(horizon)],
+                                "time_left": temp['time_left'],
+                                "init_con": temp['init_con'], "dis_inc": [float(assets)-float(liab)], "init_alloc": temp['init_alloc'],
+                                "lamb": temp['lamb'], "importance": temp['importance']})
+        return render_template("profiles/edit_goal.jinja2", portfolio_id=portfolio_id)
+    return render_template("profiles/edit_goal.jinja2", portfolio_id=portfolio_id)

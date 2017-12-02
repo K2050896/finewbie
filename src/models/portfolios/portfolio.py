@@ -1,5 +1,10 @@
 import uuid
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+plt.style.use('ggplot')
 from src.common.database import Database
+import src.models.portfolios.constants as cnst
 
 
 class Portfolio(object):
@@ -35,7 +40,6 @@ class Portfolio(object):
     def save_to_mongo(self):
         Database.insert("portfolios", self.json())
 
-    #@classmethod
     @staticmethod
     def from_mongo(port_id):
         port_data = Database.find_one(collection='portfolios', query={'port_id': port_id})
@@ -51,4 +55,10 @@ class Portfolio(object):
         # query must include all the fields of profiles
         Database.update("portfolios", {"port_id": port_id},
                         query)
- 
+
+    # @staticmethod
+    # def plot_portfolio(Portfolio):
+    #     fig = plt.figure(figsize=(12, 6))
+    #     ax = fig.add_subplot(111)
+    #     plt.pie(Portfolio['alloc_percent'][-1], labels=['SPY', 'IWM', 'VEU', 'CSJ', 'BLV', 'Cash Inv'], autopct='%1.1f%%')
+    #     return fig
