@@ -287,7 +287,7 @@ def port_opt(constants, port_id):
     port["reached"].append(reached)
     port["reached_dollar"].append(reached_dollar)
     port["ambitious"].append(ambitious)
-    Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"mean_term_wealth": port["mean_term_wealth"],
+    Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"name": port["name"], "mean_term_wealth": port["mean_term_wealth"],
                                                 "mean_var_wealth": port["mean_var_wealth"],"alloc_percent": port["alloc_percent"],"shares0": port["shares0"],
                                                 "shares1": port["shares1"],"cont": port["cont"],"reached": port["reached"],"reached_dollar":port["reached_dollar"],"ambitious": port["ambitious"]})
 
