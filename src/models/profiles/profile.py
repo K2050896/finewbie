@@ -22,13 +22,13 @@ class Profile(object):
         self.importance = importance
         self.goal = float(goal)
         
-        if self.horizon <= 1:
+        if self.horizon[-1] <= 1:
             t = 1
-        elif self.horizon <=2:
+        elif self.horizon[-1] <=2:
             t = 2
-        elif self.horizon <= 5:
+        elif self.horizon[-1] <= 5:
             t = 3
-        elif self.horizon <= 10:
+        elif self.horizon[-1] <= 10:
             t = 4
         else:
             t = 5
