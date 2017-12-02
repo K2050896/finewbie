@@ -25,14 +25,14 @@ class User(object):
         Database.insert("users", self.json())
 
     @staticmethod
-    def register_user(email, password):
+    def register_user(name, age, email, password):
         user_data = User.get_by_email(email)
         if user_data is not None:
             raise UserErrors.UserAlreadyRegisteredError("You already have an account with this email address.")
         if not Utils.email_is_valid(email):
-            raise UserErrors.InvalidEmailError("That is an invalid email address!")
+            raise UserErrors.InvalidEmailError("This is an invalid email address!")
 
-        User(email, Utils.hash_password(password)).save_to_mongo()
+        User(name, age, email, Utils.hash_password(password)).save_to_mongo()
         return True
 
     @staticmethod
@@ -46,7 +46,7 @@ class User(object):
         user_data = User.get_by_email(email)
         if user_data is None:
             # Tell the user their email does not exist
-            raise UserErrors.UserNotExistsError("Your user does not exist!")
+            raise UserErrors.UserNotExistsError("This account does not exist!")
         if not Utils.check_hashed_password(password, user_data['password']):
             # Tell the user their password is wrong
             raise UserErrors.IncorrectPasswordError("Your password was wrong!")
@@ -71,7 +71,7 @@ class User(object):
         user = User.get_by_email(email)
         user["port_ids"].append(port_id)
         Database.update("users",{"email": user["email"]},
-                        {"email": user["email"], "password": user['password'], "port_ids": user["port_ids"]})
+                        {"email": user["email"], "password": user['password'], "name": user['name'], "age": user['age'], "port_ids": user["port_ids"]})
 
     @staticmethod
     def get_port_ids(email):
@@ -85,4 +85,4 @@ class User(object):
     def change_password(email, new_pass):
         user = User.get_by_email(email)
         Database.update("users",{"email": user["email"]},
-                        {"email": user["email"], "password": new_pass, "port_ids": user["port_ids"]})
+                        {"email": user["email"], "password": new_pass, "name": user['name'], "age": user['age'], "port_ids": user["port_ids"]})

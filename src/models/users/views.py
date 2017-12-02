@@ -27,7 +27,7 @@ def register_user():   # Views form required for user signup
         email = request.form['email']
         password = request.form['password']
         try:
-            if User.register_user(email,password):
+            if User.register_user(name, age, email, password):
                 session['email'] = email
                 return redirect(url_for(".user_homepage"))
         except UserErrors.UserError as e:
@@ -45,10 +45,10 @@ def logout_user():
 def user_homepage():
     return render_template("homepage.jinja2", email=session['email'])
 
-@user_blueprint.route('/my-settings')
+@user_blueprint.route('/my-info')
 @user_decorators.requires_login
-def my_settings():
-    pass
+def my_info():
+    return render_template("my_info.jinja2")
 
 @user_blueprint.route('/faqs')
 @user_decorators.requires_login
