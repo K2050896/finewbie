@@ -1,8 +1,8 @@
 {% extends "homepage.jinja2" %}
 {% block content %}
-
+<div class="container">
     <h2>{{ portfolio.port_id }} optimized!!</h2>
     <p>Until now, this is how much you saved up for your goal:</p>
-    <p>{{ portfolio.mean_term_wealth }}</p>
-
+    <p>{{ portfolio.reached }}</p>
+</div>
 {% endblock %}

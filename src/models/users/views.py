@@ -22,6 +22,8 @@ def login_user():
 @user_blueprint.route('/register', methods = ['GET','POST'])
 def register_user():   # Views form required for user signup
     if request.method == 'POST':
+        name = request.form['name']
+        age = request.form['age']
         email = request.form['email']
         password = request.form['password']
         try:
