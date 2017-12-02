@@ -8,9 +8,10 @@ import src.models.portfolios.constants as cnst
 
 
 class Portfolio(object):
-    def __init__(self, port_id, user_email, mean_term_wealth, mean_var_wealth, alloc_percent, shares0, shares1, cont, reached, reached_dollar, ambitious):
+    def __init__(self, port_id, user_email, name, mean_term_wealth, mean_var_wealth, alloc_percent, shares0, shares1, cont, reached, reached_dollar, ambitious):
         self.port_id = port_id
         self.user_email = user_email
+        self.name = name
         self.mean_term_wealth = mean_term_wealth
         self.mean_var_wealth = mean_var_wealth
         self.alloc_percent = alloc_percent
@@ -26,6 +27,7 @@ class Portfolio(object):
         return {
             "port_id": self.port_id,
             "user_email": self.user_email,
+            "name": self.name,
             "mean_term_wealth": self.mean_term_wealth,
             "mean_var_wealth": self.mean_var_wealth,
             "alloc_percent": self.alloc_percent,
