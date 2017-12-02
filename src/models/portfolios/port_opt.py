@@ -71,7 +71,6 @@ def port_opt(constants, port_id):
         net_val[i+1] = shares[i+1]              # This is the 'true' net wealth
         init_con = float(np.sum(net_val))       # Terminal portfolio value!
         init_alloc = []
-
         nassets = 6
         for i in range(0,nassets):
             init_alloc.append(float(net_val[i] / init_con)) # Terminal asset allocation!
@@ -81,6 +80,7 @@ def port_opt(constants, port_id):
         reached = init_con / goal
                                     
         port["reached"].append(reached)
+        port["alloc_percent"].append(init_alloc)
         Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"mean_term_wealth": port["mean_term_wealth"],
                                                     "mean_var_wealth": port["mean_var_wealth"],"alloc_percent": port["alloc_percent"],"shares0": port["shares0"],
                                                     "shares1": port["shares1"],"cont": port["cont"],"reached": port["reached"],"ambitious": port["ambitious"]})
@@ -237,6 +237,21 @@ def port_opt(constants, port_id):
     
         # Additional contribution required by next time step
         cont = round(float(dv[nassets:nassets+1]),2)
+    else:
+        collect = np.matrix(np.zeros((nassets,ntrials)))
+        ctr = 0
+        for s in range(0,ntrials):
+            ctr = ctr + nassets
+            collect[:,s] = dv[ctr:ctr + nassets]
+        avg_alloc = np.mean(collect,axis=1) 
+        alloc_percent = avg_alloc / np.sum(avg_alloc)
+        shares1 = avg_alloc
+        shares1[0:-1] = avg_alloc[0:-1] / Sprices[:,1] # Cash investment is left in units of $
+        for i in range(0,nassets-1):
+            shares1[i] = shares1[i] * (1 - trans_costs[i]) # take away transaction costs
+
+        # Additional contribution required by next time step
+        cont = 0 # Since there will no next time period
     
     # % reached of financial goal target
     reached = round(float(init_con / goal),3)
