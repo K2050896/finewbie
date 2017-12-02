@@ -10,4 +10,3 @@ cvxopt
 datetime
 pandas_datareader
 bokeh
-bokeh.charts
