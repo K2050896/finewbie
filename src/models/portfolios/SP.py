@@ -39,55 +39,70 @@ def stochastic_programming(nA, nS, Y, nP, lamb, D, Returns, ic, goal, eff_fees,i
     q = np.concatenate((np.zeros((nd-nA*nS,1)),q)) / nS
 
     ### Define matrix A ###
-    A = np.zeros(((nS * (nP-1) + 1, nd - nA*nS)))
-    # define row 1 of A (t = 0 constraint)
-    for x in range(0,nA):
-        A[0,x] = 1
-    # define t = 1 contraints
-    for s in range(1,nS+1):
-        ctr = -nA
-        for w in range(0,3):                # 3 b/c R, p, X
-            ctr = ctr + nA
-            for y in range(0,nA):
-                if ctr == 0:
-                    A[s,y + ctr] = Returns[y+(s-1)*nA,0]
-                if ctr == nA:
-                    A[s,y + ctr + (s-1)*(nA + 1)] = 1 - 0    # 0 to be replaced by transaction costs
-                    break
-                if ctr == 2*nA:
-                    A[s,y + ctr + (s-1)*(nA + 1) - (nA-1)] = -1
-    # define t = 2 ... t = T-1 constraints
-    start_row = nS + 1
-    ctr = 0
-    ctr2 = -nS
-    for t in range(2,nP):                   # t=2 to T-1
-        ctr2 = ctr2 + nS
-        for s in range(0,nS):               # s=1 to s=S
-            ctr = ctr + (nA + 1)
-            for d in range(0,nA):
-                A[start_row + ctr2 + s,ctr + d] = Returns[d + s*nA,t-1]
-            for k in range(0,nA+1):
-                if k == 0:
-                    A[start_row + ctr2 + s,ctr + nA + (nS-1)*(nA+1) + k] = 1 - 0
-                else:
-                    A[start_row + ctr2 + s,ctr + nA + (nS-1)*(nA+1) + k] = -1
-
-    # define t = T constraints
-    A__ = np.zeros((nA*nS,nd-nA*nS))
-    ncols = nd - nA*nS
-    start_col = ncols - nA - (nS - 1)*(nA + 1)
-    ctr = -(nA + 1)
-    for s in range(0,nS):
-        ctr = ctr + (nA + 1)                    # nA + 1 b/c p + X's
-        for j in range(0,nA):
-            A__[s*nA + j, start_col + j + ctr] = Returns[j + s*nA,-1]
-
-    temp = -np.eye(nA*nS)
-    temp = np.concatenate((np.zeros((A.shape[0],nA*nS)),temp))
-
-    A = np.concatenate((A,A__))
-    A = np.concatenate((A,temp),axis=1)
+    if nP > 1: # If the tree is larger than one-period in size
+        A = np.zeros(((nS * (nP-1) + 1, nd - nA*nS)))
+        # define row 1 of A (t = 0 constraint)
+        for x in range(0,nA):
+            A[0,x] = 1
+        # define t = 1 contraints
+        for s in range(1,nS+1):
+            ctr = -nA
+            for w in range(0,3):                # 3 b/c R, p, X
+                ctr = ctr + nA
+                for y in range(0,nA):
+                    if ctr == 0:
+                        A[s,y + ctr] = Returns[y+(s-1)*nA,0]
+                    if ctr == nA:
+                        A[s,y + ctr + (s-1)*(nA + 1)] = 1 - 0    # 0 to be replaced by transaction costs
+                        break
+                    if ctr == 2*nA:
+                        A[s,y + ctr + (s-1)*(nA + 1) - (nA-1)] = -1
+        # define t = 2 ... t = T-1 constraints
+        start_row = nS + 1
+        ctr = 0
+        ctr2 = -nS
+        for t in range(2,nP):                   # t=2 to T-1
+            ctr2 = ctr2 + nS
+            for s in range(0,nS):               # s=1 to s=S
+                ctr = ctr + (nA + 1)
+                for d in range(0,nA):
+                    A[start_row + ctr2 + s,ctr + d] = Returns[d + s*nA,t-1]
+                for k in range(0,nA+1):
+                    if k == 0:
+                        A[start_row + ctr2 + s,ctr + nA + (nS-1)*(nA+1) + k] = 1 - 0
+                    else:
+                        A[start_row + ctr2 + s,ctr + nA + (nS-1)*(nA+1) + k] = -1
     
+        # define t = T constraints
+        A__ = np.zeros((nA*nS,nd-nA*nS))
+        ncols = nd - nA*nS
+        start_col = ncols - nA - (nS - 1)*(nA + 1)
+        ctr = -(nA + 1)
+        for s in range(0,nS):
+            ctr = ctr + (nA + 1)                    # nA + 1 b/c p + X's
+            for j in range(0,nA):
+                A__[s*nA + j, start_col + j + ctr] = Returns[j + s*nA,-1]
+    
+        temp = -np.eye(nA*nS)
+        temp = np.concatenate((np.zeros((A.shape[0],nA*nS)),temp))
+    
+        A = np.concatenate((A,A__))
+        A = np.concatenate((A,temp),axis=1)
+    else: # This means the tree is one-period in size
+        A1 = np.concatenate((np.ones((1,nA)),np.zeros((1,nA*nS))),axis=1)
+        
+        A2 = np.eye(nA)
+        for s in range(0,nS-1):
+            A2 = np.concatenate((A2,np.eye(nA)))
+        for s in range(0,nS):
+            for j in range(0,nA):
+                A2[j + s*nA,j] = Returns[j + s*nA,-1]
+        
+        A3 = -np.eye((nA*nS))
+    
+        A = np.concatenate((A2,A3),axis=1)
+        A = np.concatenate((A1,A))
+        
     # Define vector b
     b = np.zeros((nS * (nP-1) + nA*nS + 1,1))
     b[0] = ic                 # the first parameter is ALWAYS user's init. con.
@@ -107,12 +122,12 @@ def stochastic_programming(nA, nS, Y, nP, lamb, D, Returns, ic, goal, eff_fees,i
     for s in range(1,nS+1):
         ctr = ctr + nA
         for a in range(1,nA+1):
-            G__[-s,-a - ctr] = -1 * (1 - eff_fees[a-1])
+            G__[-s,-a - ctr] = -1 * (1 - eff_fees[a-1]) # Subtract mgmt fees
     G__ = np.concatenate((np.zeros((nS,nd-nA*nS)),G__),axis=1)
 
     G = np.concatenate((G,G_,G__))
     
-    # Define vector h
+    ### Define vector h
     # Restricting initial allocation from concentrating on one asset
     ini_alloc = np.matrix(init_alloc).T
     h = np.zeros((nd,1))

@@ -15,20 +15,20 @@ class Profile(object):
         new.save_to_mongo()
         
         self.name = name
-        self.horizon = float(horizon)
+        self.horizon = horizon
         self.time_left = float(time_left)
-        self.dis_inc = float(dis_inc)
+        self.dis_inc = dis_inc
         self.init_con = float(init_con)
         self.importance = importance
         self.goal = float(goal)
         
-        if self.horizon <= 1:
+        if self.horizon[-1] <= 1:
             t = 1
-        elif self.horizon <=2:
+        elif self.horizon[-1] <=2:
             t = 2
-        elif self.horizon <= 5:
+        elif self.horizon[-1] <= 5:
             t = 3
-        elif self.horizon <= 10:
+        elif self.horizon[-1] <= 10:
             t = 4
         else:
             t = 5
