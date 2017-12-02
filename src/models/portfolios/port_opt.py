@@ -263,8 +263,8 @@ def port_opt(constants, port_id):
         twrr = 0
     if Y - T != 0:
         # holding period return i.e. rate of return on the portfolio in a single time period
-        hprr = round((reached - port['reached']) / port['reached'] - port['cont']/(goal*port['reached']),3)
-        twrr = round((1 + port['twrr']) * (1 + hprr) - 1,3)
+        hprr = round((reached - port['reached'][-1]) / port['reached'][-1] - port['cont'][-1]/(goal*port['reached'][-1]),3)
+        twrr = round((1 + port['twrr'][-1]) * (1 + hprr) - 1,3)
     
     # Add elements into lists for historical view
     prof["horizon"].append((prof["horizon"][-1] + extra_time))
