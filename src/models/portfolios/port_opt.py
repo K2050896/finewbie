@@ -81,7 +81,7 @@ def port_opt(constants, port_id):
                                     
         port["reached"].append(reached)
         port["alloc_percent"].append(init_alloc)
-        Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"mean_term_wealth": port["mean_term_wealth"],
+        Portfolio.update_portfolio(port['port_id'],{"port_id": port['port_id'],"user_email":port['user_email'],"name":prof['name'],"mean_term_wealth": port["mean_term_wealth"],
                                                     "mean_var_wealth": port["mean_var_wealth"],"alloc_percent": port["alloc_percent"],"shares0": port["shares0"],
                                                     "shares1": port["shares1"],"cont": port["cont"],"reached": port["reached"],"ambitious": port["ambitious"]})
         return None
@@ -298,7 +298,7 @@ def port_opt(constants, port_id):
     port["hprr"].append(hprr)
     port["twrr"].append(twrr)
     port["ambitious"].append(ambitious)
-    Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"mean_term_wealth": port["mean_term_wealth"],
+    Portfolio.update_portfolio(port['port_id'],{"port_id": port['port_id'],"user_email":port['user_email'],"name":prof['name'],"mean_term_wealth": port["mean_term_wealth"],
                                                 "mean_var_wealth": port["mean_var_wealth"],"alloc_percent": port["alloc_percent"],"shares0": port["shares0"],
                                                 "shares1": port["shares1"],"cont": port["cont"],"reached": port["reached"],"reached_dollar":port["reached_dollar"],"hprr":port["hprr"],"twrr":port["twrr"],"ambitious": port["ambitious"]})
 
