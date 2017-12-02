@@ -5,10 +5,10 @@ from src.common.utils import Utils
 
 
 class User(object):
-    def __init__(self, email, password, name, age):
+    def __init__(self, email, password, fName, age):
         self.email = email
         self.password = password
-        self.name = name
+        self.fName = fName
         self.age = age
         self.port_ids = []
         
@@ -16,7 +16,7 @@ class User(object):
         return {
             "email": self.email,
             "password": self.password,
-            "name": self.name,
+            "fName": self.fName,
             "age": self.age,
             "port_ids": self.port_ids            
         }
@@ -25,14 +25,14 @@ class User(object):
         Database.insert("users", self.json())
 
     @staticmethod
-    def register_user(name, age, email, password):
+    def register_user(email, password, fName, age):
         user_data = User.get_by_email(email)
         if user_data is not None:
             raise UserErrors.UserAlreadyRegisteredError("You already have an account with this email address.")
         if not Utils.email_is_valid(email):
             raise UserErrors.InvalidEmailError("This is an invalid email address!")
 
-        User(name, age, email, Utils.hash_password(password)).save_to_mongo()
+        User(email, Utils.hash_password(password), fName, age).save_to_mongo()
         return True
 
     @staticmethod
@@ -71,7 +71,7 @@ class User(object):
         user = User.get_by_email(email)
         user["port_ids"].append(port_id)
         Database.update("users",{"email": user["email"]},
-                        {"email": user["email"], "password": user['password'], "name": user['name'], "age": user['age'], "port_ids": user["port_ids"]})
+                        {"email": user["email"], "password": user['password'], "fName": user['fName'], "age": user['age'], "port_ids": user["port_ids"]})
 
     @staticmethod
     def get_port_ids(email):
@@ -85,4 +85,4 @@ class User(object):
     def change_password(email, new_pass):
         user = User.get_by_email(email)
         Database.update("users",{"email": user["email"]},
-                        {"email": user["email"], "password": new_pass, "name": user['name'], "age": user['age'], "port_ids": user["port_ids"]})
+                        {"email": user["email"], "password": new_pass, "fName": user['fName'], "age": user['age'], "port_ids": user["port_ids"]})
