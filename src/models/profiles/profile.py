@@ -12,7 +12,7 @@ class Profile(object):
         User.add_portfolio_to_user(user_email, port_id)
         
         # Creating new Porfolio Document
-        new = Portfolio(port_id, user_email, name, [],[],[],[],[],[],[],[],[])
+        new = Portfolio(port_id, user_email, name, [],[],[],[],[],[],[],[],[],[])
         new.save_to_mongo()
         
         self.horizon = horizon
