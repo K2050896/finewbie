@@ -1,6 +1,20 @@
 {% extends "homepage.jinja2" %}
 {% block content %}
-<div class="container">
-    <p> User information needs to go here - change password as well! </p>
-</div>
+    <div class="container" align="center">
+        <h2>My Info</h2>
+        <br>
+        <h4>Name: {{ user_data.fName }}</h4>
+        <h4>Age: {{ user_data.age }}</h4>
+        <h4>Email: {{ user_data.email }}</h4>
+
+        <br>
+        <div class="container">
+            <p class="text-center">Use the form below to change your password.</p>
+            <form id="password-form" action="{{ url_for('users.my_info') }}" method="POST">
+                <input type="email" class="input-lg form-control" name="email" id="email" placeholder="Email Address">
+                <input type="password" class="input-lg form-control" name="new_pass" id="new_pass" placeholder="Enter the new password" >
+                <input type="submit" class="col-xs-12 btn btn-primary btn-load btn-lg" data-loading-text="Changing Password..." value="Change Password">
+            </form>
+        </div><!--/col-sm-6-->
+    </div>
 {% endblock %}

@@ -40,6 +40,8 @@ class User(object):
         data = Database.find_one(collection="users", query={"email": email})
         if data is not None:
             return data
+        else:
+            return None
 
     @staticmethod
     def login_valid(email, password):
@@ -85,4 +87,4 @@ class User(object):
     def change_password(email, new_pass):
         user = User.get_by_email(email)
         Database.update("users",{"email": user["email"]},
-                        {"email": user["email"], "password": new_pass, "fName": user['fName'], "age": user['age'], "port_ids": user["port_ids"]})
+                        {"email": user["email"], "password": Utils.hash_password(new_pass), "fName": user['fName'], "age": user['age'], "port_ids": user["port_ids"]})

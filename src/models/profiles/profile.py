@@ -130,6 +130,8 @@ class Profile(object):
         data = Database.find_one(collection="profiles", query={'port_id': port_id})
         if data is not None:
             return data
+        else:
+            return None
 
     @staticmethod
     def delete_profile(port_id):
@@ -145,3 +147,5 @@ class Profile(object):
         data = Profile.from_mongo(port_id)
         if data is not None:
             return data["user_email"]
+        else:
+            return None

@@ -45,10 +45,15 @@ def logout_user():
 def user_homepage():
     return render_template("homepage.jinja2", email=session['email'])
 
-@user_blueprint.route('/my-info')
+@user_blueprint.route('/my-info', methods=['GET','POST'])
 @user_decorators.requires_login
 def my_info():
-    return render_template("my_info.jinja2")
+    if request.method == 'POST':
+        email = request.form['email']
+        new_pass = request.form['new_pass']
+        User.change_password(email, new_pass=new_pass)
+    user_data = User.get_by_email(session['email'])
+    return render_template("my_info.jinja2", user_data=user_data)
 
 @user_blueprint.route('/faqs')
 @user_decorators.requires_login

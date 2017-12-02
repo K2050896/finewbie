@@ -1,20 +1,23 @@
 {% extends "homepage.jinja2" %}
 {% block content %}
     <div class="container">
-    <h3>The following are the portfolios of {{ data.email }}</h3>
+    <h3>The following are the portfolios of {{ portfolios.email }}</h3>
 
-    {% if data.port_ids|length == 0 %}
+    {% if portfolios.port_ids|length == 0 %}
         <p>Uh oh, you have no goals defined currently!</p>
         <p>Click below to create a goal and start planning.</p>
-        <form action = "{{ url_for('profiles.create_goal') }}" method = "POST">
+        <form action = "{{ url_for('profiles.create_goal') }}" method = "GET">
             <button type="button submit" class="btn btn-success">Create a goal now!</button>
     </form>
     {% endif %}
 
-    {% for elem in data.port_ids %}
+    {% for elem in portfolios.port_ids %}
         <ul>{{elem}}</ul>
     {% endfor %}
 
+    {% for temp in portfolios.port_ids %}
+    <a href="{{ url_for('portfolios.port_summary', portfolio_id=temp) }}">{{ (profile_from_mongo(temp)) }}</a>
+    {% endfor %}
 
    {# <style>
         body {
