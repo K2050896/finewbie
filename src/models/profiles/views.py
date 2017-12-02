@@ -43,7 +43,11 @@ def create_goal():
 @profile_blueprint.route('/my-goals')
 @user_decorators.requires_login
 def my_goals():
-    portfolios = User.get_by_email(session['email'])
+    port_ids = User.get_port_ids(session['email'])
+    portfolios = []
+    for i in port_ids:
+        portfolios.append(Portfolio.from_mongo(i))
+        print(portfolios)
     return render_template("profiles/my_goals.jinja2", portfolios=portfolios)
 
 
