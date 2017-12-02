@@ -295,7 +295,7 @@ def port_opt(constants, port_id):
     port["cont"].append(cont)
     port["reached"].append(reached)
     port["reached_dollar"].append(reached_dollar)
-    port["hprr"].appped(hprr)
+    port["hprr"].append(hprr)
     port["twrr"].append(twrr)
     port["ambitious"].append(ambitious)
     Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"mean_term_wealth": port["mean_term_wealth"],
