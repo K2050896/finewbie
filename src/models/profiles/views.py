@@ -35,20 +35,24 @@ def create_goal():
                           dis_inc=[float(assets)-float(liab)], r1=r1, r2=r2, r3=r3, r4=r4, r5=r5)
         profile.save_to_mongo()
 
-        print("It got here!")
         return redirect(url_for('portfolios.port_summary', portfolio_id=session['curr_port']))
 
     return render_template("profiles/create_goal.jinja2")
 
+
+@profile_blueprint.route('/my-goals')
+@user_decorators.requires_login
+def my_goals():
+    data = User.get_by_email(session['email'])
+    print(data)
+    return render_template("profiles/my_goals.jinja2", data=data)
+
+
 @profile_blueprint.route('/edit-goal/<string:portfolio_id>')
 @user_decorators.requires_login
 def edit_goal(portfolio_id):
-    return render_template(url_for('profiles.edit_goal', portfolio_id=portfolio_id))
+    return render_template(url_for('profiles.edit_goal', port_id=portfolio_id))
 
 
-@profile_blueprint.route('/my-goals/<string:user_email>')
-@user_decorators.requires_login
-def my_goals(user_email):
-    return render_template("profiles/my_goals.jinja2", user_email=session['email'])
 
 

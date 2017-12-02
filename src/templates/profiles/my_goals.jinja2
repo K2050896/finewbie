@@ -1,8 +1,22 @@
 {% extends "homepage.jinja2" %}
 {% block content %}
-    <h3>The following are the portfolios of {{ user_email }}</h3>
+    <div class="container">
+    <h3>The following are the portfolios of {{ data.email }}</h3>
 
-    <style>
+    {% if data.port_ids|length == 0 %}
+        <p>Uh oh, you have no goals defined currently!</p>
+        <p>Click below to create a goal and start planning.</p>
+        <form action = "{{ url_for('profiles.create_goal') }}" method = "POST">
+            <button type="button submit" class="btn btn-success">Create a goal now!</button>
+    </form>
+    {% endif %}
+
+    {% for elem in data.port_ids %}
+        <ul>{{elem}}</ul>
+    {% endfor %}
+
+
+   {# <style>
         body {
             position: relative;
         }
@@ -26,7 +40,6 @@
             }
         }
     </style>
-    </head>
     <body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
 
     <div class="container">
@@ -68,6 +81,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
+    </div>#}
+</div>
 {% endblock %}

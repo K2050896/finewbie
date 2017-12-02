@@ -74,6 +74,8 @@ class User(object):
         user = User.get_by_email(email)
         if user is not None:
             return user["port_ids"]
+        else:
+            return None
 
     @staticmethod
     def change_password(email, new_pass):
