@@ -12,7 +12,7 @@ from src.models.portfolios.portfolio import Portfolio
 import src.models.portfolios.constants as cnst
 from src.models.portfolios.port_opt import port_opt
 from bokeh.plotting import figure, output_file, show
-from bokeh.charts import Donut
+from bokeh.charts import Donut, Line
 
 portfolio_blueprint = Blueprint('portfolios', __name__)
 
