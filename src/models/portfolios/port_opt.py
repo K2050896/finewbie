@@ -134,7 +134,7 @@ def port_opt(constants, port_id):
         init_con = prof['init_con']              # intial contribution to goal (User input)
         init_alloc = prof['init_alloc']          # Recommended initial alloc (WEBAPP INPUT)
     else:
-        temp = port['shares1']
+        temp = port['shares1'][-1]
         shares = np.matrix(np.zeros((6,1)))
         for i in range(0,len(shares)):
             shares[i] = float(temp[i])
