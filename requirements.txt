@@ -9,3 +9,4 @@ uwsgi
 cvxopt
 datetime
 pandas_datareader
+bokeh
