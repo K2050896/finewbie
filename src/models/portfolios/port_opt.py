@@ -26,10 +26,6 @@ def port_opt(constants, port_id):
     Y = prof['horizon']                       # Original number of years (CONSTANT) (WEBAPP INPUT)
     T = prof['time_left']                       # Number of years left (WEBAPP INPUT)
     
-    # Terminate when time left = 0
-    if T == 0:
-        return None
-    
     if Y < 2:
         time_step = 1/12        # Trading frequency is monthly
     elif 2 <= Y <= 5:
@@ -40,6 +36,9 @@ def port_opt(constants, port_id):
         time_step = 1           # Trading frequency is annually
     
     N = int(T / time_step)      # Total number of trading periods
+    # Terminate when time left = 0
+    if N == 0:
+        return None
     
     # Convert the annual rate to any frequency
     annual_int_rate = constants.INT_RATE      # assume constant interest rate for cash investment
@@ -145,7 +144,6 @@ def port_opt(constants, port_id):
             net_val[i] = shares[i] * prices[-1,i]
         net_val[i+1] = shares[i+1]              # This is the 'true' net wealth
         init_con = float(np.sum(net_val))
-        print(init_con)
         init_alloc = []
         for i in range(0,nassets):
             init_alloc.append(float(net_val[i] / init_con)) # New allocation restriction at "t = 0"
@@ -172,8 +170,25 @@ def port_opt(constants, port_id):
     # If the goal is ambitious, how much extra should the investor be contributing to meet the goal (monthly)?
     if ambitious == 1 and (N - 1) != 0:
         extra_dis_inc = (diff / (N - 1)) / (12 * time_step)
+        extra_time = diff/mean_term_wealth * T   
     else:
         extra_dis_inc = 0
+        extra_time = 0
+    
+    importance = prof['importance']
+    if importance == 1:
+        extra_dis_inc = 0
+    elif importance == 2:
+        extra_dis_inc = 0.25 * extra_dis_inc
+        extra_time = 0.75 * extra_time
+    elif importance == 3:
+        extra_dis_inc = 0.5 * extra_dis_inc
+        extra_time = 0.5 * extra_time
+    elif importance == 4:
+        extra_dis_inc = 0.75 * extra_dis_inc
+        extra_time = 0.25 * extra_time
+    else:
+        extra_time = 0
     
     # t = 0 shares
     shares0 = dv[0:6]
@@ -200,7 +215,7 @@ def port_opt(constants, port_id):
     reached = round(float(init_con / goal),3)
     
     # Update profile by changing the length of time remaining
-    Profile.update_profile(prof['port_id'],{"port_id": prof['port_id'],"user_email": prof['user_email'],"name":prof['name'],"goal":prof['goal'],"horizon": prof['horizon'],"time_left": prof['time_left'] - time_step,"init_con":prof['init_con'],"dis_inc": prof['dis_inc'],"init_alloc": prof['init_alloc'],"lamb":prof['lamb']})
+    Profile.update_profile(prof['port_id'],{"port_id": prof['port_id'],"user_email": prof['user_email'],"name":prof['name'],"goal":prof['goal'],"horizon": prof['horizon'] + extra_time,"time_left": prof['time_left'] - time_step + extra_time,"init_con":prof['init_con'],"dis_inc": prof['dis_inc'] + extra_dis_inc,"init_alloc": init_alloc,"lamb": prof['lamb'],"importance": prof['importance']})
     
     # Update portfolio (export)
     shares0_ = []
@@ -210,7 +225,21 @@ def port_opt(constants, port_id):
         shares0_.append(float(shares0[i]))
         shares1_.append(float(shares1[i]))
         alloc_percent_.append(float(alloc_percent[i]))
-    Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"mean_term_wealth": mean_term_wealth,"mean_var_wealth": mean_var_wealth,"alloc_percent": alloc_percent_,"shares0": shares0_,"shares1": shares1_,"cont": cont,"reached": reached,"ambitious": ambitious})
+        
+    
+    # Add elements into lists for historical view
+    port["mean_term_wealth"].append(mean_term_wealth)
+    port["mean_var_wealth"].append(mean_var_wealth)
+    port["alloc_percent"].append(alloc_percent_)
+    port["shares0"].append(shares0_)
+    port["shares1"].append(shares1_)
+    port["cont"].append(cont)
+    port["reached"].append(reached)
+    port["amitious"].append(ambitious)
+    
+    Portfolio.update_portfolio(port['port_id'],{"user_email":port['user_email'],"port_id": port['port_id'],"mean_term_wealth": port["mean_term_wealth"],
+                                                "mean_var_wealth": port["mean_var_wealth"],"alloc_percent": port["alloc_percent"],"shares0": port["shares0"],
+                                                "shares1": port["shares1"],"cont": port["cont"],"reached": port["reached"],"ambitious": port["amitious"]})
 
 #    # Pie Chart: Terminal average asset allocation across all scenarios
 #    temp = dv[dv.shape[0]-nassets*ntrials:dv.shape[0]]
