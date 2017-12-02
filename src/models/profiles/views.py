@@ -31,8 +31,8 @@ def create_goal():
         r4 = request.form["r4"]
         r5 = request.form["r5"]
 
-        profile = Profile(port_id=port_id, user_email=user_email, name=name, goal=goal, horizon=horizon, time_left=time_left, importance=importance, init_con=init_con,
-                          dis_inc=float(assets)-float(liab), r1=r1, r2=r2, r3=r3, r4=r4, r5=r5)
+        profile = Profile(port_id=port_id, user_email=user_email, name=name, goal=goal, horizon=[horizon], time_left=time_left, importance=importance, init_con=init_con,
+                          dis_inc=[float(assets)-float(liab)], r1=r1, r2=r2, r3=r3, r4=r4, r5=r5)
         profile.save_to_mongo()
 
         print("It got here!")
