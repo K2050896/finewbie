@@ -15,9 +15,9 @@ class Profile(object):
         new.save_to_mongo()
         
         self.name = name
-        self.horizon = float(horizon)
+        self.horizon = horizon
         self.time_left = float(time_left)
-        self.dis_inc = float(dis_inc)
+        self.dis_inc = dis_inc
         self.init_con = float(init_con)
         self.importance = importance
         self.goal = float(goal)
