@@ -7,13 +7,14 @@
         <form action = "{{ url_for('profiles.create_goal') }}" method = "GET">
             <button type="button submit" class="btn btn-success">Create a goal now!</button>
     </form>
-    {% endif %}
-    <h3>The following are the portfolios of {{ portfolios[0]['user_email'] }}</h3>
+    {% else %}
+    <h3>The following are the portfolios of {{ session['email'] }}</h3>
     <p> {{ portfolios|length }}</p>
     <p> Click on the links below to see more details about each portfolio.</p>
     {% for temp in portfolios %}
         <p>{{ temp }}</p>
         <a href="{{ url_for('portfolios.port_summary', portfolio_id=temp['port_id']) }}">{{ temp['name'] }}</a>
     {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}
