@@ -13,11 +13,7 @@ def port_opt(constants, port_id):
     # Grab profile and portfolio objects
     prof = Profile.from_mongo(port_id)
     port = Portfolio.from_mongo(port_id)
-    
-    # If the goal was already reached, further optimizaton is meaningless.
-    if port['reached'][-1] >= 1:
-        return None
-    
+
     # Function for converting any rate to the specified time step
     def int_rate_convert(annual_int_rate,time_step):
         eff_rate = (1 + annual_int_rate)**(time_step) - 1
@@ -29,6 +25,10 @@ def port_opt(constants, port_id):
     
     Y = prof['horizon'][-1]                     # Entire length of planning horizon (WEBAPP INPUT)
     T = max(prof['time_left'],0)                # Number of years left (WEBAPP INPUT)
+    
+    # If the gaol was already reached, further optimizaton is meaningless.
+    if Y - T != 0 and port['reached'][-1] >= 1:
+        return None
     
     # Further optimization after time left = 0 is meaningless and returns None
     if T < 0:
