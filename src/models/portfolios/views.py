@@ -25,5 +25,6 @@ def optimize(portfolio_id):
     tempPortfolio = Portfolio.from_mongo(portfolio_id)
     if request.method == "POST":
         port_opt(cnst, portfolio_id)
+        tempPortfolio = Portfolio.from_mongo(portfolio_id)
         return render_template("portfolios/port_details.jinja2", portfolio=tempPortfolio)
     return render_template("portfolios/port_details.jinja2", portfolio=tempPortfolio)
