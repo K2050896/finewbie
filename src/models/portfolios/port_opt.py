@@ -27,8 +27,9 @@ def port_opt(constants, port_id):
     T = max(prof['time_left'],0)                # Number of years left (WEBAPP INPUT)
     
     # If the gaol was already reached, further optimizaton is meaningless.
-    if Y - T != 0 and port['reached'][-1] >= 1:
-        return None
+    if Y - T != 0:
+        if port['reached'][-1] >= 1:
+            return None
     
     # Further optimization after time left = 0 is meaningless and returns None
     if T < 0:
