@@ -5,16 +5,20 @@ from src.common.utils import Utils
 
 
 class User(object):
-    def __init__(self, email, password):
+    def __init__(self, email, password, name, age):
         self.email = email
         self.password = password
+        self.name = name
+        self.age = age
         self.port_ids = []
-
+        
     def json(self):
         return {
             "email": self.email,
             "password": self.password,
-            "port_ids": self.port_ids
+            "name": self.name,
+            "age": self.age,
+            "port_ids": self.port_ids            
         }
 
     def save_to_mongo(self):
