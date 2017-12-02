@@ -3,7 +3,7 @@ from src.common.database import Database
 
 
 class Portfolio(object):
-    def __init__(self, port_id, user_email, mean_term_wealth, mean_var_wealth, alloc_percent, shares0, shares1, cont, reached, ambitious):
+    def __init__(self, port_id, user_email, mean_term_wealth, mean_var_wealth, alloc_percent, shares0, shares1, cont, reached, reached_dollar, ambitious):
         self.port_id = port_id
         self.user_email = user_email
         self.mean_term_wealth = mean_term_wealth
@@ -13,6 +13,7 @@ class Portfolio(object):
         self.shares1 = shares1
         self.cont = cont
         self.reached = reached
+        self.reached_dollar = reached_dollar
         self.ambitious = ambitious
         
         
@@ -27,6 +28,7 @@ class Portfolio(object):
             "shares1": self.shares1,
             "cont": self.cont,
             "reached": self.reached,
+            "reached_dollar": self.reached_dollar,
             "ambitious": self.ambitious
         }
 
