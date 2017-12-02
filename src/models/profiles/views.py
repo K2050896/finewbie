@@ -43,12 +43,12 @@ def create_goal():
 @profile_blueprint.route('/edit-goal/<string:portfolio_id>')
 @user_decorators.requires_login
 def edit_goal(portfolio_id):
-    return render_template("profiles/edit_goal.jinja2", port_id=session['curr_port'], user_email=session['email'])
+    return render_template(url_for('profiles.edit_goal', portfolio_id=portfolio_id))
 
 
-@profile_blueprint.route('/my-goals')
+@profile_blueprint.route('/my-goals/<string:user_email>')
 @user_decorators.requires_login
 def my_goals(user_email):
-    return render_template("profiles/my_goals.jinja2", user_email=user_email)
+    return render_template("profiles/my_goals.jinja2", user_email=session['email'])
 
 
