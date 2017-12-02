@@ -8,13 +8,11 @@
             <button type="button submit" class="btn btn-success">Create a goal now!</button>
     </form>
     {% else %}
-    <h3>The following are the portfolios of {{ session['email'] }}</h3>
-    <p> {{ portfolios|length }}</p>
-    <p> Click on the links below to see more details about each portfolio.</p>
-    {% for temp in portfolios %}
-        <p>{{ temp }}</p>
-        <a href="{{ url_for('portfolios.port_summary', portfolio_id=temp['port_id']) }}">{{ temp['name'] }}</a>
-    {% endfor %}
+        <h3>The following are the portfolios of {{ session['email'] }}</h3>
+        <p> Click on the links below to see more details about each portfolio.</p>
+        {% for temp in portfolios %}
+            <a href="{{ url_for('portfolios.port_summary', portfolio_id=temp['port_id']) }}">{{ temp['name'] }}</a>
+        {% endfor %}
     {% endif %}
 </div>
 {% endblock %}

@@ -5,10 +5,10 @@
     <br>
     <h2>Goal Details</h2>
     <ul></ul>
-    <ul> Name: {{ portfolio.name }} </ul>
-    <ul> Time Horizon: {{ portfolio.horizon }} </ul>
-    <ul> Time left till end of goal: {{ portfolio.time_left }} </ul>
-    <ul> Goal amount: {{ portfolio.goal }} </ul>
+    <ul> Name: {{ profile.name }} </ul>
+    <ul> Time Horizon: {{ profile.horizon }} </ul>
+    <ul> Time left till end of goal: {{ profile.time_left }} </ul>
+    <ul> Goal amount: {{ profile.goal }} </ul>
 
     <style type="text/css">
         form {
@@ -16,13 +16,13 @@
         }
     </style>
 
-    <form action = "{{ url_for('profiles.edit_goal', portfolio_id=portfolio.port_id) }}" method = "GET">
+    <form action = "{{ url_for('profiles.edit_goal', portfolio_id=profile.port_id) }}" method = "GET">
         <button type="button submit" class="btn btn-warning">Edit your goal</button>
     </form>
-    <form action = "{{ url_for('portfolios.optimize', portfolio_id=portfolio.port_id) }}" method = "POST">
+    <form action = "{{ url_for('portfolios.optimize', portfolio_id=profile.port_id) }}" method = "POST">
         <button type="button submit" class="btn btn-primary">OPTIMIZE NOW!!!</button>
     </form>
-    <form action = "{{ url_for('portfolios.optimize', portfolio_id=portfolio.port_id) }}" method = "GET">
+    <form action = "{{ url_for('portfolios.optimize', portfolio_id=profile.port_id) }}" method = "GET">
         <button type="button submit" class="btn btn-info">View Details</button>
     </form>
 

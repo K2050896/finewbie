@@ -47,7 +47,6 @@ def my_goals():
     portfolios = []
     for i in port_ids:
         portfolios.append(Portfolio.from_mongo(i))
-        print(portfolios)
     return render_template("profiles/my_goals.jinja2", portfolios=portfolios)
 
 

@@ -335,4 +335,4 @@ def port_opt(constants, port_id):
 #    np.mean(contr)
     
 #    return mean_term_wealth, mean_var_wealth,alloc_percent,shares0,shares1,cont,reached,ambitious
-    return None
+    return time_step
