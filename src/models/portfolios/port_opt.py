@@ -26,6 +26,10 @@ def port_opt(constants, port_id):
     Y = prof['horizon'][-1]                       # Original number of years (CONSTANT) (WEBAPP INPUT)
     T = prof['time_left']                       # Number of years left (WEBAPP INPUT)
     
+    # Terminate when time left = 0
+    if T <= 0:
+        return None
+    
     if Y < 2:
         time_step = 1/12        # Trading frequency is monthly
     elif 2 <= Y <= 5:
@@ -36,9 +40,6 @@ def port_opt(constants, port_id):
         time_step = 1           # Trading frequency is annually
     
     N = int(T / time_step) + 1  # Total number of trading periods
-    # Terminate when time left = 0
-    if N == 0:
-        return None
     
     # Convert the annual rate to any frequency
     annual_int_rate = constants.INT_RATE      # assume constant interest rate for cash investment
