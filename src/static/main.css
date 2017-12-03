@@ -12,3 +12,7 @@
     margin-left: -3px;
     top: 0;
 }
+
+#container ul li {
+    font-size: 120%;
+}

@@ -17,7 +17,7 @@ For the description of the various goals -> maybe use scrollspy -->
         <div class="container-fluid">
         <div id="navbar1" class="navbar-collapse collapse navbar-right">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/users/homepage">Home</a></li>
+                <li><a href="/users/homepage">Home</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My Goals <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
@@ -43,8 +43,30 @@ For the description of the various goals -> maybe use scrollspy -->
     {% block content %}
         {% if request.path == "/users/homepage" %}
             <div class="container">
-                <h2>Welcome to finewbie, {{ email }}!</h2>
-                <p> Write something here - or what else can you add for the homepage?</p>
+            <div class="jumbotron">
+                <h2><font size=150%>Welcome to finewbie, {{ user.fName }}!</font></h2>
+                <p> What would you like to do today?</p>
+
+                <style type="text/css">
+                    form {
+                        display: inline;
+                        margin: 30px;
+                    }
+                </style>
+
+                <form action = "{{ url_for('profiles.create_goal') }}" method = "GET">
+                    <button type="button submit" class="btn btn-lg btn-success">Create a Goal!</button>
+                </form>
+
+                <form action = "{{ url_for('profiles.my_goals') }}">
+                    <button type="button submit" class="btn btn-lg btn-info">View My Goals</button>
+                </form>
+
+                <form action = "{{ url_for('users.faqs') }}">
+                    <button type="button submit" class="btn btn-lg btn-primary">Learn More</button>
+                </form>
+
+            </div>
             </div>
         {% endif %}
     {% endblock %}

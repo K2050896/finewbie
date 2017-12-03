@@ -45,7 +45,11 @@ def port_opt(constants, port_id):
     elif Y > 10:
         time_step = 1           # Trading frequency is annually
     
-    N = int(T / time_step) + 1  # Total number of trading periods
+    N = T / time_step
+    if N % 2 != 0:
+        N = int(N) + 1
+    else:
+        N = int(N)
     
     # Convert the annual rate to any frequency
     annual_int_rate = constants.INT_RATE      # assume constant interest rate for cash investment
@@ -169,6 +173,7 @@ def port_opt(constants, port_id):
     if Y - T == 0:
         init_con = prof['init_con']              # intial contribution to goal (User input)
         init_alloc = prof['init_alloc']          # Recommended initial alloc (WEBAPP INPUT)
+        port['alloc_percent'].append(init_alloc)
     else:
         temp = port['shares1'][-1]
         shares = np.matrix(np.zeros((6,1)))
@@ -293,7 +298,7 @@ def port_opt(constants, port_id):
     for i in range(0,nassets):
         shares0_.append(float(shares0[i]))
         shares1_.append(float(shares1[i]))
-        alloc_percent_.append(float(alloc_percent[i]))
+        alloc_percent_.append(round(float(alloc_percent[i])*100))
         
     
     # Add elements into lists for historical view
@@ -312,6 +317,9 @@ def port_opt(constants, port_id):
                                                 "mean_var_wealth": port["mean_var_wealth"],"alloc_percent": port["alloc_percent"],"shares0": port["shares0"],
                                                 "shares1": port["shares1"],"cont": port["cont"],"reached": port["reached"],"reached_dollar":port["reached_dollar"],"hprr":port["hprr"],"twrr":port["twrr"],"ambitious": port["ambitious"]})
 
+    temporary = shares1 - shares0
+
+
     list1 = port['reached_dollar']
     list2 = port['cont']
     list3 = [i * time_step for i in range(len(list1))]
@@ -319,12 +327,14 @@ def port_opt(constants, port_id):
     plot_data = pd.DataFrame({'reached_dollar':list1, 'cont':list2, 'time':list3})
 
     list4 = ['Large Cap Equity', 'Small Cap Equity', 'International Equity', 'Short-term Bonds', 'Long-term Bonds', 'Cash Investments']
-    list5 = port['alloc_percent'][-1]
+    list5 = port['alloc_percent'][-2]
 
     alloc_data = pd.DataFrame({'category':list4, 'percent':list5})
 
-    pie_plot = Donut(data=alloc_data, label="category", values="percent")
+    pie_plot = Donut(data=alloc_data, label="category", values="percent", hover_text="percent")
     line_plot = Line(data=plot_data, x="time", y="reached_dollar", xlabel="Time Steps Passed", ylabel="Dollar Value of Goal Reached")
+    line_plot.circle(plot_data['time'], plot_data['reached_dollar'], size=5, color='red', line_color="red", fill_alpha=0.5)
     bar_plot = Line(data=plot_data, x="time", y="cont", xlabel="Time Steps Passed", ylabel="Contribution at Every Time Step")
+    bar_plot.circle(plot_data['time'], plot_data['cont'], size=5, color='red', line_color="red", fill_alpha=0.5)
 
-    return pie_plot, line_plot, bar_plot
+    return pie_plot, line_plot, bar_plot, temporary

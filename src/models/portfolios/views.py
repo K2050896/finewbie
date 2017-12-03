@@ -27,12 +27,13 @@ def port_summary(portfolio_id):
 @portfolio_blueprint.route('/optimize/<string:portfolio_id>', methods=['POST'])
 @user_decorators.requires_login
 def optimize(portfolio_id):
-    pie_plot, line_plot, bar_plot = port_opt(cnst, portfolio_id)
+    pie_plot, line_plot, bar_plot, temporary = port_opt(cnst, portfolio_id)
     tempProfile = Profile.from_mongo(portfolio_id)
     tempPortfolio = Portfolio.from_mongo(portfolio_id)
     script1, div1 = embed.components(pie_plot)
     script2, div2 = embed.components(line_plot)
     script3, div3 = embed.components(bar_plot)
+    tickers = cnst.TICKERS
 
-    return render_template("portfolios/port_details.jinja2", profile=tempProfile, portfolio=tempPortfolio, script1=script1,
-                           div1=div1, script2=script2, div2=div2, script3=script3, div3=div3)
+    return render_template("portfolios/port_details.jinja2", profile=tempProfile, portfolio=tempPortfolio, temporary=temporary, script1=script1,
+                           div1=div1, script2=script2, div2=div2, script3=script3, div3=div3, tickers=tickers)

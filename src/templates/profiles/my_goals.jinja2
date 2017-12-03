@@ -1,6 +1,7 @@
 {% extends "homepage.jinja2" %}
 {% block content %}
     <div class="container">
+    <div class="jumbotron">
     {% if portfolios|length == 0 %}
         <h4>Uh oh, you have no goals defined currently!</h4>
         <p>Click below to create a goal and start planning.</p>
@@ -8,11 +9,12 @@
             <button type="button submit" class="btn btn-success">Create a goal now!</button>
     </form>
     {% else %}
-        <h3>The following are the portfolios of {{ session['email'] }}</h3>
+        <h1>My Goals</h1>
         <p> Click on the links below to see more details about each portfolio.</p>
         {% for temp in portfolios %}
             <ul><a href="{{ url_for('portfolios.port_summary', portfolio_id=temp['port_id']) }}">{{ temp['name'] }}</a></ul>
         {% endfor %}
     {% endif %}
-</div>
+    </div>
+    </div>
 {% endblock %}

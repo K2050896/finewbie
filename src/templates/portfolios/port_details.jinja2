@@ -1,26 +1,49 @@
 {% extends "homepage.jinja2" %}
 {% block content %}
     <div class="container">
-        <h2>Portfolio Details - {{ portfolio.name }}</h2>
-        <br>
-        <p>Until now, this is how much you saved up for your goal:</p>
-        <p>{{ portfolio.reached }}</p>
-        <p>Converted to dollar amount, this is how much your portfolio is worth now:</p>
-        <p>{{ portfolio.reached_dollar }}</p>
+        <div class="row">
+            <div class="jumbotron">
+                <h3>Portfolio Details - {{ portfolio.name }}</h3>
 
-        <form action = "{{ url_for('portfolios.port_summary', portfolio_id=portfolio.port_id) }}">
-            <button type="button submit" class="btn btn-info">Back to Goal Summary</button>
-        </form>
+                <p><span class="glyphicon glyphicon-ok-circle"></span>   As of this time, you saved up {{ (portfolio.reached[-1]) * 100 }}% of your goal (inflation taken into account).</p>
+                <p><span class="glyphicon glyphicon-usd"></span>   Translated to dollar value, your investment is now worth ${{ portfolio.reached_dollar[-1] }}.</p>
+                <p><span class="glyphicon glyphicon-piggy-bank"></span>   Don't worry! You still have {{ profile.time_left }} years to reach your goal.</p>
+
+                <form action = "{{ url_for('portfolios.port_summary', portfolio_id=portfolio.port_id) }}">
+                    <button type="button submit" class="btn btn-info">Back to Goal Summary</button>
+                </form>
+                <br>
+            </div>
+
+
+            <div class="jumbotron col-md-6">
+                    <h3 class="text-center">Important Statistics</h3>
+                    <p>Holding Period Rate of Return: {{'%0.2f'| format(((portfolio['hprr'][-1]) * 100)|float)}}%</p>
+                    <p>Time-Weighted Rate of Return: {{'%0.2f'| format(((portfolio['twrr'][-1]) * 100)|float)}}%</p>
+                    <p>Variance of Portfolio Value: ${{'%0.2f'| format(portfolio['mean_var_wealth'][-1]|float)}}</p>
+            </div>
+            <div class="jumbotron col-md-5 col-md-offset-1">
+                    <h3 class="text-center">Investment Suggestion</h3>
+                    <p>finewbie suggests that you buy the following amounts of assets listed:</p>
+                    {% for i in range(5) %}
+                        <li>{{'%0.2f'| format(temporary[i]|float)}} shares of {{ tickers[i] }}</li>
+                    {% endfor %}
+                    <li>${{'%0.2f'| format(temporary[i]|float)}} added to your cash investments.</li>
+            </div>
+        </div>
 
         <h4>Asset Allocation within Portfolio</h4>
+        <p> How is your investment split up into the different asset classes? This split keeps changing at every time period to be consistent with your risk profile, but adjusting for the returns of the assets. </p>
         {{ div1|safe }}
         {{ script1|safe }}
 
         <h4>Market Value of Portfolio</h4>
+        <p> This is how much your investment (initial contribution + added cash) is worth in the market today. </p>
         {{ div2|safe }}
         {{ script2|safe }}
 
         <h4>Additional Cash Inflow from Investor</h4>
+        <p> This is the money you put in to the portfolio as contribution towards the goal, at every time step.</p>
         {{ div3|safe }}
         {{ script3|safe }}
 

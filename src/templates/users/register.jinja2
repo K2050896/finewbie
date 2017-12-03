@@ -4,27 +4,29 @@
 
 {% block content %}
     <div class="container">
+    <div class="jumbotron">
         <div class="form">
             <form id="register-form" action="{{ url_for('users.register_user') }}" method="POST">
                 <div class="form-group">
-                    <span class="glyphicon glyphicon-user"><label for="fName">First Name</label>
+                    <span class="glyphicon glyphicon-user"></span><label for="fName">First Name</label>
                     <input type="text" class="form-control" id="name" name="fName" placeholder="First Name">
                 </div>
                 <div class="form-group">
-                    <span class="glyphicon glyphicon-user"><label for="age">Age</label>
+                    <span class="glyphicon glyphicon-user"></span><label for="age">Age</label>
                     <input type="number" class="form-control" id="age" name="age" placeholder="Age">
                 </div>
                 <div class="form-group">
-                    <span class="glyphicon glyphicon-user"><label for="email">Email address</label>
+                    <span class="glyphicon glyphicon-user"></span><label for="email">Email address</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email">
                 </div>
                 <div class="form-group">
-                    <span class="glyphicon glyphicon-lock"><label for="password">Password</label>
+                    <span class="glyphicon glyphicon-lock"></span><label for="password">Password</label>
                     <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-log-in"></span> Sign up!</button>
+                <button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-log-in"></span> Sign up!</button>
             </form>
         </div>
+    </div>
     </div>
 {% endblock %}
 

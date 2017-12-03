@@ -43,7 +43,8 @@ def logout_user():
 @user_blueprint.route('/homepage')
 @user_decorators.requires_login
 def user_homepage():
-    return render_template("homepage.jinja2", email=session['email'])
+    user = User.get_by_email(session['email'])
+    return render_template("homepage.jinja2", user=user)
 
 @user_blueprint.route('/my-info', methods=['GET','POST'])
 @user_decorators.requires_login
