@@ -1,13 +1,9 @@
-<<<<<<< HEAD
-from flask import Blueprint, request, render_template, session, redirect, url_for
-=======
 import base64
 import uuid
 from bokeh import embed
 import pandas as pd
 from flask import Blueprint, request, render_template, session, redirect, url_for
 from io import BytesIO
->>>>>>> c49f8f3931b35f672b7afc54e50416df94044f06
 from src.models.users.user import User
 import src.models.users.errors as UserErrors
 import src.models.users.decorators as user_decorators
@@ -15,7 +11,8 @@ from src.models.profiles.profile import Profile
 from src.models.portfolios.portfolio import Portfolio
 import src.models.portfolios.constants as cnst
 from src.models.portfolios.port_opt import port_opt
-from bokeh import embed
+from bokeh.plotting import figure, output_file, show
+from bokeh.charts import Donut, Line
 
 portfolio_blueprint = Blueprint('portfolios', __name__)
 
@@ -43,6 +40,3 @@ def optimize(portfolio_id):
 
     except TypeError:
         return ("There is no further optimization needed.")
-
-
-
