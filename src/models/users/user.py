@@ -1,6 +1,6 @@
 from src.common.database import Database
 import src.models.users.errors as UserErrors
-from flask import session
+from flask import session, flash
 from src.common.utils import Utils
 
 
@@ -88,3 +88,4 @@ class User(object):
         user = User.get_by_email(email)
         Database.update("users",{"email": user["email"]},
                         {"email": user["email"], "password": Utils.hash_password(new_pass), "fName": user['fName'], "age": user['age'], "port_ids": user["port_ids"]})
+        flash("Successfully Changed Password!")

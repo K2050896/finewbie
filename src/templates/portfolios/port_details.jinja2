@@ -1,12 +1,16 @@
 {% extends "homepage.jinja2" %}
 {% block content %}
     <div class="container">
-        <h2>Optimal solution for portfolio {{ portfolio.name }}</h2>
+        <h2>Portfolio Details - {{ portfolio.name }}</h2>
         <br>
         <p>Until now, this is how much you saved up for your goal:</p>
         <p>{{ portfolio.reached }}</p>
         <p>Converted to dollar amount, this is how much your portfolio is worth now:</p>
         <p>{{ portfolio.reached_dollar }}</p>
+
+        <form action = "{{ url_for('portfolios.port_summary', portfolio_id=portfolio.port_id) }}">
+            <button type="button submit" class="btn btn-info">Back to Goal Summary</button>
+        </form>
 
         <h4>Asset Allocation within Portfolio</h4>
         {{ div1|safe }}
@@ -20,9 +24,9 @@
         {{ div3|safe }}
         {{ script3|safe }}
 
-    <form action = "{{ url_for('portfolios.port_summary', portfolio_id=portfolio.port_id) }}">
-        <button type="button submit" class="btn btn-info">Back to Goal Summary</button>
-    </form>
+        <form action = "{{ url_for('portfolios.port_summary', portfolio_id=portfolio.port_id) }}">
+            <button type="button submit" class="btn btn-info">Back to Goal Summary</button>
+        </form>
 
     </div>
 {% endblock %}

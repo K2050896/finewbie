@@ -1,27 +1,40 @@
 {% extends "homepage.jinja2" %}
 {% block content %}
-<div class="container">
-    <h1> Congrats! You just made yourself a new goal!</h1>
-    <br>
-    <h2>Goal Details</h2>
-    <ul></ul>
-    <ul> Name: {{ profile.name }} </ul>
-    <ul> Time Horizon: {{ profile.horizon[-1] }} </ul>
-    <ul> Time left till end of goal: {{ profile.time_left }} </ul>
-    <ul> Goal amount: {{ profile.goal }} </ul>
+    <div class="container">
+        <h1>Goal Details</h1>
+        <ul></ul>
+        <ul> Name: {{ profile.name }} </ul>
+        <ul> Time Horizon: {{ profile.horizon[-1] }} </ul>
+        <ul> Time left till end of goal: {{ profile.time_left }} </ul>
+        <ul> Goal amount: {{ profile.goal }} </ul>
 
-    <style type="text/css">
-        form {
-            display: inline;
-        }
-    </style>
+        <style type="text/css">
+            form {
+                display: inline;
+            }
+        </style>
 
-    <form action = "{{ url_for('profiles.edit_goal', portfolio_id=profile.port_id) }}" method = "GET">
-        <button type="button submit" class="btn btn-warning">Edit your goal</button>
-    </form>
-    <form action = "{{ url_for('portfolios.optimize', portfolio_id=profile.port_id) }}" method = "POST">
-        <button type="button submit" class="btn btn-primary">OPTIMIZE!</button>
-    </form>
+        {# Newly created goal - only optimize button - no edit goal yet #}
+        {% if profile['time_left'] == profile['horizon'][-1] %}
+            <form action = "{{ url_for('portfolios.optimize', portfolio_id=profile.port_id) }}" method = "POST">
+                <button type="button submit" class="btn btn-primary">OPTIMIZE!</button>
+            </form>
+        {% else %}
+            {# Next check is for already existing goals #}
+            <form action = "{{ url_for('profiles.edit_goal', portfolio_id=profile.port_id) }}" method = "GET">
+                <button type="button submit" class="btn btn-warning">Edit your goal</button>
+            </form>
+            {% if profile['time_left']|float > 0.0 and portfolio['reached'][-1]|float < 1.0 %}
+                <form action = "{{ url_for('portfolios.optimize', portfolio_id=profile.port_id) }}" method = "POST">
+                    <button type="button submit" class="btn btn-primary">OPTIMIZE!</button>
+                </form>
+            {% else %}
+                <button type="button submit" class="btn btn-primary" disabled>OPTIMIZE!</button>
+                <p> You cannot further optimize this portfolio for one of the following reasons:</p>
+                <li>Your time horizon for the goal has ended</li>
+                <li>Your goal has been achieved ahead of time, and does not need further optimization!</li>
+            {% endif %}
+        {% endif %}
 
-</div>
+    </div>
 {% endblock %}

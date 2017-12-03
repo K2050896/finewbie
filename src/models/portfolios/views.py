@@ -20,23 +20,19 @@ portfolio_blueprint = Blueprint('portfolios', __name__)
 @user_decorators.requires_login
 # Gets unique summary of portfolio page - and user can click optimize
 def port_summary(portfolio_id):
-    temp = Profile.from_mongo(portfolio_id)
-    return render_template("portfolios/port_summary.jinja2", profile=temp)
+    tempProfile = Profile.from_mongo(portfolio_id)
+    tempPortfolio = Portfolio.from_mongo(portfolio_id)
+    return render_template("portfolios/port_summary.jinja2", profile=tempProfile, portfolio=tempPortfolio)
 
 @portfolio_blueprint.route('/optimize/<string:portfolio_id>', methods=['POST'])
 @user_decorators.requires_login
 def optimize(portfolio_id):
     pie_plot, line_plot, bar_plot = port_opt(cnst, portfolio_id)
-    try:
-        if pie_plot is not None:
-            tempPortfolio = Portfolio.from_mongo(portfolio_id)
+    tempProfile = Profile.from_mongo(portfolio_id)
+    tempPortfolio = Portfolio.from_mongo(portfolio_id)
+    script1, div1 = embed.components(pie_plot)
+    script2, div2 = embed.components(line_plot)
+    script3, div3 = embed.components(bar_plot)
 
-            script1, div1 = embed.components(pie_plot)
-            script2, div2 = embed.components(line_plot)
-            script3, div3 = embed.components(bar_plot)
-
-            return render_template("portfolios/port_details.jinja2", portfolio=tempPortfolio, script1=script1,
-                                   div1=div1, script2=script2, div2=div2, script3=script3, div3=div3)
-
-    except TypeError:
-        return ("There is no further optimization needed.")
+    return render_template("portfolios/port_details.jinja2", profile=tempProfile, portfolio=tempPortfolio, script1=script1,
+                           div1=div1, script2=script2, div2=div2, script3=script3, div3=div3)

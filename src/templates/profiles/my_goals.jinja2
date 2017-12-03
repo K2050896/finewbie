@@ -11,7 +11,7 @@
         <h3>The following are the portfolios of {{ session['email'] }}</h3>
         <p> Click on the links below to see more details about each portfolio.</p>
         {% for temp in portfolios %}
-            <a href="{{ url_for('portfolios.port_summary', portfolio_id=temp['port_id']) }}">{{ temp['name'] }}</a>
+            <ul><a href="{{ url_for('portfolios.port_summary', portfolio_id=temp['port_id']) }}">{{ temp['name'] }}</a></ul>
         {% endfor %}
     {% endif %}
 </div>
