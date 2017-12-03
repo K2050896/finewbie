@@ -204,9 +204,10 @@ def port_opt(constants, port_id):
     
     # Determine if the goal is "ambitious"
     diff = goal - mean_term_wealth
-    ambitious = 0
     if diff > 0:
         ambitious = 1
+    else:
+        ambitious = 0
         
     # If the goal is ambitious, how much extra should the investor be contributing to meet the goal (monthly)?
     if ambitious == 1 and (N - 1) != 0:
@@ -216,7 +217,7 @@ def port_opt(constants, port_id):
         extra_dis_inc = 0
         extra_time = 0
     
-    importance = prof['importance']
+    importance = int(prof['importance'])
     if ambitious == 1 and importance == 1:
         extra_dis_inc = 0
     elif ambitious == 1 and importance == 2:
