@@ -25,9 +25,11 @@ def port_opt(constants, port_id):
     trans_costs = constants.TRANS_COSTS # transaction costs
     
     Y = prof['horizon'][-1]                     # Entire length of planning horizon (WEBAPP INPUT)
+<<<<<<< HEAD
     T = prof['time_left']                       # Number of years left (WEBAPP INPUT)
 
     # If the goal was already reached, further optimizaton is meaningless.
+>>>>>>> f77fa90d639bee2cd1b74b04195c1e5cc5b68336
     if Y - T != 0:
         if port['reached'][-1] >= 1:
             return None
