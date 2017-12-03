@@ -217,18 +217,18 @@ def port_opt(constants, port_id):
         extra_time = 0
     
     importance = prof['importance']
-    if importance == 1:
+    if ambitious == 1 and importance == 1:
         extra_dis_inc = 0
-    elif importance == 2:
+    elif ambitious == 1 and importance == 2:
         extra_dis_inc = 0.25 * extra_dis_inc
         extra_time = 0.75 * extra_time
-    elif importance == 3:
+    elif ambitious == 1 and importance == 3:
         extra_dis_inc = 0.5 * extra_dis_inc
         extra_time = 0.5 * extra_time
-    elif importance == 4:
+    elif ambitious == 1 and importance == 4:
         extra_dis_inc = 0.75 * extra_dis_inc
         extra_time = 0.25 * extra_time
-    else:
+    elif ambitious == 1 and importance == 5:
         extra_time = 0
     
     # t = 0 # of shares
@@ -282,7 +282,7 @@ def port_opt(constants, port_id):
         twrr = round((1 + port['twrr'][-1]) * (1 + hprr) - 1,3)
     
     # Add elements into lists for historical view
-    prof["horizon"].append((prof["horizon"][-1] + extra_time))
+    prof["horizon"].append((float(prof["horizon"][-1]) + extra_time))
     prof["dis_inc"].append((prof["dis_inc"][-1] + extra_dis_inc))
     
     # Update profile by changing the length of time remaining
