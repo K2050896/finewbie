@@ -4,7 +4,7 @@
     <div class="jumbotron">
         <h1>Goal Details</h1>
         <p> Name: {{ profile.name }} </p>
-        <p> Time Horizon: {{ profile.horizon[-1] }} years</p>
+        <p> Time Horizon: {{ profile['horizon'][-1] }} years</p>
         <p> Time left till end of goal: {{'%0.2f'| format(portfolio['time_left']|float)}} years</p>
         <p> Goal amount: ${{ profile.goal }} </p>
 
