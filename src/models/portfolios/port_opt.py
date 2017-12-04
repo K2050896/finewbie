@@ -40,9 +40,9 @@ def port_opt(constants, port_id):
         time_step = 1/12        # Trading frequency is monthly
     elif 2 <= Y <= 5:
         time_step = 1/4         # Trading frequency is quarterly
-    elif 5 < Y <= 10:
+    elif 5 < Y < 10:
         time_step = 1/2         # Trading frequency is semi-annually
-    elif Y > 10:
+    elif Y >= 10:
         time_step = 1           # Trading frequency is annually
     
     N = T / time_step
