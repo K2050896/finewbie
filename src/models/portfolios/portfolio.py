@@ -1,7 +1,6 @@
 import uuid
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 from src.common.database import Database
 import src.models.portfolios.constants as cnst
