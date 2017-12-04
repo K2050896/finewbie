@@ -6,7 +6,7 @@ pandas==0.20.3
 requests==2.14.2
 Jinja2==2.9.6
 uwsgi
-cvxopt==1.1.8
+cvxopt
 datetime==4.2
 pandas-datareader==0.5.0
 bokeh==0.12.0
