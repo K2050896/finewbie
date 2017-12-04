@@ -2,11 +2,12 @@
 {% block content %}
 
     <div class="container">
+    <div class="jumbotron">
         <div class="form">
             <form id="login-form" action="{{ url_for('profiles.create_goal') }}" method="POST">
-                <h2>Goal Information</h2>
-                <p>Starting to save up for a goal? That's great! Even small amounts regularly add up to a lot in few years.
-                    We'll ask you some questions about the goal and personal comfort level with risk, so we can better choose your portfolios for you.</p>
+                <h1>Goal Information</h1>
+                <p>Starting to save up for a goal? That's great! Even small amounts regularly add up to a lot in few years. </p>
+                <p>We'll ask you some questions about the goal and personal comfort level with risk, so we can better choose your portfolios for you.</p>
 
                 <div class="form-group">
                     <label class="control-label" for="name">Name the goal!</label>
@@ -35,7 +36,8 @@
                 </div>
 
                 <h2>Goal Contribution</h2>
-                <p>We'd like to know how much you can regularly contribute towards your goal. Feel like you won't have any income left for your other needs? Don't worry, we will take other bills and payments you have to make into account.</p>
+                <p>We'd like to know how much you can regularly contribute towards your goal.</p>
+                <p>Feel like you won't have any income left for your other needs? Don't worry, we will take other bills and payments you have to make into account.</p>
 
                 <div class="form-group">
                     <label class="control-label" for="init_con">What is the initial contribution you would like to make towards this goal? Please enter amount rounded up to the nearest dollar.</label>
@@ -43,18 +45,19 @@
                     <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="assets">Enter the value of your current assets - salary, any existing investments.</label>
+                    <label class="control-label" for="assets">Enter the value of your monthly current assets (All sources of income basically - salary, savings account balance, existing investments.)</label>
                     <input type="number" class="form-control" id="assets" name="assets">
                     <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="liab">Enter the value of your current liabilities - monthly expenses including rent, insurance, credit card bills, utilities etc.</label>
+                    <label class="control-label" for="liab">Enter the value of your monthly current liabilities (All expenses including rent, insurance, credit card bills, utilities etc.)</label>
                     <input type="number" class="form-control" id="liab" name="liab">
                     <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                 </div>
 
-                <h2>Risk Profile</h2>
-                <p>What is your comfortable level of risk? Find out here! Don't overthink the questions - just go with your instinct :)</p>
+                <h1>Risk Profile</h1>
+                <p>What is your comfortable level of risk? Find out here! </p>
+                <p>Don't overthink the questions - just go with your instinct</p>
 
                 <div class="form-group">
                     <label class="control-label" for="r1">You are on a TV game show and can choose only one of the following options. Which would you take?</label><br>
@@ -101,5 +104,5 @@
             </form>
         </div>
     </div>
-
+    </div>
 {% endblock %}

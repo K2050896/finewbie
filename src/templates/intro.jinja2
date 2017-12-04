@@ -1,21 +1,29 @@
 {% extends "base_template.jinja2" %}
 {% block content %}
-   <div class="container-fluid">
-        {#<div class="row">
-            <div class="col-sm-6">#}
-                <h2> Welcome to finewbie!</h2>
-                <img src="{{ url_for('static', filename = 'newLogo.png') }}" width="auto">
-                <p> finewbie is a personal asset-liability management tool for beginners!</p>
-            {#</div>
-            <div class="col-sm-6">#}
-                <div class="jumbotron">
-                    <p> Haven't tried finewbie?</p>
-                    <a class="btn btn-success" href="{{ url_for('users.register_user') }}">Sign Up Now!</a>
-                    <p> Already a registered user?</p>
-                    <a class="btn btn-info" href="{{ url_for('users.login_user') }}">Login</a>
+<div class="container-fluid">
+    <p></p>
+    <p></p>
+    <p></p>
+    <ion-view>
+        <div class="row" >
+            <div class="col col-md-6">
+                <img src="static/newIntro.png" style="width:100%">
+            </div>
+
+            <div class="col col-md-6">
+                <div style="background:transparent !important" class="jumbotron">
+                    <p>finewbie helps beginners create goals and achieve them through investment advice.</p>
+                    <p>It's simple: register, create your goals and let finewbie suggest you how to invest your money.</p>
+                    <p></p>
+                    <p></p>
+                    <p><b> Haven't tried finewbie?</b></p>
+                    <a class="btn btn-lg btn-success" href="{{ url_for('users.register_user') }}">Sign Up Now!</a>
+                    <p><b> Already a registered user?</b></p>
+                    <a class="btn btn-lg btn-info" href="{{ url_for('users.login_user') }}">Login</a>
                 </div>
             </div>
-        {#</div>
-    </div>#}
-{% endblock %}
 
+        </div>
+    </ion-view>
+</div>
+ {% endblock %}
