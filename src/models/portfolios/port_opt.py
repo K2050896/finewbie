@@ -44,9 +44,7 @@ def port_opt(constants, port_id):
         time_step = 1/2         # Trading frequency is semi-annually
     elif Y >= 10:
         time_step = 1           # Trading frequency is annually
-    else:
-        time_step = 1
-    
+
     N = T / time_step
     if N % 2 != 0:
         N = int(N) + 1
