@@ -1,1 +1,1 @@
-web: gunicorn finewbie:app
+web: gunicorn src:app
