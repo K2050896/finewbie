@@ -270,7 +270,7 @@ def port_opt(constants, port_id):
         cont = 0 # Since there will no next time period
     
     # % reached of financial goal target
-    reached = round(float(init_con / goal),3)
+    reached = float(init_con / goal)
     reached_dollar = round(reached * goal,2) # In dollar value
     
     # Time weighted rate of return (TWRR)
