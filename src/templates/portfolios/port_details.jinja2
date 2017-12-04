@@ -7,7 +7,7 @@
 
                 <p><span class="glyphicon glyphicon-ok-circle"></span>   As of this time, you saved up {{'%0.2f'| format(((portfolio['reached'][-1]) * 100)|float)}}% of your goal (inflation taken into account).</p>
                 <p><span class="glyphicon glyphicon-usd"></span>   Translated to dollar value, your investment is now worth ${{ portfolio.reached_dollar[-1] }}.</p>
-                <p><span class="glyphicon glyphicon-piggy-bank"></span>   Don't worry! You still have {{'%0.2f'| format(((portfolio.time_left|float)}} years to reach your goal.</p>
+                <p><span class="glyphicon glyphicon-piggy-bank"></span>   Don't worry! You still have {{'%0.2f'| format(portfolio.time_left|float)}} years to reach your goal.</p>
 
                 <form action = "{{ url_for('portfolios.port_summary', portfolio_id=portfolio.port_id) }}">
                     <button type="button submit" class="btn btn-info">Back to Goal Summary</button>
