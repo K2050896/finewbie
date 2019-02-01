@@ -47,7 +47,6 @@ The project has the following folder (and file) structure:
 	* `user/` Frontend functions for login pages
     * `static/` CSS design and images used in the web application interface.
     * `templates/` Jinja2 templates for the design of the web application interface.
-    
 * `Demonstration.pdf` Screenshots of the web application
 * `Report.pdf` 69-page report
 * `Presentation.pdf`
