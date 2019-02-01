@@ -58,9 +58,9 @@ The web application can be launched by visting [Finewbie](http://finewbie.heroku
 
 ## Authors
 
-* **Jangwon Park**
-* **Sowmya Tata**
-* **Kai Zhang** 
+* **Jangwon Park** (algorithm/logic developer)
+* **Sowmya Tata** (frontend developer)
+* **Kai Zhang** (backend developer)
 
 ## License
 
