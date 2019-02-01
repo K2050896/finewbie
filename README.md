@@ -3,7 +3,7 @@ Capstone Project, December 2017, University of Toronto
 
 This is the directory of the Capstone Project, fall 2017, University of Toronto. This directory contains practical information on the project implementation and how to run it.
 
-The proposed challenge is to design a personal asset-liability management tool which recommends the optimal investment strategy for any individual with any unique financial circumstances and profile, and for any type of goal he/she aspires to achieve through investing. The final outcome is a **web-based robo-advisor** which works on a complex, sophisticated optimization method, accounting for many realistic factors.
+The proposed challenge is to design an online personal asset-liability management tool which recommends the optimal investment strategy for any individual with any unique financial circumstances and profile, and for any type of goal he/she aspires to achieve through investing. The final outcome is a **web-based robo-advisor** which works on a complex, sophisticated optimization method, accounting for many realistic factors.
 
 (`Report.pdf`) is a 69-page document, fullying underlying all details of the project development. For a brief overview, please refer to (`Presentation.pdf`). For a well-documented demonstration of the web application, refer to (`Demonstration.pdf`).
 
