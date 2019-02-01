@@ -1,9 +1,11 @@
 # Finewbie: Personal Investment Advisor for Beginners
 Capstone Project, December 2017, University of Toronto
 
-This is the directory of the Capstone Project fall 2017, University of Toronto. This directory contains practical information on the project implementation and how to run it. For more detailed explanation of the project (goals, implemented algorithms, ...), please refer to the report (`Report.pdf`). 
+This is the directory of the Capstone Project, fall 2017, University of Toronto. This directory contains practical information on the project implementation and how to run it.
 
-The purpose of this project is to learn various vulnerable points of a terrorist network by identifying a set of key players whose roles are vital to the success of such organizations. We seek to develop an appropriate methodology to evaluate the importance of each terrorist to the effectiveness of the network as a whole, and identify an optimal set of key terrorists that we recommend should be targeted in order to debilitate the network.
+The proposed challenge is to design a personal asset-liability management tool which recommends the optimal investment strategy for any individual with any unique financial circumstances and profile, and for any type of goal he/she aspires to achieve through investing. The final outcome is a **web-based robo-advisor** which works on a complex, sophisticated optimization method, accounting for many realistic factors.
+
+(`Report.pdf`) is a 69-page document, fullying underlying all details of the project development. For a brief overview, please refer to (`Presentation.pdf`). For a well-documented demonstration of the web application, refer to (`Demonstration.pdf`).
 
 ## Getting Started
 
@@ -15,23 +17,32 @@ The required environment for running the code and reproducing the results is a c
 
 Besides that (and the built-in Python libraries), the following packages are used and have to be installed:
 
-* [NumPy 1.13.3](http://www.numpy.org). `pip3 install --user numpy==1.13.3`
-* [Matplotlib 2.0.2](https://matplotlib.org). `pip3 install --user matplotlib==2.0.2`
-* [Networkx 2.2](https://networkx.github.io)    `pip install --user networkx==2.2`
-* [Pandas 0.23.4](https://pandas.pydata.org)    `pip install --user pandas==0.23.4`
-* [PyGSP 0.5.1](https://pygsp.readthedocs.io/en/stable/) `pip install --user pygsp==0.5.1`
-* [TQDM 4.28.1](https://github.com/tqdm/tqdm)    `pip install --user tqdm==4.28.1`
+* [Bokeh 0.12.0](https://bokeh.pydata.org/en/0.12.10/docs/releases/0.12.0.html) `pip3 install --user bokeh==0.12.0`
+* [cxvopt 1.2](https://cvxopt.org/) `pip3 install --user cvxopt==1.2`
+* [datetime 4.2](https://pypi.org/project/DateTime/4.2/) `pip3 install --user datetime==4.2`
+* [flask 0.12.2](https://pypi.org/project/Flask/0.12.2/) `pip3 install --user flask==0.12.2`
+* [Jinja2 2.9.6](https://pypi.org/project/Jinja2/2.9.6/) `pip3 install --user jinja2==2.9.6`
+* [NumPy 1.13.3](http://www.numpy.org) `pip3 install --user numpy==1.13.3`
+* [Matplotlib 2.0.2](https://matplotlib.org) `pip3 install --user matplotlib==2.0.2`
+* [Pandas 0.20.3](https://pandas.pydata.org) `pip install --user pandas==0.20.3`
+* [pandas-datareader 0.5.0](https://pandas-datareader.readthedocs.io/en/latest/whatsnew.html#v0-5-0-july-25-2017) `pip install --user pandas-datareader==0.5.0`
+* [passlib 1.7.1](https://passlib.readthedocs.io/en/stable/) `pip install --user passlib==1.7.1`
+* [pymongo 3.5.1](http://api.mongodb.com/python/3.5.1/) `pip install --user pymongo==3.5.1`
+* [requests 2.14.2](https://pypi.org/project/requests/2.14.2/) `pip install --user requests==2.14.2`
+* [uwsgi 2.0.18](https://uwsgi-docs.readthedocs.io/en/latest/Changelog-2.0.17.html) `pip install --user uwsgi==2.0.18`
 
 ### Installing
 
 To install the previously mentioned libraries a requirements.txt file is provided. The user is free to use it for installing the previously mentioned libraries.  
 
-
 ## Project Structure
 
 The project has the following folder (and file) structure:
 
-* `data/`. Directory containing original dataset from LINQS. [online] Linqs.soe.ucsc.edu. Available at: https://linqs.soe.ucsc.edu/node/236 [Accessed 11 Jan. 2019].
+* `src/`. Source directory.
+    * `common/` Backend python functions for storing data and user information.
+    * `models/` Python functions for the optimization model
+        * `gephi/` Folder containing gephi files for visualization and exploration of the network.
 
 * `project/`. Folder containing the actual code files for the project:
     * `gephi/` Folder containing gephi files for visualization and exploration of the network.
